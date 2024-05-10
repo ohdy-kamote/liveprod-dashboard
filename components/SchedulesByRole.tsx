@@ -71,13 +71,13 @@ export default async function SchedulesByRole({role}: {role: string}) {
                 { sns?.length &&
                   <Fragment>
                     <td className="border border-slate-500 bg-slate-100">{formatDate(sns[i].date)}</td>
-                    <td className="border border-slate-500 bg-slate-100 text-rose-700"><Link href={`/schedule/assign-volunteer/${sns?.[i]?.id}`} >{sns?.[i]?.volunteer || "Vermont Paguiligan"}</Link></td>
+                    <td className="border border-slate-500 bg-slate-100 text-rose-700"><Link href={`/schedule/assign-volunteer/${sns?.[i]?.id}`} >{sns?.[i]?.volunteer?.[0]?.name || "Vermont Paguiligan"}</Link></td>
                   </Fragment>
                 }
                 <td className="border border-slate-500 bg-slate-100">{formatDate(firstService.date)}</td>
-                <td className="border border-slate-500 bg-slate-100">{firstService?.volunteer || ""}</td>
-                <td className="border border-slate-500 bg-slate-100">{secondService?.volunteer || "Chrissie Tan"}</td>
-                <td className="border border-slate-500 bg-slate-100">{thirdService?.volunteer || "John Chiu"}</td>
+                <td className="border border-slate-500 bg-slate-100">{firstService?.volunteer?.[0]?.name || ""}</td>
+                <td className="border border-slate-500 bg-slate-100">{secondService?.volunteer?.[0]?.name || "Chrissie Tan"}</td>
+                <td className="border border-slate-500 bg-slate-100">{thirdService?.volunteer?.[0]?.name || "John Chiu"}</td>
               </tr>
             )})
           }

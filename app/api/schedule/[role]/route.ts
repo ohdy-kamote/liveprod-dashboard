@@ -16,6 +16,19 @@ export async function GET(request: any, { params }: any) {
       }
     },
     {
+      $lookup: {
+        from: "volunteers",
+        localField: "volunteer",
+        foreignField: "_id",
+        as: "volunteer"
+      }
+    },
+    // {
+    //   $set: {
+    //     "schedules.volunteer": "$volunteer"
+    //   }
+    // },
+    {
       $group: {
         _id: "$service",
         service: { 

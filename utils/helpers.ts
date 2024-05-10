@@ -1,3 +1,4 @@
+import { Node } from "./classes";
 import { category } from "./constants";
 
 function getSundays(year: number, month: number) {
@@ -77,4 +78,47 @@ export function getMonth(date: string) {
 
 export function formatDate(date: string) {
   return new Date(date).toLocaleDateString();
+}
+
+export function getLinkedList(arr: string[]): Node | null {
+  let start: Node | null = null;
+
+  const insertEnd = (value: string) => {
+    let newNode: Node;
+
+    if (start == null) {
+      newNode = new Node();
+      newNode.data = value;
+      newNode.next = newNode.prev = newNode;
+      start = newNode;
+      return;
+    }
+
+    const last = start.prev;
+    newNode = new Node();
+    newNode.data = value;
+    newNode.next = start;
+    start.prev = newNode;
+    newNode.prev = last;
+    last!.next = newNode;
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+    const value = arr[i];
+    insertEnd(value);
+  }
+
+  return start;
+}
+
+export function linkedListGoToData(linkedList: Node, value: string) {
+  if (!category.ROLES.includes(value)) {
+    throw new Error(`Role '${value}' not found.`);
+  }
+
+  while (linkedList.data !== value) {
+    linkedList = linkedList.next as Node;
+  }
+
+  return linkedList;
 }

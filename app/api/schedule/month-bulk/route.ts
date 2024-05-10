@@ -10,7 +10,6 @@ interface RequestData {
 
 export async function POST(request: any) {
   const requestData: RequestData = await request.json();
-  console.log(request)
   const sns = createSnsMonthPayload(requestData.year, requestData.month-1);
   const sundayService = createSundayMonthPayload(requestData.year, requestData.month-1);
   await connectMongoDB();

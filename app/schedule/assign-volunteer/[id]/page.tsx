@@ -1,5 +1,5 @@
 import AssignVolunteer from "@/components/AssignVolunteer";
 
-export default async function Page() {
-  return <AssignVolunteer />
+export default function Page({ params }: { params: { id: string }}) {
+  return <AssignVolunteer scheduleId={params.id} />
 }

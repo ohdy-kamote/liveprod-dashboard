@@ -28,8 +28,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 48px;
-  font-weight: 500;
+  flex-direction: column;
+  /* overflow: scroll; */
+  /* font-size: 12px;
+  font-weight: 100; */
 }
 
 .close-button {
@@ -56,4 +58,19 @@
 .close-button:after {
   content: 'x';
   color: black;
+}
+
+.modal-title {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  height: 48px;
+  background-color: transparent;
+  border: none;
+  border-radius: 15px; /* Circular shape */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 24px; /* Adjust font size as needed */
 }
