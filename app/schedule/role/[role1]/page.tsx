@@ -11,9 +11,9 @@ export default async function FirstRoleDisplay({ params }: {params: { role1: str
 
   return (
     <div className="flex items-center justify-evenly">
-      <Link href={`/schedule/${roledetails?.prev?.data}`}>{"<< Prev"}</Link>
+      <Link href={`/schedule/role/${roledetails?.prev?.data}`}>{"<< Prev"}</Link>
       <SchedulesByRole role={decodeURI(params.role1)} />
-      <Link href={`/schedule/${roledetails?.next?.data}`}>{"Next >>"}</Link>
+      <Link href={`/schedule/role/${roledetails?.next?.data}`}>{"Next >>"}</Link>
     </div>
   );
 }
