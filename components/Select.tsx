@@ -21,7 +21,7 @@ export default function Select({ volunteers, scheduleId }: {volunteers: { _id: s
 
     setTimeout(() => {
       router.back();
-    }, 100);
+    }, 200);
     router.refresh();
   }
 
@@ -30,7 +30,7 @@ export default function Select({ volunteers, scheduleId }: {volunteers: { _id: s
       <input className="border border-slate-500" onChange={(event) => setQuery(event.target.value)} />
       <div className="max-h-52 overflow-scroll">
         {filteredPeople.map((volunteer) => (
-          <p key={volunteer._id} className="cursor-pointer" onClick={() => setScheduleToVolunteer(volunteer._id)}>{volunteer.name}</p>
+          <div key={volunteer._id} className="cursor-pointer hover:bg-slate-200" onClick={() => setScheduleToVolunteer(volunteer._id)}>{volunteer.name}</div>
         ))}
       </div>
     </div>

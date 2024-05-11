@@ -1,8 +1,8 @@
 import { category, common } from "@/utils/constants";
 import { formatDate, getMonth } from "@/utils/helpers";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
+import VolunteerCell from "./VolunteerCell";
 
 const getSchedulesByRole = async (role: string) => {
   try {
@@ -44,7 +44,7 @@ export default async function SchedulesByRole({role}: {role: string}) {
             <th className="border-y border-slate-500"></th>
             { service?.[category.SATURDAY_SERVICE]?.length &&
               <Fragment>
-                <th className="border border-slate-500 text-rose-700">SNS</th>
+                <th className="border border-slate-500">SNS</th>
                 <th className="border border-slate-500"></th>
               </Fragment>
             }
@@ -67,17 +67,17 @@ export default async function SchedulesByRole({role}: {role: string}) {
             }
             return (
               <tr key={firstService.date}>
-                <td className="border border-slate-500 bg-slate-100">{displayMonth}</td>
+                <td className="border border-slate-500 bg-slate-100 w-24">{displayMonth}</td>
                 { sns?.length &&
                   <Fragment>
-                    <td className="border border-slate-500 bg-slate-100">{formatDate(sns[i].date)}</td>
-                    <td className="border border-slate-500 bg-slate-100 text-rose-700"><Link href={`/schedule/assign-volunteer/${sns?.[i]?.id}`} >{sns?.[i]?.volunteer?.[0]?.name || "Vermont Paguiligan"}</Link></td>
+                    <td className="border border-slate-500 bg-slate-100 w-24">{formatDate(sns[i].date)}</td>
+                    <VolunteerCell service={sns?.[i]} />
                   </Fragment>
                 }
-                <td className="border border-slate-500 bg-slate-100">{formatDate(firstService.date)}</td>
-                <td className="border border-slate-500 bg-slate-100">{firstService?.volunteer?.[0]?.name || ""}</td>
-                <td className="border border-slate-500 bg-slate-100">{secondService?.volunteer?.[0]?.name || "Chrissie Tan"}</td>
-                <td className="border border-slate-500 bg-slate-100">{thirdService?.volunteer?.[0]?.name || "John Chiu"}</td>
+                <td className="border border-slate-500 bg-slate-100 w-24">{formatDate(firstService.date)}</td>
+                <VolunteerCell service={firstService} />
+                <VolunteerCell service={secondService} />
+                <VolunteerCell service={thirdService} />
               </tr>
             )})
           }
