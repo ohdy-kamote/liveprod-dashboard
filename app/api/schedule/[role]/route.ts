@@ -34,7 +34,7 @@ export async function GET(request: any, { params }: any) {
         service: { 
           $push: { 
             date: "$date", 
-            volunteer: "$volunteer", 
+            volunteer: "$volunteer",
             id: "$_id"
           } 
         }

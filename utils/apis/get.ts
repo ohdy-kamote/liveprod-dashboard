@@ -1,0 +1,49 @@
+export const getFilteredSchedule = async () => {
+  const from = "05-11-2024";
+  const to = "05-12-2024";
+  try {
+    const res = await fetch(`http://localhost:3000/api/schedule/filter-by-date/${from}/${to}`, {
+      cache: "no-store"
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to get filtered schedule");
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.log("Error loading filtered schedule", error);
+  }
+}
+
+export const getAllVolunteers = async () => {
+  try {
+    const res = await fetch("http://localhost:3000/api/volunteers", {
+      cache: "no-store"
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to get volunteers");
+    }
+    
+    return await res.json();
+  } catch (error) {
+    console.log("Error loading volunteers", error);
+  }
+}
+
+export const getSchedulesByRole = async (role: string) => {
+  try {
+    const res = await fetch(`http://localhost:3000/api/schedule/${role}`, {
+      cache: "no-store"
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch schedules");
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.log("Error loading schedules:", error);
+  }
+}

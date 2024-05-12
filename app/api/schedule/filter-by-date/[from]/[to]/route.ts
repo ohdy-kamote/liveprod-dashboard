@@ -34,7 +34,7 @@ export async function GET(request: any, { params }: { params: { from: Date, to: 
           $push: {
             role: "$role",
             date: "$date", 
-            volunteer: "$volunteer.name", 
+            volunteer: "$volunteer",
             id: "$_id"
           }
         }

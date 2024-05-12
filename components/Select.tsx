@@ -1,5 +1,6 @@
 "use client";
 
+import { putScheduleAssign } from '@/utils/apis/put';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react'
 
@@ -15,9 +16,7 @@ export default function Select({ volunteers, scheduleId }: {volunteers: { _id: s
         });
 
   const setScheduleToVolunteer = async (volunteerId: string) => {
-    await fetch(`http://localhost:3000/api/schedule/assign/${scheduleId}/${volunteerId}`, {
-      method: "PUT"
-    });
+    await putScheduleAssign(scheduleId, volunteerId);
 
     setTimeout(() => {
       router.back();
