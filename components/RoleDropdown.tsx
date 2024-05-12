@@ -8,10 +8,7 @@ export default function RoleDropdown({role} : {role: string}) {
   const router = useRouter();
   const params = useParams<{role1: string, role2: string}>();
 
-  // const currentUrl = window.location.href;
-
   const handleChange = (e: any) => {
-    console.log(process.env.MONGODB_URI)
     const newRole = encodeURI(e.target.value);
     if (encodeURI(role) === params.role1 && !params?.role2) {
       router.push(`/schedule/role/${newRole}`);

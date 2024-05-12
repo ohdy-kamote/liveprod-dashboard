@@ -23,11 +23,6 @@ export async function GET(request: any, { params }: any) {
         as: "volunteer"
       }
     },
-    // {
-    //   $set: {
-    //     "schedules.volunteer": "$volunteer"
-    //   }
-    // },
     {
       $group: {
         _id: "$service",

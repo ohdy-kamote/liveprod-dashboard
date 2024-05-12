@@ -41,7 +41,5 @@ export async function GET(request: any, { params }: { params: { from: Date, to: 
       }
     }
   ])
-  // const schedules = await Schedule.find({ date: { $gte: new Date(`${params.from} 00:00`), $lte: new Date(`${params.to} 23:59`)}});
   return NextResponse.json({data: schedules}, {status: 200});
-  // return NextResponse.json({data: {from: new Date(`${params.from} 23:00`), to: params.to}}, {status: 200});
 }
