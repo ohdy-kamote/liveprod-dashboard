@@ -47,3 +47,19 @@ export const getSchedulesByRole = async (role: string) => {
     console.log("Error loading schedules:", error);
   }
 }
+
+export const getVolunteerById = async (id: string) => {
+  try {
+    const res = await fetch(`${process.env.SOURCE_URL}/api/volunteers/${id}`, {
+      cache: "no-store"
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to get volunteer");
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.log("Error loading volunteer", error);
+  }
+}
