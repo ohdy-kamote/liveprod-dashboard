@@ -1,8 +1,10 @@
+import { SOURCE_URL } from "./source";
+
 export const getFilteredSchedule = async () => {
   const from = "05-11-2024";
   const to = "05-12-2024";
   try {
-    const res = await fetch(`${process.env.SOURCE_URL}/api/schedule/filter-by-date/${from}/${to}`, {
+    const res = await fetch(`${SOURCE_URL}/api/schedule/filter-by-date/${from}/${to}`, {
       cache: "no-store"
     });
 
@@ -18,7 +20,7 @@ export const getFilteredSchedule = async () => {
 
 export const getAllVolunteers = async () => {
   try {
-    const res = await fetch(`${process.env.SOURCE_URL}/api/volunteers`, {
+    const res = await fetch(`${SOURCE_URL}/api/volunteers`, {
       cache: "no-store"
     });
 
@@ -34,7 +36,7 @@ export const getAllVolunteers = async () => {
 
 export const getSchedulesByRole = async (role: string) => {
   try {
-    const res = await fetch(`${process.env.SOURCE_URL}/api/schedule/${role}`, {
+    const res = await fetch(`${SOURCE_URL}/api/schedule/${role}`, {
       cache: "no-store"
     });
 
@@ -50,7 +52,7 @@ export const getSchedulesByRole = async (role: string) => {
 
 export const getVolunteerById = async (id: string) => {
   try {
-    const res = await fetch(`${process.env.SOURCE_URL}/api/volunteers/${id}`, {
+    const res = await fetch(`${SOURCE_URL}/api/volunteers/${id}`, {
       cache: "no-store"
     });
 

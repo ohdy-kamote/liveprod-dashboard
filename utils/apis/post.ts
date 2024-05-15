@@ -1,5 +1,7 @@
+import { SOURCE_URL } from "./source";
+
 export const postAddVolunteer = async (name: string, tier: string, segment: string) => {
-  await fetch(`${process.env.SOURCE_URL}/api/volunteers`, {
+  await fetch(`${SOURCE_URL}/api/volunteers`, {
     method: "POST",
     headers: {
       "Content-type": "application/json"
@@ -9,7 +11,7 @@ export const postAddVolunteer = async (name: string, tier: string, segment: stri
 }
 
 export const postCreateMonthSchedule = async (year: number, month: number) => {
-  await fetch(`${process.env.SOURCE_URL}/api/schedule/month-bulk`, {
+  await fetch(`${SOURCE_URL}/api/schedule/month-bulk`, {
     method: "POST",
     headers: {
       "Content-type": "application/json"

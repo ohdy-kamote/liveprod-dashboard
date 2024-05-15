@@ -1,5 +1,7 @@
+import { SOURCE_URL } from "./source";
+
 export const putScheduleAssign = async (scheduleId: string, volunteerId: string) => {
-  await fetch(`${process.env.SOURCE_URL}/api/schedule/assign/${scheduleId}/${volunteerId}`, {
+  await fetch(`${SOURCE_URL}/api/schedule/assign/${scheduleId}/${volunteerId}`, {
     method: "PUT"
   });
 }
@@ -13,7 +15,7 @@ interface VolunteerData {
 
 export const updateVolunteer = async (id: string, body: VolunteerData) => {
   try {
-    const res = await fetch(`${process.env.SOURCE_URL}/api/volunteers/${id}`, {
+    const res = await fetch(`${SOURCE_URL}/api/volunteers/${id}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json"
