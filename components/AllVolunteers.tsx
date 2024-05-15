@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Fragment, useState } from "react";
 import DataTable from "react-data-table-component";
 import { HiPencilAlt } from "react-icons/hi";
 
@@ -61,14 +62,31 @@ const conditionalRowStyles = [
 
 export default function AllVolunteers({data}: {data: Data[]}) {
   const router = useRouter();
+  const [query, setQuery] = useState('');
 
-	return (
-		<DataTable
-			columns={columns}
-			data={data}
-      conditionalRowStyles={conditionalRowStyles}
-      pagination
-      onRowClicked={(row: Data) => router.push(`/volunteer/profile/${row._id}`)}
-		/>
-	);
+  const filteredVolunteers =
+    query === ''
+      ? data
+      : data.filter((volunteer) => {
+          return volunteer.name.toLowerCase().includes(query.toLowerCase());
+        });
+
+  return (
+    <Fragment>
+      <div className="flex justify-end">
+        <input
+          className="border border-slate-300 rounded-md p-1 focus:outline-none w-1/4"
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Search volunteer..."
+        />
+      </div>
+      <DataTable
+        columns={columns}
+        data={filteredVolunteers}
+        conditionalRowStyles={conditionalRowStyles}
+        pagination
+        onRowClicked={(row: Data) => router.push(`/volunteer/profile/${row._id}`)}
+      />
+    </Fragment>
+  );
 };
