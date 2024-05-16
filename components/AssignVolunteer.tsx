@@ -25,6 +25,6 @@ export default async function AssignVolunteer({ scheduleId }: { scheduleId: stri
   });
 
   return (
-    <Select volunteers={volunteers} scheduleId={scheduleId} />
+    <Select volunteers={volunteers} schedule={scheduleRes.data} />
   )
 }

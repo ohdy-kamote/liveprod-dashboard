@@ -6,6 +6,12 @@ export const putScheduleAssign = async (scheduleId: string, volunteerId: string)
   });
 }
 
+export const putScheduleRemoveAssignee = async (scheduleId: string) => {
+  await fetch(`${SOURCE_URL}/api/schedule/assign/${scheduleId}`, {
+    method: "PUT"
+  });
+}
+
 interface VolunteerData {
   name?: string
   segment?: string
