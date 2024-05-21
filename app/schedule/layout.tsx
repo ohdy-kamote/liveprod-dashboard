@@ -6,7 +6,6 @@ export default function RootLayout(props: Readonly<{
 }>) {
   return (
     <Fragment>
-      {/* {"[OPTIONS HERE]"} */}
       {props.modal}
       {props.children}
     </Fragment>

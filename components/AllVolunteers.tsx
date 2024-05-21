@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Fragment, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import DataTable from "react-data-table-component";
-import { HiPencilAlt } from "react-icons/hi";
+import { PiLegoSmiley, PiLegoSmileyDuotone, PiLegoSmileyThin } from "react-icons/pi";
 
 interface Data {
   _id: string
@@ -63,13 +63,23 @@ const conditionalRowStyles = [
 export default function AllVolunteers({data}: {data: Data[]}) {
   const router = useRouter();
   const [query, setQuery] = useState('');
+  const isAdmin = false;
 
-  const filteredVolunteers =
-    query === ''
-      ? data
-      : data.filter((volunteer) => {
-          return volunteer.name.toLowerCase().includes(query.toLowerCase());
-        });
+  const filteredVolunteers = useMemo(() => {
+    const filteredValues = data.filter((volunteer) => {
+      return volunteer.name.toLowerCase().includes(query.toLowerCase());
+    });
+
+    if (isAdmin && query === '') return data;
+    if (isAdmin) return filteredValues;
+    if (filteredValues.length === 1) return filteredValues;
+    return [];
+  }, [query])
+
+  const noDataMessage = () => {
+    if (isAdmin) return "There are no records to display";
+    return "You're on guest mode. Please search for a volunteer to view their profile";
+  }
 
   return (
     <Fragment>
@@ -84,8 +94,17 @@ export default function AllVolunteers({data}: {data: Data[]}) {
         columns={columns}
         data={filteredVolunteers}
         conditionalRowStyles={conditionalRowStyles}
-        pagination
+        pagination={isAdmin}
         onRowClicked={(row: Data) => router.push(`/volunteer/profile/${row._id}`)}
+        noDataComponent={
+          <div className="flex h-96 flex-col justify-center">
+            <div className="flex gap-1">
+              <PiLegoSmileyDuotone size={27} />
+              <div className="flex flex-col justify-center">{noDataMessage()}</div>
+              <PiLegoSmiley size={27} />
+            </div>
+          </div>
+        }
       />
     </Fragment>
   );

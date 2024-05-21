@@ -1,15 +1,14 @@
 import AssignVolunteer from "@/components/AssignVolunteer";
 import { AssignVolunteerModal as Modal } from "./modal";
-import { NextPageContext } from "next";
-
-// AssignVolunteer.getInitialProps = async (ctx: NextPageContext) => {
-//   return {test: "test"};
-// }
+import { Suspense } from "react";
+import LoadingComponent from "@/components/Loading";
 
 export default function Page({ params }: { params: { id: string }}) {
   return (
     <Modal>
-      <AssignVolunteer scheduleId={params.id} />
+      <Suspense fallback={<LoadingComponent />}>
+        <AssignVolunteer scheduleId={params.id} />
+      </Suspense>
     </Modal>
   );
 }

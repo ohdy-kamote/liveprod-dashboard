@@ -3,6 +3,7 @@
 import { putScheduleAssign, putScheduleRemoveAssignee } from '@/utils/apis/put';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react'
+import LoadingComponent from './Loading';
 
 interface Volunteer {
   _id: string
@@ -19,6 +20,7 @@ interface Schedule {
 
 export default function Select({ volunteers, schedule }: {volunteers: Volunteer[], schedule: Schedule}) {
   const [query, setQuery] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const filteredPeople =
@@ -33,16 +35,19 @@ export default function Select({ volunteers, schedule }: {volunteers: Volunteer[
   }
 
   const setScheduleToVolunteer = async (volunteerId: string) => {
+    setIsLoading(true);
     await putScheduleAssign(schedule._id, volunteerId);
     closeModal();
   }
 
   const removeAssignee = async () => {
+    setIsLoading(true);
     await putScheduleRemoveAssignee(schedule._id);
     closeModal();
   }
 
   const overrideSchedule = async (volunteerId: string, prevSchedId: string) => {
+    setIsLoading(true);
     await putScheduleAssign(schedule._id, volunteerId);
     await putScheduleRemoveAssignee(prevSchedId);
     closeModal();
@@ -59,6 +64,7 @@ export default function Select({ volunteers, schedule }: {volunteers: Volunteer[
     }
   }
 
+  if (isLoading) return <LoadingComponent />
   return (
     <div className="flex justify-between align-start gap-5">
       <div>
