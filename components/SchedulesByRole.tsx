@@ -20,7 +20,7 @@ export default async function SchedulesByRole({role}: {role: string}) {
 
   return (
     <Fragment>
-      <table className="table-auto border w-full bg-slate-300">
+      <table className="table-auto border w-full bg-slate-300 text-sm">
         <thead>
           <tr className="bg-slate-900 border border-slate-500">
             <RoleDropdown role={role} />
