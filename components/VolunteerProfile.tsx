@@ -6,7 +6,7 @@ import { Calendar, View, Views, momentLocalizer } from "react-big-calendar";
 
 const localizer = momentLocalizer(moment);
 
-export default function VolunteerProfile({ events }: { events: any}) {
+export default function VolunteerProfile({ events, length }: { events: any, length: number }) {
   const [view, setView] = useState<View>(Views.AGENDA);
   const [date, setDate] = useState(new Date());
 
@@ -15,15 +15,26 @@ export default function VolunteerProfile({ events }: { events: any}) {
       <Calendar
         localizer={localizer}
         events={events}
-        startAccessor="start"
-        endAccessor="end"
+        // startAccessor="start"
+        // endAccessor="end"
         views={[Views.AGENDA, Views.MONTH, Views.WEEK]}
         defaultView={view}
         view={view}
-        onView={(view) => setView(view)}
+        onView={(_view) => {
+          if (_view === Views.AGENDA) {
+            setDate(new Date())
+          }
+          setView(_view)
+        }}
         date={date}
-        onNavigate={(date) => setDate(new Date(date))}
+        onNavigate={(date) => {
+          if (view !== Views.AGENDA) {
+            console.log(date)
+            setDate(new Date(date))
+          }
+        }}
         step={60}
+        length={length}
         style={{ height: 700 }}
       />
     </div>

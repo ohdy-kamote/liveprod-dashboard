@@ -25,10 +25,10 @@ export default async function ScheduleBySegment() {
           <tr>
             <th className="border-l border-slate-500 bg-slate-100"></th>
             <th className="bg-slate-100"></th>
-            <th className="border-l border-slate-500">May 11</th>
-            <th className="border-l border-slate-500 bg-green-400">May 12</th>
-            <th className="border-l border-slate-500 bg-green-400">May 12</th>
-            <th className="border-l border-slate-500 bg-green-400">May 12</th>
+            <th className="border-l border-slate-500">May 18</th>
+            <th className="border-l border-slate-500 bg-green-400">May 19</th>
+            <th className="border-l border-slate-500 bg-green-400">May 19</th>
+            <th className="border-l border-slate-500 bg-green-400">May 19</th>
           </tr>
           <tr>
             <th className="border-l border-slate-500 bg-slate-100"></th>

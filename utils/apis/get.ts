@@ -1,8 +1,8 @@
 import { SOURCE_URL } from "./source";
 
 export const getFilteredSchedule = async () => {
-  const from = "05-11-2024";
-  const to = "05-12-2024";
+  const from = "05-18-2024";
+  const to = "05-19-2024";
   try {
     const res = await fetch(`${SOURCE_URL}/api/schedule/filter-by-date/${from}/${to}`, {
       cache: "no-store"
