@@ -77,7 +77,7 @@ export function getMonth(date: string) {
 }
 
 export function formatDate(date: string) {
-  return new Date(date).toLocaleDateString();
+  return new Date(date).toLocaleDateString("en-US", {month: "short", day: "2-digit"});
 }
 
 export function getLinkedList(arr: string[]): Node | null {

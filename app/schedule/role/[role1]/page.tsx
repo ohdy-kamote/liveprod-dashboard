@@ -12,11 +12,12 @@ export default async function FirstRoleDisplay({ params }: {params: { role1: str
 
   return (
     <Fragment>
-      <Link className="text-white p-2 bg-slate-500 rounded-md" href="/schedule/role/foh/foh%20assistant">Split View</Link>
-      <div className="flex items-center justify-evenly">
-        <Link href={`/schedule/role/${roledetails?.prev?.data}`}>{"<< Prev"}</Link>
+      <div className="flex items-center justify-evenly flex-col">
         <SchedulesByRole role={decodeURI(params.role1)} />
-        <Link href={`/schedule/role/${roledetails?.next?.data}`}>{"Next >>"}</Link>
+        <div className="flex gap-3 w-full justify-end">
+          <Link href={`/schedule/role/${roledetails?.prev?.data}`}>{"<< Prev"}</Link>
+          <Link href={`/schedule/role/${roledetails?.next?.data}`}>{"Next >>"}</Link>
+        </div>
       </div>
     </Fragment>
   );
