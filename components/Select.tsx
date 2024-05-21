@@ -9,6 +9,7 @@ interface Volunteer {
   name: string
   available: boolean
   message: string
+  prevSchedId: string
 }
 
 interface Schedule {
@@ -41,11 +42,20 @@ export default function Select({ volunteers, schedule }: {volunteers: Volunteer[
     closeModal();
   }
 
+  const overrideSchedule = async (volunteerId: string, prevSchedId: string) => {
+    await putScheduleAssign(schedule._id, volunteerId);
+    await putScheduleRemoveAssignee(prevSchedId);
+    closeModal();
+  }
+
   const validateAssigneeSchedule = (volunteer: Volunteer) => {
     if (volunteer.available) {
-      setScheduleToVolunteer(volunteer._id)
+      setScheduleToVolunteer(volunteer._id);
     } else {
-      alert(volunteer.message)
+      const override = confirm(volunteer.message);
+
+      if (!override) return;
+      overrideSchedule(volunteer._id, volunteer.prevSchedId)
     }
   }
 

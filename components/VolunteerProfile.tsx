@@ -29,7 +29,6 @@ export default function VolunteerProfile({ events, length }: { events: any, leng
         date={date}
         onNavigate={(date) => {
           if (view !== Views.AGENDA) {
-            console.log(date)
             setDate(new Date(date))
           }
         }}
