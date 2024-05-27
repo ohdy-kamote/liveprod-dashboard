@@ -1,5 +1,6 @@
 import { Node } from "./classes";
 import { category } from "./constants";
+import { add as dateAdd, subtract as dateSub } from "date-arithmetic";
 
 function getSundays(year: number, month: number) {
   let sundays = [];
@@ -29,6 +30,32 @@ function getSaturdays(year: number, month: number) {
   }
 
   return saturdays;
+}
+
+export function getNextService(increment: number) {
+  const num = Math.abs(increment) * 7;
+  let date = new Date();
+  if (increment > 0) {
+    date = dateAdd(date, num, "day");
+  } else if (increment < 0) {
+    date = dateSub(date, num, "day")
+  }
+
+  while (date.getDay() !== 6 && date.getDay() !== 0) {
+    date = dateAdd(date, 1, "day");
+  }
+
+  if (date.getDay() === 6) {
+    return {
+      saturday: date.toISOString().slice(0, 10),
+      sunday: dateAdd(date, 1, "day").toISOString().slice(0, 10)
+    }
+  }
+
+  return {
+    saturday: dateSub(date, 1, "day").toISOString().slice(0, 10),
+    sunday: date.toISOString().slice(0, 10)
+  }
 }
 
 export function createSnsMonthPayload(year: number, month: number) {
