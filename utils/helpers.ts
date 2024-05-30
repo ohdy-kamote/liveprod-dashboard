@@ -32,7 +32,7 @@ function getSaturdays(year: number, month: number) {
   return saturdays;
 }
 
-export function getNextService(increment: number) {
+export function getNextService(increment: number = 0) {
   const num = Math.abs(increment) * 7;
   let date = new Date();
   if (increment > 0) {
