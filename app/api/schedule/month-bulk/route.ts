@@ -2,19 +2,22 @@ import connectMongoDB from "@/libs/mongodb";
 import Schedule from "@/models/schedule";
 import { createSnsMonthPayload, createSundayMonthPayload } from "@/utils/helpers";
 import { NextResponse } from "next/server";
+import { add as dateAdd, subtract as dateSub } from "date-arithmetic";
 
-interface RequestData {
-  year: number
-  month: number
-}
-
-export async function POST(request: any) {
-  const requestData: RequestData = await request.json();
-  const sns = createSnsMonthPayload(requestData.year, requestData.month-1);
-  const sundayService = createSundayMonthPayload(requestData.year, requestData.month-1);
-  await connectMongoDB();
+export async function POST() {
   try {
+    await connectMongoDB();
+
+    const latestSchedule = await Schedule.findOne().sort({date: -1});
+    const nextSchedule = dateAdd(dateSub(latestSchedule.date, 1, "day"), 1, "month");
+    const nextSchedMonth = nextSchedule.getMonth();
+    const nextSchedYear = nextSchedule.getFullYear();
+
+    const sns = createSnsMonthPayload(nextSchedYear, nextSchedMonth);
+    const sundayService = createSundayMonthPayload(nextSchedYear, nextSchedMonth);
+
     await Schedule.insertMany(sns.concat(sundayService));
+
     return NextResponse.json({message: "Month schedule added"}, {status: 201});
   } catch (error: any) {
     return NextResponse.json({message: error.message}, {status: 500});

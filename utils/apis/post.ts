@@ -10,12 +10,8 @@ export const postAddVolunteer = async (name: string, tier: string, segment: stri
   });
 }
 
-export const postCreateMonthSchedule = async (year: number, month: number) => {
+export const postCreateMonthSchedule = async () => {
   await fetch(`${SOURCE_URL}/api/schedule/month-bulk`, {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json"
-    },
-    body: JSON.stringify({ year, month })
+    method: "POST"
   });
 }

@@ -2,34 +2,21 @@ import { Node } from "./classes";
 import { category } from "./constants";
 import { add as dateAdd, subtract as dateSub } from "date-arithmetic";
 
-function getSundays(year: number, month: number) {
-  let sundays = [];
-  let date = new Date(year, month, 1);
-
-  while (date.getMonth() === month) {
-    // Sunday is represented by 0 in JavaScript
-    if (date.getDay() === 0) {
-        sundays.push(new Date(date).toLocaleDateString());
-    }
-    date.setDate(date.getDate() + 1);
-  }
-
-  return sundays;
-}
-
-function getSaturdays(year: number, month: number) {
-  let saturdays = [];
-  let date = new Date(year, month, 1);
+export function getSaturdaysAndSundays(year: number, month: number) {
+  const saturdays = [];
+  const sundays = [];
+  const date = new Date(year, month, 1);
 
   while (date.getMonth() === month) {
     // Saturday is represented by 6 in JavaScript
     if (date.getDay() === 6) {
-        saturdays.push(new Date(date).toLocaleDateString());
+      saturdays.push(new Date(date).toLocaleDateString());
+      sundays.push(dateAdd(date, 1, "day").toLocaleDateString());
     }
     date.setDate(date.getDate() + 1);
   }
 
-  return saturdays;
+  return { saturdays, sundays };
 }
 
 export function getNextService(increment: number = 0) {
@@ -60,7 +47,7 @@ export function getNextService(increment: number = 0) {
 
 export function createSnsMonthPayload(year: number, month: number) {
   const payload = [];
-  const saturdays = getSaturdays(year, month);
+  const saturdays = getSaturdaysAndSundays(year, month).saturdays;
   for (let i = 0; i < saturdays.length; i++) {
     const date = saturdays[i];
     for (let j = 0; j < category.SNS_ROLES.length; j++) {
@@ -79,7 +66,7 @@ export function createSnsMonthPayload(year: number, month: number) {
 
 export function createSundayMonthPayload(year: number, month: number) {
   const payload = [];
-  const sundays = getSundays(year, month);
+  const sundays = getSaturdaysAndSundays(year, month).sundays;
   for (let i = 0; i < sundays.length; i++) {
     const date = sundays[i];
     for (let j = 0; j < category.ROLES.length; j++) {

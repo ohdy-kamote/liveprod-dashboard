@@ -26,12 +26,11 @@ export default async function SchedulesByRole({role}: {role: string}) {
             <RoleDropdown role={role} />
           </tr>
           <tr>
-            {/* <th className="border-y border-slate-500"></th> */}
-            <th className="border-l border-slate-500"></th>
+            <th className="border border-slate-500 w-20"></th>
             { service?.[category.SATURDAY_SERVICE]?.length &&
               <Fragment>
                 <th className="border border-slate-500 uppercase">{category.SATURDAY_SERVICE}</th>
-                <th className="border border-slate-500"></th>
+                <th className="border border-slate-500 w-20"></th>
               </Fragment>
             }
             <th className="border border-slate-500 uppercase">{common.FIRST_SERVICE}</th>
@@ -40,20 +39,13 @@ export default async function SchedulesByRole({role}: {role: string}) {
           </tr>
         </thead>
         <tbody>
-          { service[common.FIRST_SERVICE].map((firstService: any, i: number) => {
+          { service[common.FIRST_SERVICE].slice(0, 18).map((firstService: any, i: number) => {
             const sns = service?.[category.SATURDAY_SERVICE];
             const secondService = service[common.SECOND_SERVICE][i];
             const thirdService = service[common.THIRD_SERVICE][i];
 
-            // let displayMonth;
-            // if (i === 0 || getMonth(firstService.date) !== getMonth(service[common.FIRST_SERVICE][i-1]?.date)) {
-            //   displayMonth = getMonth(firstService.date);
-            // } else {
-            //   displayMonth = ""
-            // }
             return (
               <tr key={firstService.date}>
-                {/* <td className="border border-slate-500 bg-slate-100 w-24">{displayMonth}</td> */}
                 { sns?.length &&
                   <Fragment>
                     <td className="border border-slate-500 bg-slate-100 w-20">{formatDate(sns[i].date)}</td>

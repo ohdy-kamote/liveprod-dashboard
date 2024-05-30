@@ -107,5 +107,5 @@ export default function AllVolunteers({data}: {data: Data[]}) {
         }
       />
     </Fragment>
-  );
-};
+  )
+}

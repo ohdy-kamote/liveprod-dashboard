@@ -3,6 +3,7 @@ import { category } from "@/utils/constants";
 import { getLinkedList, linkedListGoToData } from "@/utils/helpers";
 import Link from "next/link";
 import { Fragment } from "react";
+import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 
 export default async function FirstRoleDisplay({ params }: {params: { role1: string }}) {
   let roledetails = getLinkedList(category.ROLES);
@@ -12,11 +13,11 @@ export default async function FirstRoleDisplay({ params }: {params: { role1: str
 
   return (
     <Fragment>
-      <div className="flex items-center justify-evenly flex-col gap-3">
+      <div className="relative">
         <SchedulesByRole role={decodeURI(params.role1)} />
-        <div className="flex gap-3 w-full justify-end">
-          <Link href={`/schedule/role/${roledetails?.prev?.data}`}>{"<< Prev"}</Link>
-          <Link href={`/schedule/role/${roledetails?.next?.data}`}>{"Next >>"}</Link>
+        <div className="flex gap-4 w-full justify-end absolute -bottom-9 pr-3">
+          <Link href={`/schedule/role/${roledetails?.prev?.data}`}><BsArrowLeftCircle size={27} /></Link>
+          <Link href={`/schedule/role/${roledetails?.next?.data}`}><BsArrowRightCircle size={27} /></Link>
         </div>
       </div>
     </Fragment>

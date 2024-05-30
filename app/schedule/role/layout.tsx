@@ -1,5 +1,6 @@
 "use client";
 
+import CpAddRow from "@/components/AddRow";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Fragment } from "react";
@@ -32,6 +33,7 @@ export default function RootLayout(props: Readonly<{
         <Link className={`text-white p-2 rounded-se-md ${getBackground(3)}`} href="/schedule/role/foh/foh%20assistant/broadcast%20mix">Triple View</Link>
       </div>
       {props.children}
+      <CpAddRow />
     </Fragment>
   );
 }
