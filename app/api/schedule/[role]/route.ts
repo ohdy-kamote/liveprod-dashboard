@@ -10,6 +10,9 @@ export async function GET(request: any, { params }: any) {
   await connectMongoDB();
   const schedules = await Schedule.aggregate([
     {
+      $sort: { date: 1 }
+    },
+    {
       $match: {
         role,
         service: {
@@ -17,7 +20,7 @@ export async function GET(request: any, { params }: any) {
         },
         date: {
           $gte: new Date(`${nextService.saturday} 00:00`)
-        }
+        },
       }
     },
     {
@@ -39,9 +42,6 @@ export async function GET(request: any, { params }: any) {
           } 
         }
       }
-    },
-    {
-      $sort: { date: 1 }
     }
   ]
   );

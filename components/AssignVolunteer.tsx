@@ -11,7 +11,8 @@ export default async function AssignVolunteer({ scheduleId }: { scheduleId: stri
       name: volunteer.name,
       available: true,
       message: "",
-      prevSchedId: ""
+      prevSchedId: "",
+      role: ""
     };
 
     for (let i = 0; i < volunteer?.schedules?.length || 0; i++) {
@@ -20,6 +21,7 @@ export default async function AssignVolunteer({ scheduleId }: { scheduleId: stri
         res.available = false;
         res.message = `${volunteer.name} is already assigned to this service as ${volunteerSchedule.role}. Override schedule?`;
         res.prevSchedId = volunteerSchedule._id;
+        res.role = volunteerSchedule.role;
         break;
       }
     }

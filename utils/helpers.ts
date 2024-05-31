@@ -1,3 +1,4 @@
+import moment from "moment";
 import { Node } from "./classes";
 import { category } from "./constants";
 import { add as dateAdd, subtract as dateSub } from "date-arithmetic";
@@ -34,14 +35,14 @@ export function getNextService(increment: number = 0) {
 
   if (date.getDay() === 6) {
     return {
-      saturday: date.toISOString().slice(0, 10),
-      sunday: dateAdd(date, 1, "day").toISOString().slice(0, 10)
+      saturday: moment(date).format("YYYY-MM-DD"),
+      sunday: moment(dateAdd(date, 1, "day")).format("YYYY-MM-DD")
     }
   }
 
   return {
-    saturday: dateSub(date, 1, "day").toISOString().slice(0, 10),
-    sunday: date.toISOString().slice(0, 10)
+    saturday: moment(dateSub(date, 1, "day")).format("YYYY-MM-DD"),
+    sunday: moment(date).format("YYYY-MM-DD")
   }
 }
 
