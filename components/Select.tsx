@@ -9,6 +9,7 @@ import { IoPersonRemove, IoPersonCircleOutline } from "react-icons/io5";
 import { PiLegoSmiley, PiLegoSmileyDuotone } from 'react-icons/pi';
 import { formatDate } from '@/utils/helpers';
 import { Tooltip } from 'react-tooltip';
+import CpInput from './Input';
 
 interface Volunteer {
   _id: string
@@ -92,10 +93,7 @@ export default function Select({ volunteers, schedule }: {volunteers: Volunteer[
           <div>{schedule.role}</div>
         </div>
         <div className="flex justify-between gap-2">
-          <label htmlFor="search" className="relative text-gray-400 focus-within:text-gray-600 block w-full">
-            <CiSearch size={24} className="pointer-events-none absolute top-1/2 transform -translate-y-1/2 left-3" />
-            <input placeholder="Search volunteer name..." type="search" className="border border-slate-400 bg-slate-50 rounded-xl pl-10 pr-2 focus:outline-none w-full h-10" onChange={(event) => setQuery(event.target.value)} />
-          </label>
+          <CpInput onChange={(event) => setQuery(event.target.value)} />
           { schedule?.volunteer &&
             <button
               id="remove-assignee"

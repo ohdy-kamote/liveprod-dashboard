@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Fragment, useMemo, useState } from "react";
 import DataTable from "react-data-table-component";
 import { PiLegoSmiley, PiLegoSmileyDuotone, PiLegoSmileyThin } from "react-icons/pi";
+import CpInput from "./Input";
 
 interface Data {
   _id: string
@@ -83,12 +84,11 @@ export default function AllVolunteers({data}: {data: Data[]}) {
 
   return (
     <Fragment>
-      <div className="flex justify-end">
-        <input
-          className="border border-slate-300 rounded-md p-1 focus:outline-none w-1/4"
-          onChange={(event) => setQuery(event.target.value)}
-          placeholder="Search volunteer..."
-        />
+      <div className="flex justify-between">
+        <h2 className="text-lg uppercase text-slate-700">Volunteers List</h2>
+        <div className="w-1/3">
+          <CpInput onChange={(event) => setQuery(event.target.value)} />
+        </div>
       </div>
       <DataTable
         columns={columns}
@@ -98,7 +98,7 @@ export default function AllVolunteers({data}: {data: Data[]}) {
         onRowClicked={(row: Data) => router.push(`/volunteer/profile/${row._id}`)}
         noDataComponent={
           <div className="flex h-96 flex-col justify-center">
-            <div className="flex gap-1">
+            <div className="flex gap-1 text-slate-700">
               <PiLegoSmileyDuotone size={27} />
               <div className="flex flex-col justify-center">{noDataMessage()}</div>
               <PiLegoSmiley size={27} />
