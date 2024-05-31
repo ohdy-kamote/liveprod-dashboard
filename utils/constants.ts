@@ -59,6 +59,13 @@ export const category = {
     "graphics",
     "stage",
     "volunteer management"
+  ],
+  STATUS: [
+    "observer",
+    "trainee",
+    "active",
+    "inactive",
+    "on leave"
   ]
 };
 
