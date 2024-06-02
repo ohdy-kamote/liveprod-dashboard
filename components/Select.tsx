@@ -128,7 +128,7 @@ export default function Select({ volunteers, schedule }: {volunteers: Volunteer[
         </div>
         <div className="bg-slate-200 h-px" />
       </div>
-      <Tooltip anchorSelect="#remove-assignee" place="top-start">Remove assignee</Tooltip>
+      <Tooltip variant="error" anchorSelect="#remove-assignee" place="top-start">Remove assignee</Tooltip>
     </Fragment>
   )
 }
