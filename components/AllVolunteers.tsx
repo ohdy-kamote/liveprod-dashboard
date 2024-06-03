@@ -79,7 +79,7 @@ export default function AllVolunteers({data}: {data: Data[]}) {
 
   const noDataMessage = () => {
     if (isAdmin) return "There are no records to display";
-    return "You're on guest mode. Please search for a volunteer to view their profile";
+    return "You're on guest mode. Please search for your name to view your profile";
   }
 
   return (

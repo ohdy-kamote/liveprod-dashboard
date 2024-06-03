@@ -81,3 +81,13 @@ export const serviceTime = {
   [common.SECOND_SERVICE]: "12:00",
   [common.THIRD_SERVICE]: "15:00"
 }
+
+export const color = {
+  STATUS: {
+    [category.STATUS[0]]: "text-blue-800",
+    [category.STATUS[1]]: "text-yellow-800",
+    [category.STATUS[2]]: "text-green-800",
+    [category.STATUS[3]]: "text-red-800",
+    [category.STATUS[4]]: "text-orange-800",
+  }
+}
