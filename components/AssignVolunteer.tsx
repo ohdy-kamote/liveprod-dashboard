@@ -83,7 +83,7 @@ export default function CpAssignVolunteer({ volunteers, schedule }: {volunteers:
   if (isLoading) return <LoadingComponent />
   return (
     <Fragment>
-      <div className="w-full px-3">
+      <div className="w-full px-3 pt-7 pb-10">
         <div className="flex justify-center text-small gap-1 pb-3 uppercase text-slate-600">
           <div>{formatDate(schedule.date)}</div>
           <PiLegoSmiley size={24} />

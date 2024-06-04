@@ -1,10 +1,10 @@
 "use client";
 
 import CpCalendarSchedule from "@/components/CalendarSchedule";
-import CpInputText from "@/components/InputText";
+import CpInputTextWithLabel from "@/components/InputTextWithLabel";
 import CpSelect from "@/components/Select";
 import { putUpdateVolunteer } from "@/utils/apis/put";
-import { category, color, serviceTime } from "@/utils/constants";
+import { category, serviceTime } from "@/utils/constants";
 import { diff } from "@/utils/dates";
 import { redirect, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
@@ -108,16 +108,16 @@ export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer
     }
 
     return (
-      <div className="px-32 text-slate-800">
+      <div className="px-32 text-slate-700">
         <div className="flex justify-between pb-7">
           <h1 className="text-2xl">
             Volunteer Profile
           </h1>
           <div className={`flex gap-2 justify-end ${!hasChanges && "hidden"}`}>
-            <button onClick={resetValues} className="text-slate-700 border border-slate-400 px-3 rounded-sm">
+            <button onClick={resetValues} className="border border-slate-400 px-3 rounded-md">
               Cancel
             </button>
-            <button className="bg-sky-600 text-white pl-2.5 pr-3 rounded-sm">
+            <button className="bg-sky-600 text-white pl-3.5 pr-4 rounded-md">
               <div className="flex gap-1.5 justify-center">
                 <div className="flex flex-col justify-center">
                   <IoSaveSharp size={17} />
@@ -153,8 +153,8 @@ export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer
               <div className="px-3 pt-8 pb-5 text-sm">
                 <div className="flex flex-col gap-6">
                   <div className="flex justify-between gap-5">
-                    <CpInputText onChange={(e) => setFirstName(e.target.value)} label="first name" value={firstName} />
-                    <CpInputText onChange={(e) => setLastName(e.target.value)} label="last name" value={lastName} />
+                    <CpInputTextWithLabel onChange={(e) => setFirstName(e.target.value)} label="first name" value={firstName} />
+                    <CpInputTextWithLabel onChange={(e) => setLastName(e.target.value)} label="last name" value={lastName} />
                   </div>
                   <div className="flex justify-between gap-5">
                     <div className="flex justify-between gap-5 w-full">
@@ -162,8 +162,8 @@ export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer
                       <CpSelect onChange={(e) => setStatus(e.target.value)} label="status" value={status} options={category.STATUS} />
                     </div>
                     <div className="flex justify-between gap-5 w-full">
-                      <CpInputText onChange={(e) => setNickName(e.target.value)} label="nickname" value={nickName} />
-                      <CpInputText label="id" value={volunteer._id} disabled />
+                      <CpInputTextWithLabel onChange={(e) => setNickName(e.target.value)} label="nickname" value={nickName} />
+                      <CpInputTextWithLabel label="id" value={volunteer._id} disabled />
                     </div>
                   </div>
                 </div>

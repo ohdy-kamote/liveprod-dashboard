@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
 import { AiOutlineClose } from "react-icons/ai";
 
-export function Modal({ children, title }: { children: React.ReactNode, title: string }) {
+export function Modal({ children, title, maxHeight }: { children: React.ReactNode, title: string, maxHeight: string }) {
   const router = useRouter();
   const dialogRef = useRef<ElementRef<'dialog'>>(null);
 
@@ -21,7 +21,7 @@ export function Modal({ children, title }: { children: React.ReactNode, title: s
 
   return createPortal(
     <div className="absolute bg-[rgba(0,0,0,0.7)] flex justify-center items-center z-[1000] inset-0">
-      <dialog ref={dialogRef} className="w-4/5 max-w-[450px] h-auto max-h-[550px] relative flex justify-between flex-col rounded-xl focus:outline-none" onClose={onDismiss}>
+      <dialog ref={dialogRef} className={`w-4/5 max-w-[450px] h-auto max-h-[${maxHeight}] relative flex justify-between flex-col rounded-xl focus:outline-none" onClose={onDismiss}`}>
         <div className="flex justify-between">
           <p className="h-12 bg-transparent flex items-center justify-center font-medium text-xl text-slate-700 pl-4">
             {title}

@@ -11,7 +11,7 @@ interface InputText {
 export default function CpInputText({ label, value, disabled, required, onChange }: InputText) {
   return (
     <div className="flex flex-col gap-0.5 w-full">
-      {/* <label htmlFor="input" className="text-slate-500 pl-3 capitalize">{`${label}:`}</label> */}
+      <label htmlFor="input" className="text-slate-500 pl-3 capitalize">{`${label}:`}</label>
       <input
         type="text"
         name={label}
@@ -20,7 +20,6 @@ export default function CpInputText({ label, value, disabled, required, onChange
         onChange={onChange}
         autoComplete="off"
         required={required}
-        placeholder={`${label}${required ? " (required)" : ""}`}
         onBlur={(e) => {
           if (required && !value.length && e.target.classList.contains("border-b-slate-500")) {
             e.target.classList.add("border-b-red-500")

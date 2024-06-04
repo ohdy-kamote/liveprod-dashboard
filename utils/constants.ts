@@ -53,9 +53,9 @@ export const category = {
     "trainee"
   ],
   SEGMENTS: [
+    "audio",
     "lights",
     "camera",
-    "audio",
     "graphics",
     "stage",
     "volunteer management"

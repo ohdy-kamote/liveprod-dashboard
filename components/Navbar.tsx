@@ -13,7 +13,7 @@ export default function Navbar() {
     const url = `${pathname}`
     const prevPath = newPath;
     setNewPath(url);
-    if (prevPath.startsWith("/schedule/assign-volunteer/")) {
+    if (prevPath.startsWith("/schedule/assign-volunteer/") || prevPath.startsWith("/volunteer/add")) {
       router.refresh();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
