@@ -17,6 +17,7 @@ export default function CpInputText({ label, value, disabled, onChange }: InputT
         value={value}
         disabled={disabled}
         onChange={onChange}
+        autoComplete="off"
         className="bg-zinc-100 rounded-sm border border-b-slate-500 focus:border-b-sky-500 px-3 py-2 focus:outline-none capitalize text-slate-700"
       />
     </div>

@@ -17,14 +17,7 @@ export async function PUT(request: any, { params }: any) {
   try {
     await connectMongoDB();
     const volunteer = await Volunteer.findById(params.id);
-
-    if (requestData.firstName && requestData.lastName) {
-      volunteer.name = `${requestData.firstName} ${requestData.lastName}`;
-    } else if (requestData.firstName) {
-      volunteer.name = `${requestData.firstName} ${volunteer.lastName}`;
-    } else if (requestData.lastName) {
-      volunteer.name = `${volunteer.firstName} ${requestData.lastName}`;
-    }
+    volunteer.name = `${requestData.firstName} ${requestData.lastName}`;
 
     Object.assign(volunteer, requestData);
     await volunteer.save();

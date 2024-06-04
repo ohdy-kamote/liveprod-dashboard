@@ -3,9 +3,10 @@
 import CpCalendarSchedule from "@/components/CalendarSchedule";
 import CpInputText from "@/components/InputText";
 import CpSelect from "@/components/Select";
+import { putUpdateVolunteer } from "@/utils/apis/put";
 import { category, color, serviceTime } from "@/utils/constants";
 import { diff } from "@/utils/dates";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { GoDotFill } from "react-icons/go";
 import { IoPersonCircleSharp, IoSaveSharp } from "react-icons/io5";
@@ -29,6 +30,7 @@ interface Schedule {
 }
 
 export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer }) {
+  const router = useRouter();
   const [ firstName, setFirstName ] = useState<string>(volunteer.firstName);
   const [ lastName, setLastName ] = useState<string>(volunteer.lastName);
   const [ nickName, setNickName ] = useState<string>(volunteer?.nickName || "");
@@ -49,7 +51,7 @@ export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer
     status,
     volunteer.firstName,
     volunteer.lastName,
-    volunteer?.nickName,
+    volunteer.nickName,
     volunteer.segment,
     volunteer.status
   ]);
@@ -63,6 +65,10 @@ export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer
   }
 
   try {
+    const updateVolunteerInfo = async () => {
+      await putUpdateVolunteer(volunteer._id, { firstName, lastName, nickName, segment, status });
+      router.refresh();
+    }
     const from = (date: string, service: string): Date => {
       return new Date(`${new Date(date).toLocaleDateString()} ${serviceTime[service]}`);
     }
@@ -96,6 +102,10 @@ export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer
       if (status === "inactive") return "text-red-600"
       return "text-slate-700"
     }
+    const getAlias = () => {
+      if (volunteer.nickName) return ` "${volunteer.nickName}" `;
+      return ` `;
+    }
 
     return (
       <div className="px-32 text-slate-800">
@@ -112,7 +122,7 @@ export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer
                 <div className="flex flex-col justify-center">
                   <IoSaveSharp size={17} />
                 </div>
-                <div className="flex flex-col justify-center">
+                <div onClick={updateVolunteerInfo} className="flex flex-col justify-center">
                   Save
                 </div>
               </div>
@@ -131,8 +141,8 @@ export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer
               <div className="flex justify-start gap-3">
                 <IoPersonCircleSharp size={100} />
                 <div className="flex flex-col px-2 pb-2 pt-4 justify-start">
-                  <h2 className="font-semibold text-lg">
-                    {volunteer.name}
+                  <h2 className="font-semibold text-lg capitalize">
+                    {`${volunteer.firstName}${getAlias()}${volunteer.lastName}`}
                   </h2>
                   <div className={`text-sm capitalize flex items-center ${statusColor(volunteer.status)}`}>
                     <GoDotFill />
