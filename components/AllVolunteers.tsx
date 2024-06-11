@@ -37,10 +37,9 @@ const conditionalRowStyles = [
   }
 ];
 
-export default function CpAllVolunteers({data}: {data: Data[]}) {
+export default function CpAllVolunteers({ data, isAdmin }: { data: Data[], isAdmin: boolean }) {
   const router = useRouter();
   const [query, setQuery] = useState('');
-  const isAdmin = true;
 
   const deleteVol = async (volunteerId: string, volunteerName: string) => {
     const confirmed = confirm(`Are you sure you want to remove ${volunteerName} as volunteer?`);
@@ -119,16 +118,18 @@ export default function CpAllVolunteers({data}: {data: Data[]}) {
               <div className="w-1/2">
                 <CpInput onChange={(event) => setQuery(event.target.value)} />
               </div>
-              <button
-                onClick={openModal}
-                id="add-volunteer"
-                className="flex flex-col justify-center bg-sky-600 py-1 px-2 rounded-xl h-10"
-              >
-                <IoPersonAdd size={24} className="text-slate-50" />
-              </button>
+              { isAdmin &&
+                <button
+                  onClick={openModal}
+                  id="add-volunteer"
+                  className="flex flex-col justify-center bg-sky-600 py-1 px-2 rounded-xl h-10"
+                >
+                  <IoPersonAdd size={24} className="text-slate-50" />
+                </button>
+              }
             </div>
           </div>
-          <div className="py-1 border border-slate-200 rounded-md">
+          <div className={`${isAdmin && !!filteredVolunteers.length ? "border border-slate-200" : ""} py-1 rounded-md`}>
             <DataTable
               columns={columns}
               data={filteredVolunteers}

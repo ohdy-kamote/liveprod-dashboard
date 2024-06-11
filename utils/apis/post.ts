@@ -23,3 +23,24 @@ export const postCreateMonthSchedule = async () => {
     method: "POST"
   });
 }
+
+export const getAdmin = async (username: string, password: string) => {
+  try {
+    const res = await fetch(`${SOURCE_URL}/api/admin/get`, {
+      cache: "no-store",
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({ username, password })
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to get admin");
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.log("Error loading admin:", error);
+  }
+}

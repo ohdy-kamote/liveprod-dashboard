@@ -1,33 +1,35 @@
+import { auth } from "@/auth";
 import Image from "next/image";
 import { Fragment } from "react";
-import { BiSolidHome } from "react-icons/bi";
-import { ImHome3 } from "react-icons/im";
-import { IoHome } from "react-icons/io5";
 import { PiLegoSmiley, PiLegoSmileyDuotone } from "react-icons/pi"
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+  const user = session?.user?.username || "guest";
+
   return (
     <Fragment>
       <div className="flex flex-col gap-20">
         <div className="flex gap-1 text-slate-700">
           <PiLegoSmileyDuotone size={27} />
-          {/* <BiSolidHome size={22} /> */}
-            <div className="flex flex-col justify-center">
-              This is the Live Prod Homepage. Navigate to see other pages...
+            <div className="flex flex-col justify-center text-xl">
+              <div>
+                Hello, <span className="capitalize font-semibold">{user}</span>! Navigate to see other pages...
+              </div>
             </div>
           <PiLegoSmiley size={27} />
         </div>
         <div className="flex flex-col justify-center h-96 items-center text-slate-700">
           <div className="flex flex-col gap-5">
-            <em className="text-xl">{`"age is something that doesn't matter, unless you are a cheese"`}</em>
+            <em className="text-xl">{`"I can do all things through Christ who strengthens me."`}</em>
             <div className="flex justify-end">
-              - CathMeg 2024 Non-Quotable Quotes (3 of 33)
+              - Philippians 4:13
             </div>
           </div>
         </div>
       </div>
       <div className="flex justify-center items-center absolute bottom-0 right-0">
-        <Image src="/sleeping-quby.gif" alt="loading" width={120} height={120} />
+        <Image src="/quby-headphone.gif" alt="loading" width={120} height={120} />
       </div>
     </Fragment>
   );
