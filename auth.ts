@@ -1,7 +1,5 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { loginSchema } from "@/libs/zod";
-import { ZodError } from "zod";
 import { getAdmin } from "./utils/apis/post";
 import { configs } from "./utils/constants";
 
