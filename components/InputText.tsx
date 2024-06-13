@@ -11,7 +11,6 @@ interface InputText {
 export default function CpInputText({ label, value, disabled, required, onChange }: InputText) {
   return (
     <div className="flex flex-col gap-0.5 w-full">
-      {/* <label htmlFor="input" className="text-slate-500 pl-3 capitalize">{`${label}:`}</label> */}
       <input
         type="text"
         name={label}

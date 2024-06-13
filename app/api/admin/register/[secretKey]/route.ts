@@ -1,4 +1,5 @@
 import connectMongoDB from "@/libs/mongodb"
+import { loginSchema } from "@/libs/zod";
 import Admin from "@/models/admin"
 import { configs } from "@/utils/constants";
 import { saltAndHashPassword } from "@/utils/password";
@@ -10,10 +11,10 @@ export async function POST(request: any, { params }: { params: { secretKey: stri
       throw new Error("Invalid secret key.");
     }
 
-    const { username, password } = await request.json();
+    const { username, password } = await loginSchema.parseAsync(await request.json());
     const hashedPassword = await saltAndHashPassword(password);
     await connectMongoDB();
-    await Admin.create({ username, password: hashedPassword, superAdmin: true });
+    await Admin.create({ username, password: hashedPassword });
 
     return NextResponse.json({ message: `Admin "${username}" created.` }, { status: 201 });
   } catch (error: any) {

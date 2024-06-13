@@ -14,18 +14,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         try {
-          const { username, password } = await loginSchema.parseAsync(credentials);
+          const { username, password } = credentials;
 
           // Logic to verify if admin exists
-          const admin = await getAdmin(username, password);
+          const admin = await getAdmin(username as string, password as string);
           if (!admin.data) throw new Error("Admin not found.");
   
           return admin.data;
         } catch (error) {
-          if (error instanceof ZodError) {
-            // Return `null` to indicate that the credentials are invalid
-            return null
-          }
+          return null;
         }
       }
     })

@@ -12,7 +12,7 @@ export default async function Home() {
       <div className="flex flex-col gap-20">
         <div className="flex gap-1 text-slate-700">
           <PiLegoSmileyDuotone size={27} />
-            <div className="flex flex-col justify-center text-xl">
+            <div className="flex flex-col justify-center text-lg">
               <div>
                 Hello, <span className="capitalize font-semibold">{user}</span>! Navigate to see other pages...
               </div>
