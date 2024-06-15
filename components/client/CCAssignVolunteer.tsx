@@ -105,7 +105,7 @@ export default function CCAssignVolunteer({ volunteers, schedule }: {volunteers:
         </div>
         <div className="bg-slate-200 h-px mt-6" />
         <div className="">
-          <div className="overflow-scroll h-80 py-1">
+          <div className="overflow-scroll h-80 py-1 no-scrollbar">
             {filteredPeople.map((volunteer) => (
               <div
                 key={volunteer._id}
