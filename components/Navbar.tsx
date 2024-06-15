@@ -2,6 +2,7 @@
 
 import { Session } from "next-auth";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,8 +25,13 @@ export default function Navbar({ session }: { session: Session | null }) {
   }, [pathname])
 
   return (
-    <nav className="flex justify-between items-center bg-slate-900 px-10 py-6 rounded-md">
-      <Link className="text-white font-semibold text-lg" href={"/"}>Live Prod Dashboard</Link>
+    <nav className="flex justify-between items-center bg-slate-900 px-5 py-5 rounded-md">
+      <Link href={"/"}>
+        <div className="flex gap-1 items-center">
+          <Image src="/ccf-logo.png" width={45} height={45} alt="logo" />
+          <h1 className="text-white text-lg uppercase font-semibold">Live&nbsp;Prod</h1>
+        </div>
+      </Link>
       <div className="flex justify-between">
         { isAuthenticated && <Link className="text-white p-2" href={"/schedule/role/foh/foh%20assistant/broadcast%20mix"}>Schedules</Link> }
         <Link className="text-white p-2" href={"/schedule/segment/audio"}>Upcoming</Link>
