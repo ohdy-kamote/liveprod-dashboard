@@ -1,7 +1,7 @@
 import CpAssignVolunteer from "@/components/AssignVolunteer";
 import { getAllVolunteersPopulated, getScheduleById } from '@/utils/apis/get';
 
-export default async function USAssignVolunteer({ id }: { id: string }) {
+export default async function SCAssignVolunteer({ id }: { id: string }) {
   const volunteersRes = await getAllVolunteersPopulated();
   const scheduleRes = await getScheduleById(id);
 
