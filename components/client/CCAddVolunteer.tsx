@@ -1,6 +1,6 @@
 "use client";
 
-import CpInputText from "@/components/InputText"
+import GCInputText from "@/components/global/GCInputText"
 import CpSelect from "@/components/Select"
 import { category } from "@/utils/constants"
 import { IoPersonAdd } from "react-icons/io5"
@@ -37,9 +37,9 @@ export default function CCAddVolunteer() {
             <CpSelect onChange={(e) => setStatus(e.target.value)} label="status" value={status} options={category.STATUS} />
             <CpSelect onChange={(e) => setSegment(e.target.value)} label="segment" value={segment} options={category.SEGMENTS} />
           </div>
-          <CpInputText onChange={(e) => setFirstName(e.target.value)} label="first name" value={firstName} required />
-          <CpInputText onChange={(e) => setLastName(e.target.value)} label="last name" value={lastName} required />
-          <CpInputText onChange={(e) => setNickName(e.target.value)} label="nickname" value={nickName} />
+          <GCInputText onChange={(e) => setFirstName(e.target.value)} label="first name" value={firstName} required />
+          <GCInputText onChange={(e) => setLastName(e.target.value)} label="last name" value={lastName} required />
+          <GCInputText onChange={(e) => setNickName(e.target.value)} label="nickname" value={nickName} />
         </div>
       </div>
       <div className="absolute bottom-3 w-full px-5">
