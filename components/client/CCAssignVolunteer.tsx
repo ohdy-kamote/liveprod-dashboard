@@ -72,6 +72,8 @@ export default function CCAssignVolunteer({ volunteers, schedule }: {volunteers:
   const validateAssigneeSchedule = (volunteer: Volunteer) => {
     if (volunteer.available) {
       setScheduleToVolunteer(volunteer._id);
+    } else if(volunteer.role === "Assigned Volunteer") {
+      return;
     } else {
       const override = confirm(volunteer.message);
 
