@@ -1,4 +1,4 @@
-import CpAssignVolunteer from "@/components/AssignVolunteer";
+import CCAssignVolunteer from "@/components/client/CCAssignVolunteer";
 import { getAllVolunteersPopulated, getScheduleById } from '@/utils/apis/get';
 
 export default async function SCAssignVolunteer({ id }: { id: string }) {
@@ -29,6 +29,6 @@ export default async function SCAssignVolunteer({ id }: { id: string }) {
   });
 
   return (
-    <CpAssignVolunteer volunteers={volunteers} schedule={scheduleRes.data} />
+    <CCAssignVolunteer volunteers={volunteers} schedule={scheduleRes.data} />
   );
 }

@@ -1,10 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Fragment, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import DataTable from "react-data-table-component";
 import { PiLegoSmiley, PiLegoSmileyDuotone } from "react-icons/pi";
-import CpInput from "./Input";
+import CpInput from "../Input";
 import { IoPersonAdd } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -19,6 +19,13 @@ interface Data {
   status: string
   segment: string
   active: boolean
+}
+
+interface Columns {
+  name: string
+  selector: (row: Data) => string
+  sortable: boolean
+  button?: boolean
 }
 
 const conditionalRowStyles = [
@@ -37,7 +44,7 @@ const conditionalRowStyles = [
   }
 ];
 
-export default function CpAllVolunteers({ data, isAdmin }: { data: Data[], isAdmin: boolean }) {
+export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdmin: boolean }) {
   const router = useRouter();
   const [query, setQuery] = useState('');
 
@@ -52,7 +59,7 @@ export default function CpAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
     }
   }
 
-  const columns = [
+  const columns: Columns[] = [
     {
       name: "First Name",
       selector: (row: Data) => row.firstName,
@@ -78,13 +85,16 @@ export default function CpAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
       selector: (row: Data) => row.status,
       sortable: true,
     },
-    {
+  ];
+
+  if (isAdmin) {
+    columns.push({
       name: "Actions",
       selector: (row: Data) => <RiDeleteBinLine onClick={() => deleteVol(row._id, row.name)} size={18} /> as any,
       sortable: false,
       button: true,
-    }
-  ];
+    })
+  }
 
   const filteredVolunteers = useMemo(() => {
     const filteredValues = data.filter((volunteer) => {
@@ -108,7 +118,8 @@ export default function CpAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
   }
 
   return (
-    <Fragment>
+    <div className="flex justify-center">
+      <div className="w-full">
         <div className="flex flex-col gap-7 text-slate-700 px-32">
           <div className="flex justify-between">
             <h1 className="text-2xl">
@@ -156,6 +167,7 @@ export default function CpAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
           </div>
         </div>
         <Tooltip variant="info" anchorSelect="#add-volunteer" place="top-end">Add Volunteer</Tooltip>
-    </Fragment>
+      </div>
+    </div>
   )
 }

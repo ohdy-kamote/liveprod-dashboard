@@ -3,12 +3,12 @@
 import { putScheduleAssign, putScheduleRemoveAssignee } from '@/utils/apis/put';
 import { useRouter } from 'next/navigation';
 import { Fragment, useState } from 'react'
-import LoadingComponent from './Loading';
+import LoadingComponent from '../Loading';
 import { IoPersonRemove, IoPersonCircleOutline } from "react-icons/io5";
 import { PiLegoSmiley, PiLegoSmileyDuotone } from 'react-icons/pi';
 import { formatDate } from '@/utils/helpers';
 import { Tooltip } from 'react-tooltip';
-import CpInput from './Input';
+import CpInput from '../Input';
 
 interface Volunteer {
   _id: string
@@ -27,7 +27,7 @@ interface Schedule {
   date: string
 }
 
-export default function CpAssignVolunteer({ volunteers, schedule }: {volunteers: Volunteer[], schedule: Schedule}) {
+export default function CCAssignVolunteer({ volunteers, schedule }: {volunteers: Volunteer[], schedule: Schedule}) {
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
