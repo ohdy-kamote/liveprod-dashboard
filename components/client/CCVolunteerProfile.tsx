@@ -1,6 +1,6 @@
 "use client";
 
-import CpCalendarSchedule from "@/components/CalendarSchedule";
+import CCCalendarSchedule from "@/components/client/CCCalendarSchedule";
 import CpInputTextWithLabel from "@/components/InputTextWithLabel";
 import CpSelect from "@/components/Select";
 import { putUpdateVolunteer } from "@/utils/apis/put";
@@ -178,7 +178,7 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
             </div>
             <div className="bg-slate-300 h-px" />
             <div className="px-5 pb-5 pt-14">
-              <CpCalendarSchedule events={schedule} length={length} />
+              <CCCalendarSchedule events={schedule} length={length} />
             </div>
           </div>
         </div>
