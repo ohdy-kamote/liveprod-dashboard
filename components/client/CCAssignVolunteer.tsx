@@ -3,7 +3,7 @@
 import { putScheduleAssign, putScheduleRemoveAssignee } from '@/utils/apis/put';
 import { useRouter } from 'next/navigation';
 import { Fragment, useState } from 'react'
-import LoadingComponent from '../Loading';
+import GCLoading from "@/components/global/GCLoading";
 import { IoPersonRemove, IoPersonCircleOutline } from "react-icons/io5";
 import { PiLegoSmiley, PiLegoSmileyDuotone } from 'react-icons/pi';
 import { formatDate } from '@/utils/helpers';
@@ -82,7 +82,7 @@ export default function CCAssignVolunteer({ volunteers, schedule }: {volunteers:
     }
   }
 
-  if (isLoading) return <LoadingComponent />
+  if (isLoading) return <GCLoading />
   return (
     <Fragment>
       <div className="w-full px-3 pt-7 pb-10">
