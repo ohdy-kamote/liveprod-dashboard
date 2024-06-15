@@ -3,10 +3,10 @@ import { formatDate } from "@/utils/helpers";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
 import SCVolunteerCell from "@/components/server/SCVolunteerCell";
-import RoleDropdown from "./RoleDropdown";
+import RoleDropdown from "@/components/RoleDropdown";
 import { getSchedulesByRole } from "@/utils/apis/get";
 
-export default async function SchedulesByRole({role}: {role: string}) {
+export default async function SCSchedulesByRole({role}: {role: string}) {
   if (!category.ROLES.includes(role)) {
     redirect("/");
   }

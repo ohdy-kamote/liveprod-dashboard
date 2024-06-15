@@ -1,20 +1,22 @@
-import SchedulesByRole from "@/components/SchedulesByRole";
+import CpAddRow from "@/components/AddRow";
+import LoadingComponent from "@/components/Loading";
+import SCSchedulesByRole from "@/components/server/SCSchedulesByRole";
 import { category } from "@/utils/constants";
 import { getLinkedList, linkedListGoToData } from "@/utils/helpers";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 
-export default async function FirstRoleDisplay({ params }: {params: { role1: string }}) {
+export default function FirstRoleDisplay({ params }: {params: { role1: string }}) {
   let roledetails = getLinkedList(category.ROLES);
   if (roledetails) {
     roledetails = linkedListGoToData(roledetails, decodeURI(params.role1));
   }
 
   return (
-    <Fragment>
+    <Suspense fallback={<LoadingComponent />}>
       <div className="relative">
-        <SchedulesByRole role={decodeURI(params.role1)} />
+        <SCSchedulesByRole role={decodeURI(params.role1)} />
         <div className="flex gap-4 w-full justify-end absolute -bottom-9 pr-3">
           <Link className="hover:bg-slate-800 hover:text-slate-50 rounded-full" href={`/schedule/role/${roledetails?.prev?.data}`}>
             <BsArrowLeftCircle size={27} />
@@ -24,6 +26,7 @@ export default async function FirstRoleDisplay({ params }: {params: { role1: str
           </Link>
         </div>
       </div>
-    </Fragment>
-  );
+      <CpAddRow />
+    </Suspense>
+  )
 }

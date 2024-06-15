@@ -1,15 +1,17 @@
-import SchedulesByRole from "@/components/SchedulesByRole";
-import Link from "next/link";
-import { Fragment } from "react";
+import CpAddRow from "@/components/AddRow";
+import LoadingComponent from "@/components/Loading";
+import SCSchedulesByRole from "@/components/server/SCSchedulesByRole";
+import { Fragment, Suspense } from "react";
 
-export default async function SecondRoleDisplay({ params }: { params: { role1: string, role2: string, role3: string } }) {
+export default function SecondRoleDisplay({ params }: { params: { role1: string, role2: string, role3: string } }) {
   return (
-    <Fragment>
+    <Suspense fallback={<LoadingComponent />}>
       <div className="flex gap-px">
-        <SchedulesByRole role={decodeURI(params.role1)} />
-        <SchedulesByRole role={decodeURI(params.role2)} />
-        <SchedulesByRole role={decodeURI(params.role3)} />
+        <SCSchedulesByRole role={decodeURI(params.role1)} />
+        <SCSchedulesByRole role={decodeURI(params.role2)} />
+        <SCSchedulesByRole role={decodeURI(params.role3)} />
       </div>
-    </Fragment>
-  );
+      <CpAddRow />
+    </Suspense>
+  )
 }
