@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.css";
-import Navbar from "@/components/Navbar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import GCNavbar from "@/components/global/GCNavbar";
 import { auth } from "@/auth";
 import { Bounce, ToastContainer } from "react-toastify";
 
@@ -23,7 +23,7 @@ export default async function RootLayout(props: Readonly<{
     <html lang="en">
       <body className={inter.className}>
         <div className="mx-auto p-4">
-          <Navbar session={session} />
+          <GCNavbar session={session} />
           <div className="mt-8">
             {props.children}
           </div>
