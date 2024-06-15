@@ -1,4 +1,4 @@
-import VolunteerCell from "@/components/VolunteerCell";
+import SCVolunteerCell from "@/components/server/SCVolunteerCell";
 import { getFilteredSchedule } from "@/utils/apis/get";
 import { category, common } from "@/utils/constants";
 import { formatDate, getNextService } from "@/utils/helpers";
@@ -52,10 +52,10 @@ export default async function CpScheduleBySegment({increment}: {increment: numbe
               <tr key={i}>
                 <td className="border border-slate-500 bg-slate-100 w-9 text-center h-9">{i}</td>
                 <td className="border border-slate-500 bg-slate-100 px-1 w-64 uppercase">{role}</td>
-                <VolunteerCell service={sns} />
-                <VolunteerCell service={firstService} />
-                <VolunteerCell service={secondService} />
-                <VolunteerCell service={thirdService} />
+                <SCVolunteerCell service={sns} />
+                <SCVolunteerCell service={firstService} />
+                <SCVolunteerCell service={secondService} />
+                <SCVolunteerCell service={thirdService} />
               </tr>
             )})
           }

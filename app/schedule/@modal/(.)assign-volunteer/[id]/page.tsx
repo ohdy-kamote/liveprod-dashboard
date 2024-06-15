@@ -1,13 +1,13 @@
 import { AssignVolunteerModal } from "./modal";
 import { Suspense } from "react";
 import LoadingComponent from "@/components/Loading";
-import USAssignVolunteer from "@/components/server/USAssignVolunteer";
+import SCAssignVolunteer from "@/components/server/SCAssignVolunteer";
 
 export default function AssignVolunteer({ params }: { params: { id: string }}) {
   return (
     <AssignVolunteerModal>
       <Suspense fallback={<LoadingComponent />}>
-        <USAssignVolunteer id={params.id} />
+        <SCAssignVolunteer id={params.id} />
       </Suspense>
     </AssignVolunteerModal>
   );
