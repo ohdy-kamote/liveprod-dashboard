@@ -3,7 +3,7 @@ import { formatDate } from "@/utils/helpers";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
 import SCVolunteerCell from "@/components/server/SCVolunteerCell";
-import RoleDropdown from "@/components/RoleDropdown";
+import RoleDropdown from "@/components/client/CCRoleDropdown";
 import { getSchedulesByRole } from "@/utils/apis/get";
 
 export default async function SCSchedulesByRole({role}: {role: string}) {

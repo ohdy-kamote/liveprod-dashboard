@@ -1,10 +1,8 @@
-import CpAddRow from "@/components/AddRow";
-import LoadingComponent from "@/components/Loading";
 import SCSchedulesByRole from "@/components/server/SCSchedulesByRole";
 import { category } from "@/utils/constants";
 import { getLinkedList, linkedListGoToData } from "@/utils/helpers";
 import Link from "next/link";
-import { Fragment, Suspense } from "react";
+import { Fragment } from "react";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 
 export default function FirstRoleDisplay({ params }: {params: { role1: string }}) {
@@ -14,7 +12,7 @@ export default function FirstRoleDisplay({ params }: {params: { role1: string }}
   }
 
   return (
-    <Suspense fallback={<LoadingComponent />}>
+    <Fragment>
       <div className="relative">
         <SCSchedulesByRole role={decodeURI(params.role1)} />
         <div className="flex gap-4 w-full justify-end absolute -bottom-9 pr-3">
@@ -26,7 +24,6 @@ export default function FirstRoleDisplay({ params }: {params: { role1: string }}
           </Link>
         </div>
       </div>
-      <CpAddRow />
-    </Suspense>
-  )
+    </Fragment>
+  );
 }
