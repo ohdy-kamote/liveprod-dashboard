@@ -1,3 +1,9 @@
+export const configs = {
+  SESSION_MAX_AGE: process.env.SESSION_MAX_AGE || "12",
+  SESSION_UPDATE_AGE: process.env.SESSION_UPDATE_AGE || "1",
+  ADMIN_SECRET_KEY: process.env.ADMIN_SECRET_KEY
+}
+
 export const category = {
   SERVICES: [
     "sns",

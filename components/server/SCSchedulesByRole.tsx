@@ -2,11 +2,11 @@ import { category, common } from "@/utils/constants";
 import { formatDate } from "@/utils/helpers";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
-import VolunteerCell from "./VolunteerCell";
-import RoleDropdown from "./RoleDropdown";
+import SCVolunteerCell from "@/components/server/SCVolunteerCell";
+import RoleDropdown from "@/components/client/CCRoleDropdown";
 import { getSchedulesByRole } from "@/utils/apis/get";
 
-export default async function SchedulesByRole({role}: {role: string}) {
+export default async function SCSchedulesByRole({role}: {role: string}) {
   if (!category.ROLES.includes(role)) {
     redirect("/");
   }
@@ -49,13 +49,13 @@ export default async function SchedulesByRole({role}: {role: string}) {
                 { sns?.length &&
                   <Fragment>
                     <td className="border border-slate-500 bg-slate-100 w-20">{formatDate(sns[i].date)}</td>
-                    <VolunteerCell service={sns?.[i]} />
+                    <SCVolunteerCell service={sns?.[i]} />
                   </Fragment>
                 }
                 <td className="border border-slate-500 bg-slate-100 w-20">{formatDate(firstService.date)}</td>
-                <VolunteerCell service={firstService} />
-                <VolunteerCell service={secondService} />
-                <VolunteerCell service={thirdService} />
+                <SCVolunteerCell service={firstService} />
+                <SCVolunteerCell service={secondService} />
+                <SCVolunteerCell service={thirdService} />
               </tr>
             )})
           }

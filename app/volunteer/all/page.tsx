@@ -1,19 +1,11 @@
-import dynamic from 'next/dynamic';
-import { getAllVolunteers } from '@/utils/apis/get';
-import LoadingComponent from '@/components/Loading';
+import GCLoading from "@/components/global/GCLoading";
+import SCAllVolunteers from '@/components/server/SCAllVolunteers';
 import { Suspense } from 'react';
-const CpAllVolunteers = dynamic(() => import('@/components/AllVolunteers'), {ssr: false});
 
-export default async function AllVolunteers() {
-  const volunteers = await getAllVolunteers();
-
+export default function AllVolunteers() {
 	return (
-    <Suspense fallback={<LoadingComponent />}>
-      <div className="flex justify-center">
-        <div className="w-full">
-          <CpAllVolunteers data={volunteers.data} />
-        </div>
-      </div>
+    <Suspense fallback={<GCLoading />}>
+      <SCAllVolunteers />
     </Suspense>
-	);
-};
+	)
+}

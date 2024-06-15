@@ -1,7 +1,7 @@
 import { ChangeEventHandler } from "react";
 import { CiSearch } from "react-icons/ci";
 
-export default function CpInput(
+export default function GCInputSearch(
   { onChange }: { onChange: ChangeEventHandler<HTMLInputElement> | undefined }
 ) {
   return (

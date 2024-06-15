@@ -1,8 +1,8 @@
 "use client";
 
-import CpCalendarSchedule from "@/components/CalendarSchedule";
-import CpInputTextWithLabel from "@/components/InputTextWithLabel";
-import CpSelect from "@/components/Select";
+import CCCalendarSchedule from "@/components/client/CCCalendarSchedule";
+import GCInputTextWithLabel from "@/components/global/GCInputTextWithLabel";
+import GCSelect from "@/components/global/GCSelect";
 import { putUpdateVolunteer } from "@/utils/apis/put";
 import { category, serviceTime } from "@/utils/constants";
 import { diff } from "@/utils/dates";
@@ -29,7 +29,7 @@ interface Schedule {
   service: string
 }
 
-export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer }) {
+export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { volunteer: Volunteer, isAuthenticated: boolean }) {
   const router = useRouter();
   const [ firstName, setFirstName ] = useState<string>(volunteer.firstName);
   const [ lastName, setLastName ] = useState<string>(volunteer.lastName);
@@ -153,17 +153,17 @@ export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer
               <div className="px-3 pt-8 pb-5 text-sm">
                 <div className="flex flex-col gap-6">
                   <div className="flex justify-between gap-5">
-                    <CpInputTextWithLabel onChange={(e) => setFirstName(e.target.value)} label="first name" value={firstName} />
-                    <CpInputTextWithLabel onChange={(e) => setLastName(e.target.value)} label="last name" value={lastName} />
+                    <GCInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setFirstName(e.target.value)} label="first name" value={firstName} />
+                    <GCInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setLastName(e.target.value)} label="last name" value={lastName} />
                   </div>
                   <div className="flex justify-between gap-5">
                     <div className="flex justify-between gap-5 w-full">
-                      <CpSelect onChange={(e) => setSegment(e.target.value)} label="segment" value={segment} options={category.SEGMENTS} />
-                      <CpSelect onChange={(e) => setStatus(e.target.value)} label="status" value={status} options={category.STATUS} />
+                      <GCSelect disabled={!isAuthenticated} onChange={(e) => setSegment(e.target.value)} label="segment" value={segment} options={category.SEGMENTS} />
+                      <GCSelect disabled={!isAuthenticated} onChange={(e) => setStatus(e.target.value)} label="status" value={status} options={category.STATUS} />
                     </div>
                     <div className="flex justify-between gap-5 w-full">
-                      <CpInputTextWithLabel onChange={(e) => setNickName(e.target.value)} label="nickname" value={nickName} />
-                      <CpInputTextWithLabel label="id" value={volunteer._id} disabled />
+                      <GCInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setNickName(e.target.value)} label="nickname" value={nickName} />
+                      <GCInputTextWithLabel disabled label="id" value={volunteer._id} />
                     </div>
                   </div>
                 </div>
@@ -178,7 +178,7 @@ export default function CpVolunteerProfile({ volunteer }: { volunteer: Volunteer
             </div>
             <div className="bg-slate-300 h-px" />
             <div className="px-5 pb-5 pt-14">
-              <CpCalendarSchedule events={schedule} length={length} />
+              <CCCalendarSchedule events={schedule} length={length} />
             </div>
           </div>
         </div>

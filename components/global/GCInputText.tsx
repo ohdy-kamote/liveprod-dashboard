@@ -8,10 +8,9 @@ interface InputText {
   onChange?: ChangeEventHandler<HTMLInputElement>
 }
 
-export default function CpInputText({ label, value, disabled, required, onChange }: InputText) {
+export default function GCInputText({ label, value, disabled, required, onChange }: InputText) {
   return (
     <div className="flex flex-col gap-0.5 w-full">
-      {/* <label htmlFor="input" className="text-slate-500 pl-3 capitalize">{`${label}:`}</label> */}
       <input
         type="text"
         name={label}
@@ -30,7 +29,7 @@ export default function CpInputText({ label, value, disabled, required, onChange
             e.target.classList.remove("border-b-red-500")
           }
         }}
-        className="bg-zinc-100 rounded-sm border border-b-slate-500 focus:border-b-sky-500 px-3 py-2 focus:outline-none capitalize text-slate-700"
+        className="bg-zinc-100 rounded-sm border border-b-slate-500 focus:border-b-sky-500 px-3 py-2 focus:outline-none text-slate-700"
       />
     </div>
   )

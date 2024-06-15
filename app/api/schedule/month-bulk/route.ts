@@ -7,9 +7,15 @@ import { add as dateAdd, subtract as dateSub } from "date-arithmetic";
 export async function POST() {
   try {
     await connectMongoDB();
-
     const latestSchedule = await Schedule.findOne().sort({date: -1});
-    const nextSchedule = dateAdd(dateSub(latestSchedule.date, 1, "day"), 1, "month");
+
+    let nextSchedule: Date;
+    if (!latestSchedule) {
+      nextSchedule = dateSub(new Date(), 1, "day");
+    } else {
+      nextSchedule = dateAdd(dateSub(latestSchedule.date, 1, "day"), 1, "month");
+    }
+
     const nextSchedMonth = nextSchedule.getMonth();
     const nextSchedYear = nextSchedule.getFullYear();
 

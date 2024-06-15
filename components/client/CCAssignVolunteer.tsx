@@ -3,12 +3,12 @@
 import { putScheduleAssign, putScheduleRemoveAssignee } from '@/utils/apis/put';
 import { useRouter } from 'next/navigation';
 import { Fragment, useState } from 'react'
-import LoadingComponent from './Loading';
+import GCLoading from "@/components/global/GCLoading";
 import { IoPersonRemove, IoPersonCircleOutline } from "react-icons/io5";
 import { PiLegoSmiley, PiLegoSmileyDuotone } from 'react-icons/pi';
 import { formatDate } from '@/utils/helpers';
 import { Tooltip } from 'react-tooltip';
-import CpInput from './Input';
+import GCInputSearch from "@/components/global/GCInputSearch";
 
 interface Volunteer {
   _id: string
@@ -27,7 +27,7 @@ interface Schedule {
   date: string
 }
 
-export default function CpAssignVolunteer({ volunteers, schedule }: {volunteers: Volunteer[], schedule: Schedule}) {
+export default function CCAssignVolunteer({ volunteers, schedule }: {volunteers: Volunteer[], schedule: Schedule}) {
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -72,6 +72,8 @@ export default function CpAssignVolunteer({ volunteers, schedule }: {volunteers:
   const validateAssigneeSchedule = (volunteer: Volunteer) => {
     if (volunteer.available) {
       setScheduleToVolunteer(volunteer._id);
+    } else if(volunteer.role === "Assigned Volunteer") {
+      return;
     } else {
       const override = confirm(volunteer.message);
 
@@ -80,7 +82,7 @@ export default function CpAssignVolunteer({ volunteers, schedule }: {volunteers:
     }
   }
 
-  if (isLoading) return <LoadingComponent />
+  if (isLoading) return <GCLoading />
   return (
     <Fragment>
       <div className="w-full px-3 pt-7 pb-10">
@@ -92,7 +94,7 @@ export default function CpAssignVolunteer({ volunteers, schedule }: {volunteers:
           <div>{schedule.role}</div>
         </div>
         <div className="flex justify-between gap-2">
-          <CpInput onChange={(event) => setQuery(event.target.value)} />
+          <GCInputSearch onChange={(event) => setQuery(event.target.value)} />
           { schedule?.volunteer &&
             <button
               id="remove-assignee"
@@ -105,7 +107,7 @@ export default function CpAssignVolunteer({ volunteers, schedule }: {volunteers:
         </div>
         <div className="bg-slate-200 h-px mt-6" />
         <div className="">
-          <div className="overflow-scroll h-80 py-1">
+          <div className="overflow-scroll h-80 py-1 no-scrollbar">
             {filteredPeople.map((volunteer) => (
               <div
                 key={volunteer._id}
