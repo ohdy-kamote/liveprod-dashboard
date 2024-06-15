@@ -40,7 +40,7 @@ export default function CpInputText(
             e.target.classList.remove("border-b-red-500")
           }
         }}
-        className={`${capitalize ? "capitalize" : ""} bg-zinc-100 rounded-sm border border-b-slate-500 focus:border-b-sky-500 px-3 py-2 focus:outline-none text-slate-700`}
+        className="bg-zinc-100 rounded-sm border border-b-slate-500 focus:border-b-sky-500 px-3 py-2 focus:outline-none text-slate-700"
       />
     </div>
   )

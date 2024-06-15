@@ -8,6 +8,7 @@ import { IoPersonAdd } from "react-icons/io5"
 import { FormEvent, useState } from "react"
 import { postAddVolunteer } from "@/utils/apis/post";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function AddVolunteer() {
   const router = useRouter();
@@ -19,8 +20,14 @@ export default function AddVolunteer() {
 
   const addVolunteer = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await postAddVolunteer({firstName, lastName, nickName, segment, status});
-    router.back();
+    try {
+      await postAddVolunteer({firstName, lastName, nickName, segment, status});
+      toast.success('Volunteer added successfully!');
+    } catch (error) {
+      toast.error('Failed to add volunteer!');
+    } finally {
+      router.back();
+    }
   }
 
   return (

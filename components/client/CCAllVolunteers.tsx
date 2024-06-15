@@ -9,6 +9,8 @@ import { IoPersonAdd } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { deleteVolunteer } from "@/utils/apis/delete";
+import { toast } from "react-toastify";
+import { sleep } from "@/utils/helpers";
 
 interface Data {
   _id: string
@@ -52,9 +54,15 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
     const confirmed = confirm(`Are you sure you want to remove ${volunteerName} as volunteer?`);
     if (!confirmed) return;
 
-    const res = await deleteVolunteer(volunteerId);
-    if (res.success) {
-      alert(res.message);
+    try {
+      const res = await deleteVolunteer(volunteerId);
+      if (res.success) {
+        toast.info(res.message);
+      }
+    } catch (error) {
+      toast.error("Failed to remove volunteer!");
+    } finally {
+      await sleep(1000);
       router.refresh();
     }
   }

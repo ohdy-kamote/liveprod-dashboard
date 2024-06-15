@@ -153,8 +153,8 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
               <div className="px-3 pt-8 pb-5 text-sm">
                 <div className="flex flex-col gap-6">
                   <div className="flex justify-between gap-5">
-                    <CpInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setFirstName(e.target.value)} label="first name" value={firstName} capitalize />
-                    <CpInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setLastName(e.target.value)} label="last name" value={lastName} capitalize />
+                    <CpInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setFirstName(e.target.value)} label="first name" value={firstName} />
+                    <CpInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setLastName(e.target.value)} label="last name" value={lastName} />
                   </div>
                   <div className="flex justify-between gap-5">
                     <div className="flex justify-between gap-5 w-full">
@@ -162,7 +162,7 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
                       <CpSelect disabled={!isAuthenticated} onChange={(e) => setStatus(e.target.value)} label="status" value={status} options={category.STATUS} />
                     </div>
                     <div className="flex justify-between gap-5 w-full">
-                      <CpInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setNickName(e.target.value)} label="nickname" value={nickName} capitalize />
+                      <CpInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setNickName(e.target.value)} label="nickname" value={nickName} />
                       <CpInputTextWithLabel disabled label="id" value={volunteer._id} />
                     </div>
                   </div>
