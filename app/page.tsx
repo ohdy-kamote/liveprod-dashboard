@@ -29,7 +29,7 @@ export default async function Home() {
         </div>
       </div>
       <div className="flex justify-center items-center absolute bottom-0 right-0">
-        <Image src="/quby-headphone.gif" alt="loading" width={120} height={120} />
+        <Image unoptimized src="/quby-headphone.gif" alt="loading" width={120} height={120} />
       </div>
     </Fragment>
   );
