@@ -3,7 +3,7 @@
 import { postCreateMonthSchedule } from "@/utils/apis/post";
 import { useRouter } from "next/navigation";
 
-export default function CpAddRow() {
+export default function CCAddRow() {
   const router = useRouter();
 
   const createMonthSchedule = async () => {
