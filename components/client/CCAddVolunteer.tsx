@@ -1,10 +1,10 @@
 "use client";
 
-import GCInputText from "@/components/global/GCInputText"
-import CpSelect from "@/components/Select"
-import { category } from "@/utils/constants"
-import { IoPersonAdd } from "react-icons/io5"
-import { FormEvent, useState } from "react"
+import GCInputText from "@/components/global/GCInputText";
+import GCSelect from "@/components/global/GCSelect";
+import { category } from "@/utils/constants";
+import { IoPersonAdd } from "react-icons/io5";
+import { FormEvent, useState } from "react";
 import { postAddVolunteer } from "@/utils/apis/post";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -34,8 +34,8 @@ export default function CCAddVolunteer() {
       <div className="px-5 pt-7 pb-20">
         <div className="flex flex-col gap-6">
           <div className="flex gap-3">
-            <CpSelect onChange={(e) => setStatus(e.target.value)} label="status" value={status} options={category.STATUS} />
-            <CpSelect onChange={(e) => setSegment(e.target.value)} label="segment" value={segment} options={category.SEGMENTS} />
+            <GCSelect onChange={(e) => setStatus(e.target.value)} label="status" value={status} options={category.STATUS} />
+            <GCSelect onChange={(e) => setSegment(e.target.value)} label="segment" value={segment} options={category.SEGMENTS} />
           </div>
           <GCInputText onChange={(e) => setFirstName(e.target.value)} label="first name" value={firstName} required />
           <GCInputText onChange={(e) => setLastName(e.target.value)} label="last name" value={lastName} required />

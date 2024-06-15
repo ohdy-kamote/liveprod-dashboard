@@ -8,7 +8,7 @@ interface SelectProps {
   onChange?: ChangeEventHandler<HTMLSelectElement>
 }
 
-export default function CpSelect({ label, value, options, disabled, onChange }: SelectProps) {
+export default function GCSelect({ label, value, options, disabled, onChange }: SelectProps) {
   return (
     <div className="flex flex-col gap-0.5 w-full">
       <label htmlFor="input" className="text-slate-500 pl-3 capitalize">{`${label}:`}</label>
