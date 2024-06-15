@@ -1,11 +1,11 @@
 'use client';
 
-import { type ElementRef, useEffect, useRef, Suspense } from 'react';
+import { type ElementRef, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
 import { AiOutlineClose } from "react-icons/ai";
 
-export function Modal({ children, title, maxHeight }: { children: React.ReactNode, title: string, maxHeight: string }) {
+export default function GCModal({ children, title, maxHeight }: { children: React.ReactNode, title: string, maxHeight: string }) {
   const router = useRouter();
   const dialogRef = useRef<ElementRef<'dialog'>>(null);
 
