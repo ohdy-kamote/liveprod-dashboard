@@ -48,7 +48,7 @@ export default async function SCSchedulesByRole({role}: {role: string}) {
             console.log({sns: sns[i], firstService})
 
             return (
-              <tr key={firstService.date}>
+              <tr key={i}>
                 { sns?.length &&
                   <Fragment>
                     <td className="border border-slate-500 bg-slate-100 w-20">{formatDate(sns[i].date)}</td>
