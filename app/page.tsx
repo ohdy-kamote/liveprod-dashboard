@@ -14,7 +14,7 @@ export default async function Home() {
           <PiLegoSmileyDuotone size={27} />
             <div className="flex flex-col justify-center text-lg">
               <div>
-                Hello, <span className="capitalize font-semibold">{user}</span>! Navigate to see other pages...
+                Hello, <span className="capitalize font-semibold">{user}</span>! Navigate to see other pages
               </div>
             </div>
           <PiLegoSmiley size={27} />
