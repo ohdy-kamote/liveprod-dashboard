@@ -1,10 +1,10 @@
 "use client";
 
 import { Fragment, useEffect } from "react";
-import CpInputText from "./InputTextWithLabel";
+import CpInputText from "../InputTextWithLabel";
 import { toast } from "react-toastify";
 
-export default function CpLogin({ error }: { error: number }) {
+export default function CCLogin({ error }: { error: number }) {
   useEffect(() => {
     if (error) toast.error('Invalid username or password!');
   }, [error])
@@ -13,9 +13,9 @@ export default function CpLogin({ error }: { error: number }) {
     <Fragment>
       <div className="flex flex-col justify-center h-[calc(100svh_-_16rem)]">
         <div className="flex justify-center">
-          <div className="w-1/3 rounded-lg border border-slate-100 shadow-md">
+          <div className="w-1/3 rounded-xl border border-slate-100 shadow-md">
             <div className="flex justify-start py-5 pl-6">
-              <h2 className="font-semibold text-lg">
+              <h2 className="font-semibold text-lg text-slate-700">
                 Admin Login
               </h2>
             </div>
