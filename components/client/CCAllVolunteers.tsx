@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import DataTable from "react-data-table-component";
 import { PiLegoSmiley, PiLegoSmileyDuotone } from "react-icons/pi";
-import CpInput from "../Input";
+import GCInputSearch from "@/components/global/GCInputSearch";
 import { IoPersonAdd } from "react-icons/io5";
 import { Tooltip } from "react-tooltip";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -135,7 +135,7 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
             </h1>
             <div className="flex gap-3 justify-end w-1/2">
               <div className="w-1/2">
-                <CpInput onChange={(event) => setQuery(event.target.value)} />
+                <GCInputSearch onChange={(event) => setQuery(event.target.value)} />
               </div>
               { isAdmin &&
                 <button

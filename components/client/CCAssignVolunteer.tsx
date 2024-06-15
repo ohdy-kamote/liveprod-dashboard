@@ -8,7 +8,7 @@ import { IoPersonRemove, IoPersonCircleOutline } from "react-icons/io5";
 import { PiLegoSmiley, PiLegoSmileyDuotone } from 'react-icons/pi';
 import { formatDate } from '@/utils/helpers';
 import { Tooltip } from 'react-tooltip';
-import CpInput from '../Input';
+import GCInputSearch from "@/components/global/GCInputSearch";
 
 interface Volunteer {
   _id: string
@@ -94,7 +94,7 @@ export default function CCAssignVolunteer({ volunteers, schedule }: {volunteers:
           <div>{schedule.role}</div>
         </div>
         <div className="flex justify-between gap-2">
-          <CpInput onChange={(event) => setQuery(event.target.value)} />
+          <GCInputSearch onChange={(event) => setQuery(event.target.value)} />
           { schedule?.volunteer &&
             <button
               id="remove-assignee"
