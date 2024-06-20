@@ -13,7 +13,7 @@ export default function CCVolunteerCell({ service, isAuthenticated }: { service:
   return (
     <td onClick={handleClick} className={`${isAuthenticated ? "hover:bg-slate-200 cursor-pointer" : ""} border border-slate-500 bg-slate-100 min-w-20`}>
       <div className="overflow-hidden h-6">
-        {service?.volunteer?.[0]?.name}
+        {service?.volunteer?.[0]?.firstName}
       </div>
     </td>
   );
