@@ -170,6 +170,11 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
                     color: "#334155"
                   }
                 },
+                rows: {
+                  style: {
+                    minHeight: "2.8rem"
+                  }
+                }
               }}
             />
           </div>
