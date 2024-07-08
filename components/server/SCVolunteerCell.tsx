@@ -1,4 +1,4 @@
-import { checkAuth } from "@/utils/helpers";
+import { checkAuth } from "@/utils/helpersServer";
 import CCVolunteerCell from "@/components/client/CCVolunteerCell";
 
 export default async function SCVolunteerCell(props: { service: any }) {

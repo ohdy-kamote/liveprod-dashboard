@@ -1,5 +1,6 @@
 import { getFilteredSchedule } from "@/utils/apis/get";
-import { checkAuth, getNextService } from "@/utils/helpers";
+import { getNextService } from "@/utils/helpers";
+import { checkAuth } from "@/utils/helpersServer";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";

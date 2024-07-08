@@ -1,6 +1,6 @@
 import { signIn } from "@/auth";
 import CCLogin from "@/components/client/CCLogin";
-import { checkAuth } from "@/utils/helpers";
+import { checkAuth } from "@/utils/helpersServer";
 import { redirect } from "next/navigation";
 
 export default async function SCLogin({errorAttempt}: {errorAttempt: number}) {
