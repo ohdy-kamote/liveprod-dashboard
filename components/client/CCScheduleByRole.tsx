@@ -9,7 +9,7 @@ export default function CCSchedulesByRole({ service }: { service: any }) {
   return (
     <tbody>
       { service[common.FIRST_SERVICE].slice(0, 18).map((firstService: any, i: number) => {
-        const sns = service?.[category.SATURDAY_SERVICE];
+        const sns = service?.[category.SATURDAY_SERVICE[0]];
         const secondService = service[common.SECOND_SERVICE][i];
         const thirdService = service[common.THIRD_SERVICE][i];
 

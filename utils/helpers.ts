@@ -56,8 +56,8 @@ export function createSnsMonthPayload(year: number, month: number) {
       payload.push({
         date,
         role,
-        service: category.SATURDAY_SERVICE,
-        dateServiceRole: date.concat(category.SATURDAY_SERVICE, role)
+        service: category.SATURDAY_SERVICE[0],
+        dateServiceRole: date.concat(category.SATURDAY_SERVICE[0], role)
       });
     }
   }

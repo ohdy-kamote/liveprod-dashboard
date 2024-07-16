@@ -37,7 +37,7 @@ export default async function CCScheduleBySegment({ schedule }: { schedule: Sche
           <tr>
             <th className="border-l border-slate-500 bg-slate-100"></th>
             <th className="bg-slate-100"></th>
-            <th className="border-l border-slate-500 uppercase">{category.SATURDAY_SERVICE}</th>
+            <th className="border-l border-slate-500 uppercase">{category.SATURDAY_SERVICE[0]}</th>
             <th className="border-l border-slate-500 bg-green-400 uppercase">{common.FIRST_SERVICE}</th>
             <th className="border-l border-slate-500 bg-green-400 uppercase">{common.SECOND_SERVICE}</th>
             <th className="border-l border-slate-500 bg-green-400 uppercase">{common.THIRD_SERVICE}</th>
@@ -45,14 +45,14 @@ export default async function CCScheduleBySegment({ schedule }: { schedule: Sche
         </thead>
         <tbody>
           { category.ROLES.map((role, i) => {
-            const sns = convertedData?.[category.SATURDAY_SERVICE]?.[role]
+            const sns = convertedData?.[category.SATURDAY_SERVICE[0]]?.[role]
             const firstService = convertedData?.[common.FIRST_SERVICE]?.[role]
             const secondService = convertedData?.[common.SECOND_SERVICE]?.[role]
             const thirdService = convertedData?.[common.THIRD_SERVICE]?.[role]
 
             return (
               <tr key={i}>
-                <td className="border border-slate-500 bg-slate-100 w-9 text-center h-8">{i+1}</td>
+                <td className="border border-slate-500 bg-slate-100 w-9 text-center h-7">{i+1}</td>
                 <td className="border border-slate-500 bg-slate-100 px-1 w-64 uppercase">{role}</td>
                 <SCVolunteerCell service={sns} />
                 <SCVolunteerCell service={firstService} />

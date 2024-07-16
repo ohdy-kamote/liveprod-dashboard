@@ -4,7 +4,7 @@ export const configs = {
   ADMIN_SECRET_KEY: process.env.ADMIN_SECRET_KEY
 }
 
-export const category = {
+export const category: { [key: string]: string[] } = {
   SERVICES: [
     "sns",
     "9 am",
@@ -15,7 +15,7 @@ export const category = {
     "mmrc",
     "special event"
   ],
-  SATURDAY_SERVICE: "sns",
+  SATURDAY_SERVICE: ["sns"],
   SUNDAY_SERVICES: [
     "9 am",
     "12 nn",
@@ -27,9 +27,11 @@ export const category = {
     "3 pm",
     "sns",
   ],
-  ROLES: [
+  PRIMARY_ROLES: [
     "foh",
     "foh assistant",
+    "foh trainee",
+    "foh observer",
     "broadcast mix",
     "broadcast mix assistant",
     "broadcast mix trainee",
@@ -40,6 +42,8 @@ export const category = {
     "nxtgen",
     "nxtgen trainee",
     "nxtgen observer",
+  ],
+  EXTRA_ROLES: [
     "audio volunteer 1",
     "audio volunteer 2"
   ],
@@ -73,7 +77,8 @@ export const category = {
     "inactive",
     "on leave"
   ]
-};
+}
+category.ROLES = category.PRIMARY_ROLES.concat(category.EXTRA_ROLES)
 
 export const common = {
   FIRST_SERVICE: "9 am",
@@ -82,7 +87,7 @@ export const common = {
 }
 
 export const serviceTime = {
-  [category.SATURDAY_SERVICE]: "17:00",
+  [category.SATURDAY_SERVICE[0]]: "17:00",
   [common.FIRST_SERVICE]: "09:00",
   [common.SECOND_SERVICE]: "12:00",
   [common.THIRD_SERVICE]: "15:00"
