@@ -27,7 +27,7 @@ export const category: { [key: string]: string[] } = {
     "3 pm",
     "sns",
   ],
-  PRIMARY_ROLES: [
+  ROLES: [
     "foh",
     "foh assistant",
     "foh trainee",
@@ -37,23 +37,28 @@ export const category: { [key: string]: string[] } = {
     "broadcast mix trainee",
     "broadcast mix observer",
     "monitor mix",
+    "rf tech",
     "monitor mix trainee",
     "monitor mix observer",
     "nxtgen",
     "nxtgen trainee",
     "nxtgen observer",
-  ],
-  EXTRA_ROLES: [
     "audio volunteer 1",
     "audio volunteer 2"
   ],
   SNS_ROLES: [
     "foh",
     "foh assistant",
+    "foh trainee",
+    "foh observer",
     "broadcast mix",
     "broadcast mix assistant",
     "broadcast mix trainee",
     "broadcast mix observer",
+    "monitor mix",
+    "rf tech",
+    "monitor mix trainee",
+    "monitor mix observer",
     "audio volunteer 1",
     "audio volunteer 2"
   ],
@@ -78,7 +83,6 @@ export const category: { [key: string]: string[] } = {
     "on leave"
   ]
 }
-category.ROLES = category.PRIMARY_ROLES.concat(category.EXTRA_ROLES)
 
 export const common = {
   FIRST_SERVICE: "9 am",
