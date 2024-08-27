@@ -11,7 +11,7 @@ export default function CCVolunteerCell({ service, isAuthenticated }: { service:
   };
 
   return (
-    <td onClick={handleClick} className={`${isAuthenticated && !!service?.id ? "hover:bg-slate-200 cursor-pointer" : ""} ${!!service?.id ? "bg-slate-100": "bg-gray-300"} border border-slate-500 min-w-20`}>
+    <td onClick={handleClick} className={`${isAuthenticated && !!service?.id ? "hover:bg-slate-300 cursor-pointer" : ""} ${!!service?.id ? "": "bg-gray-300"} border border-slate-300 min-w-20`}>
       <div className="overflow-hidden h-6">
         {service?.volunteer?.[0]?.firstName}
       </div>
