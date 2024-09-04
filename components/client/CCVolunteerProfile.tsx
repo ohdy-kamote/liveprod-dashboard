@@ -191,7 +191,7 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
                                     <div className="relative">
                                       {isAuthenticated && 
                                         <div className="absolute -top-3 left-0 opacity-0 hover:opacity-100">
-                                          <IoCloseCircle size={20} className="cursor-pointer" />
+                                          <IoCloseCircle size={20} className="cursor-pointer" onClick={() => setRoles(roles.filter(r => r != volunteerRole))} />
                                         </div>
                                       }
                                     </div>
