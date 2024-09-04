@@ -189,9 +189,11 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
                                     {/* Non-breakable space is char 160 */}
                                     <div>{volunteerRole.replaceAll(" ", String.fromCharCode(160))}</div>
                                     <div className="relative">
-                                      <div className="absolute -top-3 left-0 opacity-0 hover:opacity-100">
-                                        <IoCloseCircle size={20} className="cursor-pointer" />
-                                      </div>
+                                      {isAuthenticated && 
+                                        <div className="absolute -top-3 left-0 opacity-0 hover:opacity-100">
+                                          <IoCloseCircle size={20} className="cursor-pointer" />
+                                        </div>
+                                      }
                                     </div>
                                   </div>
                                 </div>
