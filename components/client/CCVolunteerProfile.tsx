@@ -186,6 +186,7 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
                             { roles.map((volunteerRole, i) => (
                                 <div key={i} className="uppercase border border-slate-500 py-1.5 px-3 rounded-full">
                                   <div className="flex gap-0">
+                                    {/* Non-breakable space is char 160 */}
                                     <div>{volunteerRole.replaceAll(" ", String.fromCharCode(160))}</div>
                                     <div className="relative">
                                       <div className="absolute -top-3 left-0 opacity-0 hover:opacity-100">
