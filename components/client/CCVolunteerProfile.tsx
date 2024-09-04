@@ -46,18 +46,21 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
     lastName !== volunteer.lastName ||
     nickName !== (volunteer?.nickName || "") ||
     status !== volunteer.status ||
-    segment !== volunteer.segment
+    segment !== volunteer.segment ||
+    JSON.stringify(roles) !== JSON.stringify(volunteer.roles)
   ), [
     firstName,
     lastName,
     nickName,
     segment,
     status,
+    roles,
     volunteer.firstName,
     volunteer.lastName,
     volunteer.nickName,
     volunteer.segment,
-    volunteer.status
+    volunteer.status,
+    volunteer.roles
   ]);
 
   useEffect(() => {
@@ -77,7 +80,7 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
 
   try {
     const updateVolunteerInfo = async () => {
-      await putUpdateVolunteer(volunteer._id, { firstName, lastName, nickName, segment, status });
+      await putUpdateVolunteer(volunteer._id, { firstName, lastName, nickName, segment, status, roles });
       router.refresh();
     }
     const from = (date: string, service: string): Date => {
