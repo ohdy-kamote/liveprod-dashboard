@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import CCSlideshow from "@/components/client/CCSlideshow";
 import Image from "next/image";
 import { Fragment } from "react";
 import { PiLegoSmiley, PiLegoSmileyDuotone } from "react-icons/pi"
@@ -20,12 +21,13 @@ export default async function Home() {
           <PiLegoSmiley size={27} />
         </div>
         <div className="flex flex-col justify-center h-96 items-center text-slate-700">
-          <div className="flex flex-col gap-5">
+          {/* <div className="flex flex-col gap-5">
             <em className="text-xl">{`"I can do all things through Christ who strengthens me."`}</em>
             <div className="flex justify-end">
               - Philippians 4:13
             </div>
-          </div>
+          </div> */}
+          <CCSlideshow />
         </div>
       </div>
       <div className="flex justify-center items-center absolute bottom-0 right-0">
