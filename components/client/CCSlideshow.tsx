@@ -1,8 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
 
-const slides = [0, 1, 2, 3, 4, 5, 6, 9];
+const slides = [0, 1, 2, 3, 4, 5, 6];
 
 export default function CCSlideshow() {
   const itemsRef = useRef<Array<HTMLDivElement | null>>([]);
@@ -20,6 +21,7 @@ export default function CCSlideshow() {
     (itemsRef.current[active] as any).style.zIndex = 1;
     (itemsRef.current[active] as any).style.filter = `none`;
     (itemsRef.current[active] as any).style.opacity = 1;
+    (itemsRef.current[active] as any).style.boxShadow = `0px 30px 40px -25px rgba(100, 100, 120, 1)`;
     for (let i = 1; i <= upperhand; i++) {
       stt++;
       const nextValue = getNextValue(active + i);
@@ -27,6 +29,7 @@ export default function CCSlideshow() {
       (itemsRef.current[nextValue] as any).style.zIndex = -stt;
       (itemsRef.current[nextValue] as any).style.filter = `blur(5px)`;
       (itemsRef.current[nextValue] as any).style.opacity = stt > 2 ? 0 : 0.6;
+      (itemsRef.current[nextValue] as any).style.boxShadow = `0 0 #0000`;
     }
     stt = 0;
     for (let i = 1; i <= lowerhand; i++) {
@@ -36,6 +39,7 @@ export default function CCSlideshow() {
       (itemsRef.current[prevValue] as any).style.zIndex = -stt;
       (itemsRef.current[prevValue] as any).style.filter = `blur(5px)`;
       (itemsRef.current[prevValue] as any).style.opacity = stt > 2 ? 0 : 0.6;
+      (itemsRef.current[prevValue] as any).style.boxShadow = `0 0 #0000`;
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active])
@@ -65,17 +69,16 @@ export default function CCSlideshow() {
   }
 
   return (
-    <div onKeyDown={handleKeyDown} className="slider relative w-full h-96 overflow-hidden">
+    <div onKeyDown={handleKeyDown} className="slider relative w-full h-[500px] overflow-hidden">
       {slides.map((slide, i) => (
         <div key={i} ref={el => {
           itemsRef.current[i] = el
-        }} className="item absolute w-[500px] h-[320px] text-justify rounded-xl p-[20px] top-0 left-[calc(50%_-_245px)] bg-white duration-700">
-          <h1>Slide {slide + 1}</h1>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem sint distinctio ipsum, et ex quidem nobis expedita modi iusto repudiandae libero laudantium velit culpa inventore, aliquid vitae earum, ratione provident!
+        }} className="item absolute w-[500px] h-[375px] text-justify rounded-xl top-0 left-[calc(50%_-_250px)] bg-white duration-700">
+          <Image src={`/${slide+1}.jpg`} alt={`${slide+1}.jpg`} layout="fill" objectFit="contain" className="rounded-xl" />
         </div>
       ))}
-      <button onClick={() => setActive(getPrevValue(active - 1))} id="prev" className="absolute top-[40%] text-white bg-transparent border-none text-2xl font-mono font-bold left-12">{"<"}</button>
-      <button onClick={() => setActive(getNextValue(active + 1))} id="next" className="absolute top-[40%] text-white bg-transparent border-none text-2xl font-mono font-bold right-12">{">"}</button>
+      <button onClick={() => setActive(getPrevValue(active - 1))} id="prev" className="absolute bg-black bg-opacity-5 hover:bg-opacity-20 rounded-sm h-4/5 w-12 text-slate-500 text-opacity-50 hover:text-opacity-80 border-none text-2xl font-mono font-bold left-5 focus:outline-none">{"<"}</button>
+      <button onClick={() => setActive(getNextValue(active + 1))} id="next" className="absolute bg-black bg-opacity-5 hover:bg-opacity-20 rounded-sm h-4/5 w-12 text-slate-500 text-opacity-50 hover:text-opacity-80 border-none text-2xl font-mono font-bold right-5 focus:outline-none">{">"}</button>
     </div>
   )
 }
