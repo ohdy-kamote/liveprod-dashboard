@@ -11,7 +11,7 @@ export default async function Home() {
   return (
     <Fragment>
       <div className="flex flex-col gap-16">
-        <div className="flex gap-1 text-white opacity-60 justify-center">
+        <div className="flex gap-3 text-white opacity-60 justify-center">
           <PiLegoSmileyDuotone size={27} />
             <div className="flex flex-col justify-center text-lg">
               <div>
