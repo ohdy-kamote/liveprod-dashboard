@@ -16,7 +16,7 @@ export default async function Home() {
             <div className="flex flex-col justify-center text-lg">
               <div>
                 {/* Hello, <span className="capitalize">{user}</span>! Navigate to see other pages */}
-                Meet the audio family! ♫⋆｡♪ ₊˚♬ 
+                Hello, <span className="capitalize">{user}</span>! Meet the Audio family! ♫⋆｡♪ ₊˚♬
               </div>
             </div>
           <PiLegoSmiley size={27} />
