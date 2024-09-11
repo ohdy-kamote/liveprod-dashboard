@@ -48,6 +48,12 @@ export default function CCSlideshow() {
     loadSlideshow();
   }, [loadSlideshow])
 
+  useEffect(() => {
+    setInterval(() => {
+      setActive(getNextValue(active + 1))
+    }, 7000)
+  }, [active])
+
   function getNextValue(current: number) {
     const length = slides.length;
     if (current <= length - 1) return current;
