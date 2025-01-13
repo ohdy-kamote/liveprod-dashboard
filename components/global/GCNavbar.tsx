@@ -32,6 +32,7 @@ export default function Navbar({ session }: { session: Session | null }) {
       document.body.classList.remove("background-gradient");
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // testing
   }, [pathname])
 
   return (
