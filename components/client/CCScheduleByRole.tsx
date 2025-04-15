@@ -1,8 +1,22 @@
 "use client";
 
-import { category, sunday } from "@/utils/constants";
+import { category, saturday, sunday } from "@/utils/constants";
 import { Fragment } from "react";
 import RoleDropdown from "@/components/client/CCRoleDropdown";
+
+/**
+ * TODO:
+ * 
+ * components folder:
+ * wrapper and view instead of server and client
+ * all components in the components folder should be client components
+ * 
+ * app folder:
+ * all server components and api calls should be in app folder
+ * 
+ * components/global folder:
+ * all global components should be in components/view folder
+ */
 
 export default function CCSchedulesByRole({ role, service, children }: { role: string, service: any, children: React.ReactNode }) {
   return (
@@ -14,11 +28,12 @@ export default function CCSchedulesByRole({ role, service, children }: { role: s
         <table className="table-auto w-full text-sm">
           <thead>
             <tr className="snap-start">
-              <th className="sticky top-px bg-slate-300 border border-slate-300 w-20"></th>
-              { service?.[category.SATURDAY_SERVICE[0]]?.length &&
+              <th className="sticky top-px bg-slate-300 border border-slate-300 w-20">SNS</th>
+              { service?.[category.SATURDAY_SERVICES[0]]?.length &&
                 <Fragment>
-                  <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{category.SATURDAY_SERVICE[0]}</th>
-                  <th className="sticky top-px bg-slate-300 border border-slate-300 w-20"></th>
+                  <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{saturday.FIRST_SERVICE}</th>
+                  <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{saturday.SECOND_SERVICE}</th>
+                  <th className="sticky top-px bg-slate-300 border border-slate-300 w-20">SUNDAY</th>
                 </Fragment>
               }
               <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase py-0.5">{sunday.FIRST_SERVICE}</th>

@@ -20,7 +20,7 @@ export default function CCVolunteerCell({ service, isAuthenticated }: { service:
         <div className="overflow-hidden h-6">
           {service?.volunteer?.[0]?.firstName}
         </div> :
-        <div className="flex justify-center">
+        <div className="flex justify-center h-6">
           <MdOutlineLockPerson size={22} />
         </div>
       }

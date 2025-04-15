@@ -22,18 +22,20 @@ export default async function SCSchedulesByRole({role}: {role: string}) {
   return (
     <CCSchedulesByRole role={role} service={service}>
       <tbody>
-        { service[sunday.FIRST_SERVICE]?.map((firstService: any, i: number) => {
-          const sns = service?.[category.SATURDAY_SERVICE[0]];
-          const secondService = service[sunday.SECOND_SERVICE][i];
-          const thirdService = service[sunday.THIRD_SERVICE][i];
-          const fourthService = service[sunday.FOURTH_SERVICE][i];
+        { service[category.SUNDAY_SERVICES[0]]?.map((firstService: any, i: number) => {
+          const snsFirst = service?.[category.SATURDAY_SERVICES[0]];
+          const snsSecond = service?.[category.SATURDAY_SERVICES[1]];
+          const secondService = service[category.SUNDAY_SERVICES[1]][i];
+          const thirdService = service[category.SUNDAY_SERVICES[2]][i];
+          const fourthService = service[category.SUNDAY_SERVICES[3]][i];
 
           return (
             <tr key={i} className="bg-slate-100 odd:bg-slate-200 snap-start">
-              { sns?.length &&
+              { snsFirst?.length &&
                 <Fragment>
-                  <td className="border border-slate-300 w-20 text-center">{formatDate(sns[i].date)}</td>
-                  <SCVolunteerCell service={sns?.[i]} />
+                  <td className="border border-slate-300 w-20 text-center">{formatDate(snsFirst[i].date)}</td>
+                  <SCVolunteerCell service={snsFirst?.[i]} />
+                  <SCVolunteerCell service={snsSecond?.[i]} />
                 </Fragment>
               }
               <td className="border border-slate-300 w-20 text-center">{formatDate(firstService.date)}</td>

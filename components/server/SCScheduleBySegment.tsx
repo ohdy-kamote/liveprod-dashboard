@@ -24,7 +24,15 @@ export default async function SCScheduleBySegment({increment, service}: {increme
         </h1>
         <div className='relative'>
           <div className='absolute right-0 -translate-y-full'>
-            <GCTabLInk links={["saturday", "sunday"]} labels={["Saturday", "Sunday"]} isSinglePath path='service' />
+            <GCTabLInk
+              links={[
+                `/schedule/segment/audio/saturday?increment=${increment}`,
+                `/schedule/segment/audio/sunday?increment=${increment}`
+              ]}
+              name={["saturday", "sunday"]}
+              labels={["Saturday", "Sunday"]}
+              isSinglePath path='service'
+            />
           </div>
           <div className="flex gap-0.5 w-full mt-[0.5px]">
             <CCScheduleBySegment schedule={schedule1} dayService={service} />
@@ -33,10 +41,10 @@ export default async function SCScheduleBySegment({increment, service}: {increme
         </div>
         { isAdmin &&
           <div className="flex gap-3 w-full justify-end">
-            <Link className="hover:bg-slate-800 hover:text-slate-50 rounded-full" href={`/schedule/segment/sunday?increment=${increment-1}`}>
+            <Link className="hover:bg-slate-800 hover:text-slate-50 rounded-full" href={`/schedule/segment/audio/${service}?increment=${increment-1}`}>
               <BsArrowLeftCircle size={27} />
             </Link>
-            <Link className="hover:bg-slate-800 hover:text-slate-50 rounded-full" href={`/schedule/segment/audio/sunday?increment=${increment+1}`}>
+            <Link className="hover:bg-slate-800 hover:text-slate-50 rounded-full" href={`/schedule/segment/audio/${service}?increment=${increment+1}`}>
               <BsArrowRightCircle size={27} />
             </Link>
           </div>

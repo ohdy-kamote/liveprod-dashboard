@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 export default function GCTabLInk(props: Readonly<{
   links: string[];
   labels: string[];
+  name?: string[];
   isSinglePath?: boolean;
   path?: string
 }>) {
@@ -27,7 +28,8 @@ export default function GCTabLInk(props: Readonly<{
     }
   }
 
-  const getBackgroundByName = (name: string) => {
+  const getBackgroundByName = (name?: string) => {
+    console.log(name, params?.[path]);
     if (name === params?.[path]) {
       return "bg-slate-800";
     } else {
@@ -41,7 +43,7 @@ export default function GCTabLInk(props: Readonly<{
         <Link
           key={index}
           href={link}
-          className={`text-white p-1.5 w-28 text-center first:rounded-ss-md last:rounded-se-md ${isSinglePath ? getBackgroundByName(link) : getBackgroundByNumber(index + 1)}`}
+          className={`text-white p-1.5 w-28 text-center first:rounded-ss-md last:rounded-se-md ${isSinglePath ? getBackgroundByName(props?.name?.[index]) : getBackgroundByNumber(index + 1)}`}
         >
           {labels[index]}
         </Link>
