@@ -1,7 +1,7 @@
 "use client";
 
 import CCAddRow from "@/components/client/CCAddRow";
-import Link from "next/link";
+import GCTabLInk from '@/components/global/tabs/GCTabLink';
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { HiMiniArrowsRightLeft } from "react-icons/hi2";
@@ -18,14 +18,6 @@ export default function RootLayout(props: Readonly<{
     numRoles = 3;
   } else if (params?.role2) {
     numRoles = 2;
-  }
-
-  const getBackground = (roleNum: number) => {
-    if (roleNum === numRoles) {
-      return "bg-slate-700";
-    } else {
-      return "bg-slate-500";
-    }
   }
 
   const switchRole1And2 = () => {
@@ -49,11 +41,19 @@ export default function RootLayout(props: Readonly<{
           <HiMiniArrowsRightLeft id="role2And3" onClick={switchRole2And3} size={20} className={`${numRoles < 3 ? "hidden" : ""} cursor-pointer focus:outline-none`} />
         </div>
       </div>
-      <div className="flex w-fit gap-px">
-        <Link className={`text-white p-2 rounded-ss-md ${getBackground(1)}`} href="/schedule/role/foh">Single View</Link>
-        <Link className={`text-white p-2 ${getBackground(2)}`} href="/schedule/role/foh/foh%20assistant">Split View</Link>
-        <Link className={`text-white p-2 rounded-se-md ${getBackground(3)}`} href="/schedule/role/foh/foh%20assistant/broadcast%20mix">Triple View</Link>
-      </div>
+      <GCTabLInk
+        links={[
+          "/schedule/role/foh",
+          "/schedule/role/foh/foh%20assistant",
+          "/schedule/role/foh/foh%20assistant/broadcast%20mix"
+        ]}
+        labels={["Single View", "Split View", "Triple View"]}
+      />
+      {/* <div className="flex w-fit gap-px">
+        <Link className={`text-white p-2 first:rounded-ss-md last:rounded-se-md ${getBackground(1)}`} href="/schedule/role/foh">Single View</Link>
+        <Link className={`text-white p-2 first:rounded-ss-md last:rounded-se-md ${getBackground(2)}`} href="/schedule/role/foh/foh%20assistant">Split View</Link>
+        <Link className={`text-white p-2 first:rounded-ss-md last:rounded-se-md ${getBackground(3)}`} href="/schedule/role/foh/foh%20assistant/broadcast%20mix">Triple View</Link>
+      </div> */}
       {props.children}
       <CCAddRow />
       <Tooltip variant="dark" anchorSelect="#role1And2" place="top">Switch <span className="uppercase">{decodeURI(params.role1)}</span> and <span className="uppercase">{decodeURI(params.role2)}</span></Tooltip>

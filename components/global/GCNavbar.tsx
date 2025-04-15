@@ -45,7 +45,7 @@ export default function Navbar({ session }: { session: Session | null }) {
       </Link>
       <div className="flex justify-between">
         { isAuthenticated && <Link className="text-white p-2" href={"/schedule/role/foh/foh%20assistant/broadcast%20mix"}>Schedules</Link> }
-        <Link className="text-white p-2" href={"/schedule/segment/audio"}>Upcoming</Link>
+        <Link className="text-white p-2" href={"/schedule/segment/audio/sunday"}>Upcoming</Link>
         <Link className="text-white p-2" href={"/volunteer/all"}>Volunteers</Link>
         { !isAuthenticated ?
           <button onClick={() => signIn()} className="text-white p-2">Login</button>

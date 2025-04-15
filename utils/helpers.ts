@@ -53,12 +53,15 @@ export function createSnsMonthPayload(year: number, month: number) {
     const date = saturdays[i];
     for (let j = 0; j < category.SNS_ROLES.length; j++) {
       const role = category.SNS_ROLES[j];
-      payload.push({
-        date,
-        role,
-        service: category.SATURDAY_SERVICE[0],
-        dateServiceRole: date.concat(category.SATURDAY_SERVICE[0], role)
-      });
+      for (let k = 0; k < category.SATURDAY_SERVICES.length; k++) {
+        const service = category.SATURDAY_SERVICES[k];
+        payload.push({
+          date,
+          role,
+          service,
+          dateServiceRole: date.concat(service, role)
+        });
+      }
     }
   }
 

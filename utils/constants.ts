@@ -6,40 +6,50 @@ export const configs = {
 
 export const category: { [key: string]: string[] } = {
   SERVICES: [
-    "sns",
-    "9 am",
-    "12 nn",
-    "3 pm",
+    "sns1",
+    "sns2",
+    "sunday1",
+    "sunday2",
+    "sunday3",
+    "sunday4",
     "idc",
     "b1g",
     "mmrc",
     "special event"
   ],
   SATURDAY_SERVICE: ["sns"],
+  SATURDAY_SERVICES: [
+    "sns1",
+    "sns2",
+  ],
   SUNDAY_SERVICES: [
-    "9 am",
-    "12 nn",
-    "3 pm",
+    "sunday1",
+    "sunday2",
+    "sunday3",
+    "sunday4",
   ],
   REGULAR_SERVICES: [
-    "9 am",
-    "12 nn",
-    "3 pm",
-    "sns",
+    "sns1",
+    "sns2",
+    "sunday1",
+    "sunday2",
+    "sunday3",
+    "sunday4",
   ],
   ROLES: [
     "foh",
     "foh assistant",
-    "foh trainee",
-    "foh observer",
-    "broadcast mix",
-    "broadcast mix assistant",
-    "broadcast mix trainee",
-    "broadcast mix observer",
+    "foh observer 1",
+    "foh observer 2",
     "monitor mix",
     "rf tech",
     "monitor mix trainee",
     "monitor mix observer",
+    "broadcast mix",
+    "broadcast mix assistant",
+    "broadcast mix trainee",
+    "broadcast mix assistant trainee",
+    "broadcast mix observer",
     "nxtgen",
     "nxtgen trainee",
     "nxtgen observer",
@@ -49,16 +59,16 @@ export const category: { [key: string]: string[] } = {
   SNS_ROLES: [
     "foh",
     "foh assistant",
-    "foh trainee",
-    "foh observer",
+    "foh observer 1",
+    "foh observer 2",
+    "monitor mix",
+    "monitor mix trainee",
+    "monitor mix observer",
     "broadcast mix",
     "broadcast mix assistant",
     "broadcast mix trainee",
+    "broadcast mix assistant trainee",
     "broadcast mix observer",
-    "monitor mix",
-    "rf tech",
-    "monitor mix trainee",
-    "monitor mix observer",
     "audio volunteer 1",
     "audio volunteer 2"
   ],
@@ -84,17 +94,30 @@ export const category: { [key: string]: string[] } = {
   ]
 }
 
-export const common = {
-  FIRST_SERVICE: "9 am",
-  SECOND_SERVICE: "12 nn",
-  THIRD_SERVICE: "3 pm"
+export const saturday = {
+  FIRST_SERVICE: "4:00 pm",
+  SECOND_SERVICE: "6:30 pm",
+}
+
+export const sunday = {
+  FIRST_SERVICE: "9:00 am",
+  SECOND_SERVICE: "12:00 pm",
+  THIRD_SERVICE: "3:00 pm",
+  FOURTH_SERVICE: "6:00 pm"
+}
+
+export const service = {
+  SATURDAY: "saturday",
+  SUNDAY: "sunday",
 }
 
 export const serviceTime = {
-  [category.SATURDAY_SERVICE[0]]: "17:00",
-  [common.FIRST_SERVICE]: "09:00",
-  [common.SECOND_SERVICE]: "12:00",
-  [common.THIRD_SERVICE]: "15:00"
+  [saturday.FIRST_SERVICE]: "16:00",
+  [saturday.SECOND_SERVICE]: "18:30",
+  [sunday.FIRST_SERVICE]: "09:00",
+  [sunday.SECOND_SERVICE]: "12:00",
+  [sunday.THIRD_SERVICE]: "15:00",
+  [sunday.FOURTH_SERVICE]: "18:00"
 }
 
 export const color = {

@@ -1,4 +1,4 @@
-import { category, common } from "@/utils/constants";
+import { category, sunday } from "@/utils/constants";
 import { formatDate } from "@/utils/helpers";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
@@ -22,10 +22,11 @@ export default async function SCSchedulesByRole({role}: {role: string}) {
   return (
     <CCSchedulesByRole role={role} service={service}>
       <tbody>
-        { service[common.FIRST_SERVICE].map((firstService: any, i: number) => {
+        { service[sunday.FIRST_SERVICE]?.map((firstService: any, i: number) => {
           const sns = service?.[category.SATURDAY_SERVICE[0]];
-          const secondService = service[common.SECOND_SERVICE][i];
-          const thirdService = service[common.THIRD_SERVICE][i];
+          const secondService = service[sunday.SECOND_SERVICE][i];
+          const thirdService = service[sunday.THIRD_SERVICE][i];
+          const fourthService = service[sunday.FOURTH_SERVICE][i];
 
           return (
             <tr key={i} className="bg-slate-100 odd:bg-slate-200 snap-start">
@@ -39,6 +40,7 @@ export default async function SCSchedulesByRole({role}: {role: string}) {
               <SCVolunteerCell service={firstService} />
               <SCVolunteerCell service={secondService} />
               <SCVolunteerCell service={thirdService} />
+              <SCVolunteerCell service={fourthService} />
             </tr>
           )})
         }

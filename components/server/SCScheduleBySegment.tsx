@@ -5,10 +5,11 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 import CCScheduleBySegment from "../client/CCScheduleBySegment";
+import GCTabLInk from '../global/tabs/GCTabLink';
 
-export default async function SCScheduleBySegment({increment}: {increment: number}) {
+export default async function SCScheduleBySegment({increment, service}: {increment: number, service: string}) {
   const isAdmin = await checkAuth();
-  if (!isAdmin && increment !== 0) redirect("/schedule/segment/audio");
+  if (!isAdmin && increment !== 0) redirect("/schedule/segment/audio/sunday");
 
   const serviceDate = getNextService(increment);
   const nextServiceDate = getNextService(increment+1);
@@ -21,16 +22,21 @@ export default async function SCScheduleBySegment({increment}: {increment: numbe
         <h1 className="text-2xl">
           Upcoming Schedule
         </h1>
-        <div className="flex gap-0.5 w-full">
-          <CCScheduleBySegment schedule={schedule1} />
-          <CCScheduleBySegment schedule={schedule2} />
+        <div className='relative'>
+          <div className='absolute right-0 -translate-y-full'>
+            <GCTabLInk links={["saturday", "sunday"]} labels={["Saturday", "Sunday"]} isSinglePath path='service' />
+          </div>
+          <div className="flex gap-0.5 w-full mt-[0.5px]">
+            <CCScheduleBySegment schedule={schedule1} dayService={service} />
+            <CCScheduleBySegment schedule={schedule2} dayService={service} />
+          </div>
         </div>
         { isAdmin &&
           <div className="flex gap-3 w-full justify-end">
-            <Link className="hover:bg-slate-800 hover:text-slate-50 rounded-full" href={`/schedule/segment/audio?increment=${increment-1}`}>
+            <Link className="hover:bg-slate-800 hover:text-slate-50 rounded-full" href={`/schedule/segment/sunday?increment=${increment-1}`}>
               <BsArrowLeftCircle size={27} />
             </Link>
-            <Link className="hover:bg-slate-800 hover:text-slate-50 rounded-full" href={`/schedule/segment/audio?increment=${increment+1}`}>
+            <Link className="hover:bg-slate-800 hover:text-slate-50 rounded-full" href={`/schedule/segment/audio/sunday?increment=${increment+1}`}>
               <BsArrowRightCircle size={27} />
             </Link>
           </div>

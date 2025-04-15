@@ -1,6 +1,6 @@
 "use client";
 
-import { category, common } from "@/utils/constants";
+import { category, sunday } from "@/utils/constants";
 import { Fragment } from "react";
 import RoleDropdown from "@/components/client/CCRoleDropdown";
 
@@ -21,9 +21,10 @@ export default function CCSchedulesByRole({ role, service, children }: { role: s
                   <th className="sticky top-px bg-slate-300 border border-slate-300 w-20"></th>
                 </Fragment>
               }
-              <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase py-0.5">{common.FIRST_SERVICE}</th>
-              <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{common.SECOND_SERVICE}</th>
-              <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{common.THIRD_SERVICE}</th>
+              <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase py-0.5">{sunday.FIRST_SERVICE}</th>
+              <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{sunday.SECOND_SERVICE}</th>
+              <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{sunday.THIRD_SERVICE}</th>
+              <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{sunday.FOURTH_SERVICE}</th>
             </tr>
           </thead>
           { children }
