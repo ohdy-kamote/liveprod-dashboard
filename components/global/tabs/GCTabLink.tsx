@@ -29,7 +29,6 @@ export default function GCTabLInk(props: Readonly<{
   }
 
   const getBackgroundByName = (name?: string) => {
-    console.log(name, params?.[path]);
     if (name === params?.[path]) {
       return "bg-slate-800";
     } else {

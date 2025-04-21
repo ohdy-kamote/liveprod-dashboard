@@ -11,7 +11,7 @@ interface Schedule {
 export default function CCScheduleBySegment({ schedule, dayService }: { schedule: Schedule, dayService: string }) {
   const convertData = (data: any) => {
     const convertedData: any = {};
-    data.forEach((item: any) => {
+    data?.forEach((item: any) => {
       convertedData[item._id] = {};
       item.service.forEach((service: any) => {
         convertedData[item._id][service.role] = service;
