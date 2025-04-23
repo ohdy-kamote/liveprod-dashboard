@@ -9,6 +9,7 @@ import { PiLegoSmiley, PiLegoSmileyDuotone } from 'react-icons/pi';
 import { formatDate } from '@/utils/helpers';
 import { Tooltip } from 'react-tooltip';
 import GCInputSearch from "@/components/global/GCInputSearch";
+import { serviceCodeToTime } from '@/utils/constants';
 
 interface Volunteer {
   _id: string
@@ -90,9 +91,9 @@ export default function CCAssignVolunteer({ volunteers, schedule }: {volunteers:
         <div className="flex justify-center text-small gap-1 pb-3 uppercase text-slate-600">
           <div>{formatDate(schedule.date)}</div>
           <PiLegoSmiley size={24} />
-          <div>{schedule.service}</div>
+          <div>{serviceCodeToTime[schedule.service]}</div>
           <PiLegoSmileyDuotone size={24} />
-          <div>{schedule.role}</div>
+          <div id='volunteer-role' className='max-w-1/3 whitespace-nowrap overflow-hidden text-ellipsis'>{schedule.role}</div>
         </div>
         <div className="flex justify-between gap-2">
           <GCInputSearch onChange={(event) => setQuery(event.target.value)} autofocus />
@@ -131,6 +132,7 @@ export default function CCAssignVolunteer({ volunteers, schedule }: {volunteers:
         <div className="bg-slate-200 h-px" />
       </div>
       <Tooltip variant="error" anchorSelect="#remove-assignee" place="top-start">Remove assignee</Tooltip>
+      <Tooltip anchorSelect="#volunteer-role" className='uppercase'>{schedule.role}</Tooltip>
     </Fragment>
   )
 }

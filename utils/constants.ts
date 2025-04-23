@@ -25,37 +25,49 @@ const role = {
   AUDIO_VOLUNTEER_2: "audio volunteer 2",
 }
 
+export const serviceCode = {
+  SNS_1: "sns1",
+  SNS_2: "sns2",
+  SUNDAY_1: "sunday1",
+  SUNDAY_2: "sunday2",
+  SUNDAY_3: "sunday3",
+  SUNDAY_4: "sunday4",
+  IDC: "idc",
+  B1G: "b1g",
+  MMRC: "mmrc",
+  SPECIAL_EVENT: "special event"
+}
+
 export const category: { [key: string]: string[] } = {
   SERVICES: [
-    "sns1",
-    "sns2",
-    "sunday1",
-    "sunday2",
-    "sunday3",
-    "sunday4",
-    "idc",
-    "b1g",
-    "mmrc",
-    "special event"
+    serviceCode.SNS_1,
+    serviceCode.SNS_2,
+    serviceCode.SUNDAY_1,
+    serviceCode.SUNDAY_2,
+    serviceCode.SUNDAY_3,
+    serviceCode.SUNDAY_4,
+    serviceCode.IDC,
+    serviceCode.B1G,
+    serviceCode.MMRC,
+    serviceCode.SPECIAL_EVENT,
   ],
-  SATURDAY_SERVICE: ["sns"],
   SATURDAY_SERVICES: [
-    "sns1",
-    "sns2",
+    serviceCode.SNS_1,
+    serviceCode.SNS_2,
   ],
   SUNDAY_SERVICES: [
-    "sunday1",
-    "sunday2",
-    "sunday3",
-    "sunday4",
+    serviceCode.SUNDAY_1,
+    serviceCode.SUNDAY_2,
+    serviceCode.SUNDAY_3,
+    serviceCode.SUNDAY_4,
   ],
   REGULAR_SERVICES: [
-    "sns1",
-    "sns2",
-    "sunday1",
-    "sunday2",
-    "sunday3",
-    "sunday4",
+    serviceCode.SNS_1,
+    serviceCode.SNS_2,
+    serviceCode.SUNDAY_1,
+    serviceCode.SUNDAY_2,
+    serviceCode.SUNDAY_3,
+    serviceCode.SUNDAY_4,
   ],
   ROLES: [
     role.FOH,
@@ -127,18 +139,27 @@ export const sunday = {
   FOURTH_SERVICE: "6:00 pm"
 }
 
+export const serviceCodeToTime = {
+  [serviceCode.SNS_1]: saturday.FIRST_SERVICE,
+  [serviceCode.SNS_2]: saturday.SECOND_SERVICE,
+  [serviceCode.SUNDAY_1]: sunday.FIRST_SERVICE,
+  [serviceCode.SUNDAY_2]: sunday.SECOND_SERVICE,
+  [serviceCode.SUNDAY_3]: sunday.THIRD_SERVICE,
+  [serviceCode.SUNDAY_4]: sunday.FOURTH_SERVICE
+}
+
 export const service = {
   SATURDAY: "saturday",
   SUNDAY: "sunday",
 }
 
 export const serviceTime = {
-  [saturday.FIRST_SERVICE]: "16:00",
-  [saturday.SECOND_SERVICE]: "18:30",
-  [sunday.FIRST_SERVICE]: "09:00",
-  [sunday.SECOND_SERVICE]: "12:00",
-  [sunday.THIRD_SERVICE]: "15:00",
-  [sunday.FOURTH_SERVICE]: "18:00"
+  [serviceCode.SNS_1]: "16:00",
+  [serviceCode.SNS_2]: "18:30",
+  [serviceCode.SUNDAY_1]: "09:00",
+  [serviceCode.SUNDAY_2]: "12:00",
+  [serviceCode.SUNDAY_3]: "15:00",
+  [serviceCode.SUNDAY_4]: "18:00"
 }
 
 export const color = {
@@ -203,6 +224,17 @@ export const roleFilter = [
     roles: [
       role.FOH_ASSISTANT,
       role.BROADCAST_MIX_ASSISTANT
+    ]
+  },
+  {
+    label: "Trainee",
+    value: "trainee",
+    href: "/schedule/role/trainee",
+    roles: [
+      role.MONITOR_MIX_TRAINEE,
+      role.BROADCAST_MIX_TRAINEE,
+      role.BROADCAST_MIX_ASSISTANT_TRAINEE,
+      role.NXTGEN_TRAINEE
     ]
   },
   {
