@@ -3,7 +3,7 @@ import { roleFilter } from '@/utils/constants';
 import { chunkArray } from '@/utils/helpers';
 import { Fragment } from "react";
 
-export default function ScheduleByRole({ params }: { params: { role1: string, role2: string, role3: string } }) {
+export default function ScheduleByRole({params}: {params: {role1: string}}) {
   const roles = roleFilter.find((role) => role.value === decodeURI(params.role1))?.roles || [];
   const columns = chunkArray(roles, 2);
 

@@ -1,20 +1,23 @@
 "use client";
 
 import CCAddRow from "@/components/client/CCAddRow";
+import GCLoading from '@/components/global/GCLoading';
 import GCTabLInk from '@/components/global/tabs/GCTabLink';
 import { roleFilter } from '@/utils/constants';
 import Link from 'next/link';
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { HiMiniArrowsRightLeft } from "react-icons/hi2";
 import { Tooltip } from "react-tooltip";
 
 export default function RootLayout(props: Readonly<{
   children: React.ReactNode;
 }>) {
-  const params = useParams<{role1: string, role2: string, role3: string}>();
+  const params = useParams<{role1: string}>();
+  const [isLoading, setIsLoading] = useState(false);
 
+  if (isLoading) return <GCLoading />
   return (
     <Fragment>
       <div className='flex items-center justify-between'>
@@ -34,7 +37,7 @@ export default function RootLayout(props: Readonly<{
               </Link>
           ))}
         </div>
-        <CCAddRow />
+        <CCAddRow toggleLoading={() => setIsLoading(!isLoading)} />
       </div>
       <div className='mb-5'></div>
       {props.children}

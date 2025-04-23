@@ -23,3 +23,9 @@ components/global folder:
 
 Assign Volunteer Modal:
 - Replace "sunday1" with service time
+
+GCTabLink:
+- Move upward to look like capsule tab
+
+Upcoming page table:
+- Modify to look like schedules table
