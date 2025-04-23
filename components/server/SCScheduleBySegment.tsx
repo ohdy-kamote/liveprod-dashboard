@@ -19,22 +19,22 @@ export default async function SCScheduleBySegment({increment, service}: {increme
   return (
     <div className="flex justify-center">
       <div className="flex flex-col w-full gap-4 text-slate-700">
-        <h1 className="text-2xl">
-          Upcoming Schedule
-        </h1>
-        <div className='relative'>
-          <div className='absolute right-0 -translate-y-full'>
-            <GCTabLInk
-              links={[
-                `/schedule/segment/audio/saturday?increment=${increment}`,
-                `/schedule/segment/audio/sunday?increment=${increment}`
-              ]}
-              name={["saturday", "sunday"]}
-              labels={["Saturday", "Sunday"]}
-              isSinglePath path='service'
-            />
-          </div>
-          <div className="flex gap-0.5 w-full mt-[0.5px]">
+        <div className='flex items-center justify-between'>
+          <h1 className="text-2xl">
+            Upcoming Schedule
+          </h1>
+          <GCTabLInk
+            links={[
+              `/schedule/segment/audio/saturday?increment=${increment}`,
+              `/schedule/segment/audio/sunday?increment=${increment}`
+            ]}
+            name={["saturday", "sunday"]}
+            labels={["Saturday", "Sunday"]}
+            isSinglePath path='service'
+          />
+        </div>
+        <div>
+          <div className="flex gap-2 w-full mt-[0.5px]">
             <CCScheduleBySegment schedule={schedule1} dayService={service} />
             <CCScheduleBySegment schedule={schedule2} dayService={service} />
           </div>

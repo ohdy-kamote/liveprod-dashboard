@@ -7,7 +7,7 @@ import RoleDropdown from "@/components/client/CCRoleDropdown";
 export default function CCSchedulesByRole({ role, service, children }: { role: string, service: any, children: React.ReactNode }) {
   return (
     <div className="flex flex-col w-full">
-      <div className="bg-slate-900 border border-slate-900 flex justify-center">
+      <div className="bg-slate-800 border border-slate-800 flex justify-center">
         <RoleDropdown role={role} />
       </div>
       <div className="relative max-h-[240px] overflow-y-scroll no-scrollbar snap-y snap-mandatory transition-all delay-1000">

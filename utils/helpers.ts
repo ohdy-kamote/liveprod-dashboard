@@ -99,7 +99,7 @@ export function formatDate(date: string) {
 }
 
 export function formatDateLong(date: string) {
-  return new Date(date).toLocaleDateString("en-US", {month: "long", day: "2-digit", timeZone: "Asia/Manila"});
+  return new Date(date).toLocaleDateString("en-US", {month: "long", day: "2-digit", year: "numeric", timeZone: "Asia/Manila"});
 }
 
 export function newDate() {

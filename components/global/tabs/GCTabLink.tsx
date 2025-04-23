@@ -30,19 +30,19 @@ export default function GCTabLInk(props: Readonly<{
 
   const getBackgroundByName = (name?: string) => {
     if (name === params?.[path]) {
-      return "bg-slate-800";
+      return "bg-slate-700";
     } else {
-      return "bg-slate-500";
+      return "bg-slate-400";
     }
   }
 
   return (
-    <div className="flex w-fit gap-px">
+    <div className="flex gap-px">
       {links.map((link, index) => (
         <Link
           key={index}
           href={link}
-          className={`text-white p-1.5 w-28 text-center first:rounded-ss-md last:rounded-se-md ${isSinglePath ? getBackgroundByName(props?.name?.[index]) : getBackgroundByNumber(index + 1)}`}
+          className={`text-white py-1 w-28 text-center first:rounded-s-xl last:rounded-e-xl ${isSinglePath ? getBackgroundByName(props?.name?.[index]) : getBackgroundByNumber(index + 1)}`}
         >
           {labels[index]}
         </Link>

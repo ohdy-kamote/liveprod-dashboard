@@ -20,12 +20,3 @@ app folder:
 
 components/global folder:
 - all global components should be in components/view folder
-
-Assign Volunteer Modal:
-- Replace "sunday1" with service time
-
-GCTabLink:
-- Move upward to look like capsule tab
-
-Upcoming page table:
-- Modify to look like schedules table
