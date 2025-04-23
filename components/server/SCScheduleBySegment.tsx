@@ -40,13 +40,15 @@ export default async function SCScheduleBySegment({increment, service}: {increme
           </div>
         </div>
         { isAdmin &&
-          <div className="flex gap-3 w-full justify-end">
-            <Link className="hover:bg-slate-800 hover:text-slate-50 rounded-full" href={`/schedule/segment/audio/${service}?increment=${increment-1}`}>
-              <BsArrowLeftCircle size={27} />
-            </Link>
-            <Link className="hover:bg-slate-800 hover:text-slate-50 rounded-full" href={`/schedule/segment/audio/${service}?increment=${increment+1}`}>
-              <BsArrowRightCircle size={27} />
-            </Link>
+          <div className='absolute right-3.5 bottom-2'>
+            <div className="flex gap-3 w-full justify-end">
+              <Link className="text-slate-600 hover:bg-slate-600 hover:text-slate-50 rounded-full" href={`/schedule/segment/audio/${service}?increment=${increment-1}`}>
+                <BsArrowLeftCircle size={27} />
+              </Link>
+              <Link className="text-slate-600 hover:bg-slate-600 hover:text-slate-50 rounded-full" href={`/schedule/segment/audio/${service}?increment=${increment+1}`}>
+                <BsArrowRightCircle size={27} />
+              </Link>
+            </div>
           </div>
         }
       </div>
