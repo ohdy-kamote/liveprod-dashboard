@@ -20,7 +20,7 @@ export default function RootLayout(props: Readonly<{
   if (isLoading) return <GCLoading />
   return (
     <Fragment>
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center justify-between mt-11'>
         <div className='flex items-center gap-2'>
           { roleFilter.map((role, index) => (
               <Link
@@ -39,7 +39,7 @@ export default function RootLayout(props: Readonly<{
         </div>
         <CCAddRow toggleLoading={() => setIsLoading(!isLoading)} />
       </div>
-      <div className='mb-5'></div>
+      <div className='mb-2'></div>
       {props.children}
     </Fragment>
   )

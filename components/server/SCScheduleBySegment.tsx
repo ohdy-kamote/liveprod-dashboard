@@ -21,7 +21,7 @@ export default async function SCScheduleBySegment({increment, service}: {increme
       <div className="flex flex-col w-full gap-4 text-slate-700">
         <div className='flex items-center justify-between'>
           <h1 className="text-2xl">
-            Upcoming Schedule
+            
           </h1>
           <GCTabLInk
             links={[

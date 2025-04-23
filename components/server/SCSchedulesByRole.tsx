@@ -30,10 +30,10 @@ export default async function SCSchedulesByRole({role}: {role: string}) {
           const fourthService = service[category.SUNDAY_SERVICES[3]][i];
 
           return (
-            <tr key={i} className="bg-slate-100 odd:bg-slate-200 snap-start">
+            <tr key={i} className="border border-slate-300 bg-slate-100 odd:bg-slate-200 snap-start">
               { snsFirst?.length &&
                 <Fragment>
-                  <td className="border border-slate-300 w-20 text-center">{formatDate(snsFirst[i].date)}</td>
+                  <td className="w-20 text-center">{formatDate(snsFirst[i].date)}</td>
                   <SCVolunteerCell service={snsFirst?.[i]} />
                   <SCVolunteerCell service={snsSecond?.[i]} />
                 </Fragment>
