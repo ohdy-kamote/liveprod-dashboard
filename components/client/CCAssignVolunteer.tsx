@@ -122,7 +122,7 @@ export default function CCAssignVolunteer({ volunteers, schedule }: {volunteers:
                 </div>
                 { volunteer.role &&
                   <div className="flex flex-col justify-center border border-sky-600 bg-sky-50 px-1 rounded-md">
-                    <p className="uppercase text-xs text-sky-600">{volunteer.role}</p>
+                    <p className="uppercase text-xs text-sky-600">{volunteer.role.replace(/\d+/g, "")}</p>
                   </div>
                 }
               </div>

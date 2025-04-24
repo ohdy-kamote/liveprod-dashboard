@@ -75,6 +75,7 @@ export default function CCScheduleBySegment({ schedule, dayService }: { schedule
               return (
                 <tr key={i} data-group={role.slice(0, 3)} className={`${isLastInGroup && "last-in-group"} ${isFirstInGroup && "first-in-group"} border border-slate-300 bg-slate-100 odd:bg-slate-200`}>
                   <td className="w-9 text-center h-6 text-xs">{i+1}</td>
+                  {/* str.replace(/\d+/g, "") removes numbers in name */}
                   <td className="px-1 w-52 uppercase text-sm">{role.replace("broadcast", "bc").replace(/\d+/g, "")}</td>
                   { dayService === service.SATURDAY ?
                     <>

@@ -20,3 +20,9 @@ app folder:
 
 components/global folder:
 - all global components should be in components/view folder
+
+Schedule Pages
+- Copy and paste functionalities
+
+Volunteer Profile
+- Auto add roles assigned when assigning a role in schedules page
