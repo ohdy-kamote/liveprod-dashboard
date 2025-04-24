@@ -10,15 +10,9 @@ export default function GCTabLInk(props: Readonly<{
   isSinglePath?: boolean;
   path?: string
 }>) {
-  const { links, labels, path = "service", isSinglePath = false } = props;
-  const params = useParams<{role1: string, role2: string, role3: string, [path]: string}>();
+  const { links, labels, isSinglePath = false } = props;
+  const params = useParams<{role1: string, service: string}>();
   let numPaths = 1;
-
-  if (params?.role3) {
-    numPaths = 3;
-  } else if (params?.role2) {
-    numPaths = 2;
-  }
 
   const getBackgroundByNumber = (pathNum: number) => {
     if (pathNum === numPaths) {
@@ -29,7 +23,7 @@ export default function GCTabLInk(props: Readonly<{
   }
 
   const getBackgroundByName = (name?: string) => {
-    if (name === params?.[path]) {
+    if (name === params?.service) {
       return "bg-slate-700";
     } else {
       return "bg-slate-400";

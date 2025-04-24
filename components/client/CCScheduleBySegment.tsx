@@ -1,6 +1,6 @@
 import SCVolunteerCell from "@/components/server/SCVolunteerCell";
 import { category, saturday, service, sunday } from "@/utils/constants";
-import { formatDate, formatDateLong } from "@/utils/helpers";
+import { formatDateLong } from "@/utils/helpers";
 import { Fragment, useMemo } from 'react';
 
 interface Schedule {

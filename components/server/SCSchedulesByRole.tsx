@@ -1,9 +1,8 @@
-import { category, sunday } from "@/utils/constants";
+import { category } from "@/utils/constants";
 import { formatDate } from "@/utils/helpers";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
 import SCVolunteerCell from "@/components/server/SCVolunteerCell";
-import RoleDropdown from "@/components/client/CCRoleDropdown";
 import { getSchedulesByRole } from "@/utils/apis/get";
 import CCSchedulesByRole from "../client/CCScheduleByRole";
 

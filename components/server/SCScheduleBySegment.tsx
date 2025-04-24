@@ -30,7 +30,7 @@ export default async function SCScheduleBySegment({increment, service}: {increme
             ]}
             name={["saturday", "sunday"]}
             labels={["Saturday", "Sunday"]}
-            isSinglePath path='service'
+            isSinglePath
           />
         </div>
         <div>
