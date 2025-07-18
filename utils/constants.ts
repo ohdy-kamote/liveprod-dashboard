@@ -7,8 +7,9 @@ export const configs = {
 const role = {
   FOH: "foh",
   FOH_ASSISTANT: "foh assistant",
-  FOH_OBSERVER_1: "foh observer 1",
-  FOH_OBSERVER_2: "foh observer 2",
+  FOH_TRAINEE: "foh trainee",
+  FOH_ASSISTANT_TRAINEE: "foh assistant trainee",
+  FOH_OBSERVER: "foh observer",
   MONITOR_MIX: "monitor mix",
   RF_TECH: "rf tech",
   MONITOR_MIX_TRAINEE: "monitor mix trainee",
@@ -72,8 +73,9 @@ export const category: { [key: string]: string[] } = {
   ROLES: [
     role.FOH,
     role.FOH_ASSISTANT,
-    role.FOH_OBSERVER_1,
-    role.FOH_OBSERVER_2,
+    role.FOH_TRAINEE,
+    role.FOH_ASSISTANT_TRAINEE,
+    role.FOH_OBSERVER,
     role.MONITOR_MIX,
     role.RF_TECH,
     role.MONITOR_MIX_TRAINEE,
@@ -92,8 +94,9 @@ export const category: { [key: string]: string[] } = {
   SNS_ROLES: [
     role.FOH,
     role.FOH_ASSISTANT,
-    role.FOH_OBSERVER_1,
-    role.FOH_OBSERVER_2,
+    role.FOH_TRAINEE,
+    role.FOH_ASSISTANT_TRAINEE,
+    role.FOH_OBSERVER,
     role.MONITOR_MIX,
     role.MONITOR_MIX_TRAINEE,
     role.MONITOR_MIX_OBSERVER,
@@ -180,8 +183,9 @@ export const roleFilter = [
     roles: [
       role.FOH,
       role.FOH_ASSISTANT,
-      role.FOH_OBSERVER_1,
-      role.FOH_OBSERVER_2,
+      role.FOH_TRAINEE,
+      role.FOH_ASSISTANT_TRAINEE,
+      role.FOH_OBSERVER
     ]
   },
   {
@@ -242,8 +246,7 @@ export const roleFilter = [
     value: "observer",
     href: "/schedule/role/observer",
     roles: [
-      role.FOH_OBSERVER_1,
-      role.FOH_OBSERVER_2,
+      role.FOH_OBSERVER,
       role.MONITOR_MIX_OBSERVER,
       role.BROADCAST_MIX_OBSERVER,
       role.NXTGEN_OBSERVER
