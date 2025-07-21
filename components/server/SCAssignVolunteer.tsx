@@ -10,6 +10,7 @@ export default async function SCAssignVolunteer({ id }: { id: string }) {
     const res = {
       _id: volunteer._id,
       name: volunteer.name,
+      roles: volunteer.roles,
       available: true,
       message: "",
       prevSchedId: "",

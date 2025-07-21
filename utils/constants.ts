@@ -127,6 +127,10 @@ export const category: { [key: string]: string[] } = {
     "active",
     "inactive",
     "on leave"
+  ],
+  GENDER: [
+    "male",
+    "female"
   ]
 }
 

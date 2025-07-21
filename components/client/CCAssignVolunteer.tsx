@@ -1,6 +1,6 @@
 "use client";
 
-import { putScheduleAssign, putScheduleRemoveAssignee } from '@/utils/apis/put';
+import { putScheduleAssign, putScheduleRemoveAssignee, putUpdateVolunteer } from '@/utils/apis/put';
 import { useRouter } from 'next/navigation';
 import { Fragment, useState } from 'react'
 import GCLoading from "@/components/global/GCLoading";
@@ -18,6 +18,7 @@ interface Volunteer {
   message: string
   prevSchedId: string
   role: string
+  roles: string[]
 }
 
 interface Schedule {
@@ -52,9 +53,18 @@ export default function CCAssignVolunteer({ volunteers, schedule }: {volunteers:
     router.back();
   }
 
-  const setScheduleToVolunteer = async (volunteerId: string) => {
+  const assignScheduleAndRoleToVolunteer = async (volunteer: Volunteer) => {
+    await putScheduleAssign(schedule._id, volunteer._id);
+
+    if (volunteer.roles?.includes(schedule.role)) return
+    await putUpdateVolunteer(volunteer._id, {
+      roles: [...volunteer.roles, schedule.role],
+    })
+  }
+
+  const setScheduleToVolunteer = async (volunteer: Volunteer) => {
     setIsLoading(true);
-    await putScheduleAssign(schedule._id, volunteerId);
+    await assignScheduleAndRoleToVolunteer(volunteer);
     closeModal();
   }
 
@@ -64,23 +74,23 @@ export default function CCAssignVolunteer({ volunteers, schedule }: {volunteers:
     closeModal();
   }
 
-  const overrideSchedule = async (volunteerId: string, prevSchedId: string) => {
+  const overrideSchedule = async (volunteer: Volunteer, prevSchedId: string) => {
     setIsLoading(true);
-    await putScheduleAssign(schedule._id, volunteerId);
+    await assignScheduleAndRoleToVolunteer(volunteer);
     await putScheduleRemoveAssignee(prevSchedId);
     closeModal();
   }
 
   const validateAssigneeSchedule = (volunteer: Volunteer) => {
     if (volunteer.available) {
-      setScheduleToVolunteer(volunteer._id);
+      setScheduleToVolunteer(volunteer);
     } else if(volunteer.role === "Assigned Volunteer") {
       return;
     } else {
       const override = confirm(volunteer.message);
 
       if (!override) return;
-      overrideSchedule(volunteer._id, volunteer.prevSchedId)
+      overrideSchedule(volunteer, volunteer.prevSchedId)
     }
   }
 
