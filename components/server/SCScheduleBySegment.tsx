@@ -1,4 +1,4 @@
-import { getFilteredSchedule } from "@/utils/apis/get";
+import { getSchduleByDateRange } from "@/utils/apis/get";
 import { getNextService } from "@/utils/helpers";
 import Link from "next/link";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
@@ -8,8 +8,8 @@ import GCTabLInk from '../global/tabs/GCTabLink';
 export default async function SCScheduleBySegment({increment, service}: {increment: number, service: string}) {
   const serviceDate = getNextService(increment);
   const nextServiceDate = getNextService(increment+1);
-  const schedule1 = await getFilteredSchedule(serviceDate.saturday, serviceDate.sunday);
-  const schedule2 = await getFilteredSchedule(nextServiceDate.saturday, nextServiceDate.sunday);
+  const schedule1 = await getSchduleByDateRange(serviceDate.saturday, serviceDate.sunday);
+  const schedule2 = await getSchduleByDateRange(nextServiceDate.saturday, nextServiceDate.sunday);
 
   return (
     <div className="flex justify-center">

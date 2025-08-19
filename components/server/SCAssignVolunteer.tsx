@@ -1,10 +1,15 @@
 import CCAssignVolunteer from "@/components/client/CCAssignVolunteer";
-import { getAllVolunteersPopulated, getScheduleById } from '@/utils/apis/get';
+import { getAllVolunteersPopulated, getScheduleById, getFilteredSchedules } from '@/utils/apis/get';
 import { eq } from "@/utils/dates";
 
 export default async function SCAssignVolunteer({ id }: { id: string }) {
   const volunteersRes = await getAllVolunteersPopulated();
   const scheduleRes = await getScheduleById(id);
+  const adjacentSchedules = await getFilteredSchedules({
+    date: scheduleRes.data.date,
+    role: scheduleRes.data.role
+  });
+  console.log("Adjacent Schedules:", adjacentSchedules);
 
   const volunteers = volunteersRes.data.map((volunteer: any) => {
     const res = {
