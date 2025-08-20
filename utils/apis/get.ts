@@ -54,7 +54,7 @@ export const getFilteredSchedules = async (request = {}) => {
   try {
     const res = await fetch(`${SOURCE_URL}/api/schedule/filter`, {
       cache: "no-store",
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-type": "application/json"
       },

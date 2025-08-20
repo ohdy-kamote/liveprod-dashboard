@@ -9,7 +9,19 @@ export default async function SCAssignVolunteer({ id }: { id: string }) {
     date: scheduleRes.data.date,
     role: scheduleRes.data.role
   });
-  console.log("Adjacent Schedules:", adjacentSchedules);
+  const adjacentSchedulesGrouped = adjacentSchedules.data.reduce(
+    (acc: any, item: any) => {
+      if (item.service === "sunday1" || item.service === "sunday2") {
+        acc.am.push(item._id);
+      } else if (item.service === "sunday3" || item.service === "sunday4") {
+        acc.pm.push(item._id);
+      } else if (item.service === "sns1" || item.service === "sns2") {
+        acc.sns.push(item._id);
+      }
+      return acc;
+    },
+    { am: [], pm: [], sns: [] } as { am: string[]; pm: string[], sns: string[] }
+  );
 
   const volunteers = volunteersRes.data.map((volunteer: any) => {
     const res = {
@@ -36,6 +48,6 @@ export default async function SCAssignVolunteer({ id }: { id: string }) {
   });
 
   return (
-    <CCAssignVolunteer volunteers={volunteers} schedule={scheduleRes.data} />
+    <CCAssignVolunteer volunteers={volunteers} schedule={scheduleRes.data} schedulesGrouped={adjacentSchedulesGrouped} />
   );
 }
