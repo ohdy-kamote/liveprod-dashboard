@@ -31,6 +31,8 @@ export const getSchedulesByRole = async (role: string) => {
     return await res.json();
   } catch (error) {
     console.log("Error loading schedules:", error);
+    // Return a proper error response structure
+    return { data: [], error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
 

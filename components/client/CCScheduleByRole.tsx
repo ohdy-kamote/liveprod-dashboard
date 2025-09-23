@@ -4,7 +4,7 @@ import { category, saturday, sunday } from "@/utils/constants";
 import { Fragment } from "react";
 import RoleDropdown from "@/components/client/CCRoleDropdown";
 
-export default function CCSchedulesByRole({ role, service, children }: { role: string, service: any, children: React.ReactNode }) {
+export default function CCSchedulesByRole({ role, service, hasSaturday }: { role: string, service: any, hasSaturday?: boolean, children: React.ReactNode }) {
   return (
     <div className="flex flex-col w-full">
       <div className="bg-slate-800 border border-slate-800 flex justify-center">
@@ -15,20 +15,21 @@ export default function CCSchedulesByRole({ role, service, children }: { role: s
           <thead>
             <tr className="snap-start">
               <th className="sticky top-px bg-slate-300 border border-slate-300 w-20">SNS</th>
-              { service?.[category.SATURDAY_SERVICES[0]]?.length &&
+              { hasSaturday ? (
                 <Fragment>
                   <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{saturday.FIRST_SERVICE}</th>
                   <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{saturday.SECOND_SERVICE}</th>
                   <th className="sticky top-px bg-slate-300 border border-slate-300 w-20">SUNDAY</th>
                 </Fragment>
-              }
+              ) : null }
               <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase py-0.5">{sunday.FIRST_SERVICE}</th>
               <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{sunday.SECOND_SERVICE}</th>
               <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{sunday.THIRD_SERVICE}</th>
               <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{sunday.FOURTH_SERVICE}</th>
             </tr>
           </thead>
-          { children }
+          { /* @ts-expect-error children provided by server */ }
+          { arguments[0].children }
         </table>
       </div>
     </div>
