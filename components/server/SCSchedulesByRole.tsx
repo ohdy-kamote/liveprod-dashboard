@@ -54,7 +54,6 @@ export default async function SCSchedulesByRole({role}: {role: string}) {
                       {snsFirst?.[i]?.date ? formatDate(snsFirst[i].date) : ''}
                     </td>
                     <SCVolunteerCell service={snsFirst?.[i]} />
-                    <SCVolunteerCell service={snsSecond?.[i]} />
                   </Fragment>
                 )}
                 <td className="border border-slate-300 w-20 text-center">

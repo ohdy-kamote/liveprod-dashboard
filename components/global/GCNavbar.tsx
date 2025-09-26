@@ -13,6 +13,7 @@ export default function Navbar({ session }: { session: Session | null }) {
   const [newPath, setNewPath] = useState("/");
 
   const isAuthenticated = session?.user?.username;
+  const isAdmin = session?.user?.isAdmin;
 
   useEffect(() => {
     const url = `${pathname}`
@@ -56,10 +57,10 @@ export default function Navbar({ session }: { session: Session | null }) {
         </div>
       </Link>
       <div className="flex justify-between">
-        <Link className="text-white p-2" href={"/schedule/role/foh"}>Schedules</Link>
+        { isAdmin && <Link className="text-white p-2" href={"/schedule/role/foh"}>Schedules</Link> }
         <Link className="text-white p-2" href={"/schedule/calendar"}>Calendar</Link>
         <Link className="text-white p-2" href={"/schedule/segment/audio/sunday"}>Upcoming</Link>
-        <Link className="text-white p-2" href={"/volunteer/all"}>Volunteers</Link>
+        { isAdmin && <Link className="text-white p-2" href={"/volunteer/all"}>Volunteers</Link> }
         { !isAuthenticated ?
           <button onClick={() => signIn()} className="text-white p-2">Login</button>
           :

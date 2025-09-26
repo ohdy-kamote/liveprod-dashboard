@@ -135,8 +135,7 @@ export const category: { [key: string]: string[] } = {
 }
 
 export const saturday = {
-  FIRST_SERVICE: "4:00 pm",
-  SECOND_SERVICE: "6:30 pm",
+  FIRST_SERVICE: "5:00 PM",
 }
 
 export const sunday = {

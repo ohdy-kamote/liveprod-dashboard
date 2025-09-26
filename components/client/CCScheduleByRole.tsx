@@ -14,11 +14,10 @@ export default function CCSchedulesByRole({ role, service, hasSaturday }: { role
         <table className="table-auto w-full text-sm">
           <thead>
             <tr className="snap-start">
-              <th className="sticky top-px bg-slate-300 border border-slate-300 w-20">SNS</th>
               { hasSaturday ? (
                 <Fragment>
+                  <th className="sticky top-px bg-slate-300 border border-slate-300 w-20">SNS</th>
                   <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{saturday.FIRST_SERVICE}</th>
-                  <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{saturday.SECOND_SERVICE}</th>
                   <th className="sticky top-px bg-slate-300 border border-slate-300 w-20">SUNDAY</th>
                 </Fragment>
               ) : null }
