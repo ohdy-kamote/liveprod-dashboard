@@ -14,8 +14,7 @@ export function migrateToFlexibleSchedule() {
   
   // Add Saturday services
   config.services.push(
-    { id: 'sns1', name: '4:00 pm', time: '16:00', day: 'saturday', order: 1, isActive: true },
-    { id: 'sns2', name: '6:30 pm', time: '18:30', day: 'saturday', order: 2, isActive: true }
+    { id: 'sns1', name: '5:00 pm', time: '17:00', day: 'saturday', order: 1, isActive: true }
   );
   
   // Add Sunday services

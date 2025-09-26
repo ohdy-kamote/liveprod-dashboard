@@ -46,7 +46,17 @@ const volunteerSchema = new Schema({
   phone: {
     type: String,
     required: false,
-  }
+  },
+  trainings: [{
+    name: {
+      type: String,
+      required: true
+    },
+    date: {
+      type: Date,
+      required: true
+    }
+  }]
 }, { timestamps: true, strict: true });
 
 const Volunteer = mongoose.models.Volunteer || mongoose.model("Volunteer", volunteerSchema);

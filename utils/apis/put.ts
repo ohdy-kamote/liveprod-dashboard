@@ -20,6 +20,8 @@ interface VolunteerData {
   status?: string
   roles?: string[]
   gender?: string
+  phone?: string
+  trainings?: Array<{ name: string; date: string }>
 }
 
 export const putUpdateVolunteer = async (id: string, body: VolunteerData) => {

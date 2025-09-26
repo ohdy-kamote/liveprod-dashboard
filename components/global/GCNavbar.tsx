@@ -64,7 +64,10 @@ export default function Navbar({ session }: { session: Session | null }) {
         { !isAuthenticated ?
           <button onClick={() => signIn()} className="text-white p-2">Login</button>
           :
-          <button onClick={() => signOut({redirect: true, callbackUrl: "/login"})} className="text-white p-2">Logout</button>
+          <div className="flex items-center gap-2">
+            <button onClick={() => signOut({redirect: true, callbackUrl: "/login"})} className="text-white p-2">Logout</button>
+            <span className="text-white text-sm capitalize">({session?.user?.username})</span>
+          </div>
         }
       </div>
       { pathname !== "/" &&

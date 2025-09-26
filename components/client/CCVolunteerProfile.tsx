@@ -12,6 +12,11 @@ import { useEffect, useMemo, useState } from "react";
 import { GoDotFill } from "react-icons/go";
 import { IoCloseCircle, IoPersonCircleSharp, IoSaveSharp } from "react-icons/io5";
 
+interface Training {
+  name: string
+  date: string
+}
+
 interface Volunteer {
   _id: string
   name: string
@@ -23,6 +28,8 @@ interface Volunteer {
   schedules: Schedule[]
   roles: string[]
   gender: string
+  phone?: string
+  trainings?: Training[]
 }
 
 interface Schedule {
@@ -42,6 +49,8 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
   const [ role, setRole ] = useState<string | undefined>(undefined);
   const [ roles, setRoles ] = useState<string[]>(volunteer.roles);
   const [ gender, setGender ] = useState<string>(volunteer.gender);
+  const [ phone, setPhone ] = useState<string>(volunteer.phone || "");
+  const [ trainings, setTrainings ] = useState<Training[]>(volunteer.trainings || []);
 
   const hasChanges = useMemo(() => (
     firstName !== volunteer.firstName ||
@@ -50,7 +59,9 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
     status !== volunteer.status ||
     segment !== volunteer.segment ||
     gender !== volunteer.gender ||
-    JSON.stringify(roles) !== JSON.stringify(volunteer.roles)
+    phone !== (volunteer.phone || "") ||
+    JSON.stringify(roles) !== JSON.stringify(volunteer.roles) ||
+    JSON.stringify(trainings) !== JSON.stringify(volunteer.trainings || [])
   ), [
     firstName,
     lastName,
@@ -59,13 +70,17 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
     status,
     roles,
     gender,
+    phone,
+    trainings,
     volunteer.firstName,
     volunteer.lastName,
     volunteer.nickName,
     volunteer.segment,
     volunteer.status,
     volunteer.roles,
-    volunteer.gender
+    volunteer.gender,
+    volunteer.phone,
+    volunteer.trainings
   ]);
 
   useEffect(() => {
@@ -81,13 +96,23 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
     setNickName(volunteer?.nickName || "")
     setStatus(volunteer.status)
     setSegment(volunteer.segment)
+    setPhone(volunteer.phone || "")
+    setTrainings(volunteer.trainings || [])
+  }
+
+  const updateVolunteerInfo = async () => {
+    try {
+      console.log('Saving trainings:', trainings);
+      const result = await putUpdateVolunteer(volunteer._id, { firstName, lastName, nickName, segment, status, roles, gender, phone, trainings });
+      console.log('Save result:', result);
+      router.refresh();
+    } catch (error) {
+      console.error('Error saving volunteer:', error);
+      alert('Failed to save volunteer information');
+    }
   }
 
   try {
-    const updateVolunteerInfo = async () => {
-      await putUpdateVolunteer(volunteer._id, { firstName, lastName, nickName, segment, status, roles, gender });
-      router.refresh();
-    }
     const from = (date: string, service: string): Date => {
       return new Date(`${new Date(date).toLocaleDateString("en-US", {timeZone: "Asia/Manila"})} ${serviceTime[service]}`);
     }
@@ -133,12 +158,16 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
             <button disabled={!hasChanges} onClick={resetValues} className="border border-slate-400 px-3 rounded-md py-0.5">
               Cancel
             </button>
-            <button disabled={!hasChanges} className="bg-sky-700 text-white pl-3.5 pr-4 rounded-md py-0.5">
+            <button 
+              disabled={!hasChanges} 
+              onClick={updateVolunteerInfo}
+              className="bg-sky-700 text-white pl-3.5 pr-4 rounded-md py-0.5"
+            >
               <div className="flex gap-1.5 justify-center">
                 <div className="flex flex-col justify-center">
                   <IoSaveSharp size={17} />
                 </div>
-                <div onClick={updateVolunteerInfo} className="flex flex-col justify-center">
+                <div className="flex flex-col justify-center">
                   Save
                 </div>
               </div>
@@ -182,6 +211,10 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
                         <GCInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setNickName(e.target.value)} label="nickname" value={nickName} />
                         <GCSelect disabled={!isAuthenticated} onChange={(e) => setGender(e.target.value)} label="gender" value={gender} options={category.GENDER} />
                       </div>
+                      <div className="flex justify-between gap-5 w-full">
+                        <GCInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setPhone(e.target.value)} label="phone number" value={phone} />
+                        <div className="w-full"></div>
+                      </div>
                     </div>
                     <div className="flex flex-col justify-between gap-0 w-full">
                       <GCSelect disabled={!isAuthenticated} onChange={(e) => setRole(e.target.value)} label="roles assigned" value={role} options={category.ROLES} uppercase />
@@ -210,6 +243,59 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-full rounded-lg border border-slate-100 shadow-md overflow-hidden">
+            <div className="flex justify-start py-5 pl-6 bg-slate-800">
+              <h2 className="font-semibold text-lg text-white">
+                Trainings Attended
+              </h2>
+            </div>
+            <div className="bg-slate-300 h-px" />
+            <div className="px-5 pb-5 pt-12">
+              <div className="flex flex-col gap-4">
+                {trainings.map((training, index) => (
+                  <div key={index} className="flex gap-3 items-center">
+                    <GCInputTextWithLabel 
+                      disabled={!isAuthenticated} 
+                      onChange={(e) => {
+                        const newTrainings = [...trainings];
+                        newTrainings[index].name = e.target.value;
+                        setTrainings(newTrainings);
+                      }} 
+                      label={`Training ${index + 1} Name`} 
+                      value={training.name} 
+                    />
+                    <GCInputTextWithLabel 
+                      disabled={!isAuthenticated} 
+                      onChange={(e) => {
+                        const newTrainings = [...trainings];
+                        newTrainings[index].date = e.target.value;
+                        setTrainings(newTrainings);
+                      }} 
+                      label={`Training ${index + 1} Date`} 
+                      value={training.date ? new Date(training.date).toISOString().split('T')[0] : ''} 
+                      type="date"
+                    />
+                    {isAuthenticated && (
+                      <button 
+                        onClick={() => setTrainings(trainings.filter((_, i) => i !== index))}
+                        className="text-red-500 hover:text-red-700 mt-6"
+                      >
+                        <IoCloseCircle size={24} />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                {isAuthenticated && trainings.length < 2 && (
+                  <button 
+                    onClick={() => setTrainings([...trainings, { name: '', date: '' }])}
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-fit"
+                  >
+                    Add Training
+                  </button>
+                )}
               </div>
             </div>
           </div>

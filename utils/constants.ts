@@ -265,6 +265,12 @@ export const roleFilter = [
     ]
   },
   {
+    label: "Events",
+    value: "events",
+    href: "/schedule/role/events",
+    roles: []
+  },
+  {
     label: "All",
     value: "all",
     href: "/schedule/role/all",

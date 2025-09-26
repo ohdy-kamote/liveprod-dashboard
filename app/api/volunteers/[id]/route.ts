@@ -9,10 +9,16 @@ interface RequestData {
   nickName?: string
   segment?: string
   status?: string
+  roles?: string[]
+  gender?: string
+  phone?: string
+  trainings?: Array<{ name: string; date: string }>
 }
 
 export async function PUT(request: any, { params }: any) {
   const requestData: RequestData = await request.json();
+  console.log('Received volunteer update data:', requestData);
+  console.log('Trainings data:', requestData.trainings);
 
   try {
     await connectMongoDB();
@@ -20,9 +26,12 @@ export async function PUT(request: any, { params }: any) {
     volunteer.name = `${requestData?.firstName || volunteer.firstName} ${requestData?.lastName || volunteer.lastName}`;
 
     Object.assign(volunteer, requestData);
+    console.log('Volunteer before save:', volunteer.toObject());
     await volunteer.save();
+    console.log('Volunteer saved successfully');
     return NextResponse.json({message: `Volunteer info updated`}, {status: 200});
   } catch (error: any) {
+    console.error('Error saving volunteer:', error);
     return NextResponse.json({message: error.message}, {status: 500});
   }
 }

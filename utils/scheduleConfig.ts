@@ -24,8 +24,7 @@ export interface ScheduleConfig {
 export const defaultScheduleConfig: ScheduleConfig = {
   services: [
     // Saturday Services
-    { id: 'sns1', name: '4:00 pm', time: '16:00', day: 'saturday', order: 1, isActive: true },
-    { id: 'sns2', name: '6:30 pm', time: '18:30', day: 'saturday', order: 2, isActive: true },
+    { id: 'sns1', name: '5:00 pm', time: '17:00', day: 'saturday', order: 1, isActive: true },
     
     // Sunday Services
     { id: 'sunday1', name: '9:00 am', time: '09:00', day: 'sunday', order: 3, isActive: true },

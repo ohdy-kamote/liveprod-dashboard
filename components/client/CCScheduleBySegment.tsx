@@ -1,4 +1,5 @@
 import SCVolunteerCell from "@/components/server/SCVolunteerCell";
+import CCEventsManager from "@/components/client/CCEventsManager";
 import { category, saturday, service, sunday } from "@/utils/constants";
 import { formatDateLong } from "@/utils/helpers";
 import { Fragment, useMemo } from 'react';
@@ -9,7 +10,14 @@ interface Schedule {
   data: any
 }
 
-export default function CCScheduleBySegment({ schedule, dayService }: { schedule: Schedule, dayService: string }) {
+export default function CCScheduleBySegment({ schedule, dayService, isAuthenticated }: { schedule: Schedule, dayService: string, isAuthenticated?: boolean }) {
+  if (dayService === 'events') {
+    return (
+      <div className='w-full rounded-t-xl rounded-b-lg overflow-hidden'>
+        <CCEventsManager isAuthenticated={false} />
+      </div>
+    );
+  }
   const convertData = (data: any) => {
     const convertedData: any = {};
     data?.forEach((item: any) => {

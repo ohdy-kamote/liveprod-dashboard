@@ -4,6 +4,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import GCNavbar from "@/components/global/GCNavbar";
+import SessionWrapper from "@/components/global/SessionWrapper";
 import { auth } from "@/auth";
 import { Bounce, ToastContainer } from "react-toastify";
 
@@ -22,26 +23,28 @@ export default async function RootLayout(props: Readonly<{
   return (
     <html lang="en">
       <body className={`${inter.className} h-svh background-gradient`}>
-        <div className="mx-auto p-4">
-          <GCNavbar session={session} />
-          <div className="mt-8">
-            {props.children}
+        <SessionWrapper session={session}>
+          <div className="mx-auto p-4">
+            <GCNavbar session={session} />
+            <div className="mt-8">
+              {props.children}
+            </div>
+            <div id="modal-root" />
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="colored"
+              transition={Bounce}
+            />
           </div>
-          <div id="modal-root" />
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-            transition={Bounce}
-          />
-        </div>
+        </SessionWrapper>
       </body>
     </html>
   );
