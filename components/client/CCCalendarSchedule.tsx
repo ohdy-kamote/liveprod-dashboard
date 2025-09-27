@@ -2,14 +2,24 @@
 
 import { newDate } from "@/utils/helpers";
 import moment from "moment";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Calendar, View, Views, momentLocalizer } from "react-big-calendar";
 
 const localizer = momentLocalizer(moment);
 
 export default function CpCalendarSchedule({ events, length }: { events: any, length: number }) {
   const [view, setView] = useState<View>(Views.AGENDA);
-  const [date, setDate] = useState(newDate());
+  const [date, setDate] = useState(new Date());
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setDate(newDate());
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div style={{ height: 700 }} className="flex items-center justify-center">Loading...</div>;
+  }
 
   return (
     <div>

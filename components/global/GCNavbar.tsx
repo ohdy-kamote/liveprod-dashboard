@@ -5,7 +5,7 @@ import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Navbar({ session }: { session: Session | null }) {
   const pathname = usePathname();
@@ -26,14 +26,12 @@ export default function Navbar({ session }: { session: Session | null }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (pathname === "/") {
       document.body.classList.add("background-gradient");
     } else {
       document.body.classList.remove("background-gradient");
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // testing
   }, [pathname])
 
   const pageTitle = useMemo(() => {
@@ -60,7 +58,7 @@ export default function Navbar({ session }: { session: Session | null }) {
         { isAdmin && <Link className="text-white p-2" href={"/schedule/role/foh"}>Schedules</Link> }
         <Link className="text-white p-2" href={"/schedule/calendar"}>Calendar</Link>
         <Link className="text-white p-2" href={"/schedule/segment/audio/sunday"}>Upcoming</Link>
-        { isAdmin && <Link className="text-white p-2" href={"/volunteer/all"}>Volunteers</Link> }
+        <Link className="text-white p-2" href={"/volunteer/all"}>Volunteers</Link>
         { !isAuthenticated ?
           <button onClick={() => signIn()} className="text-white p-2">Login</button>
           :

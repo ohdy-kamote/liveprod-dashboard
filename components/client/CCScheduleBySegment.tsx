@@ -10,7 +10,7 @@ interface Schedule {
   data: any
 }
 
-export default function CCScheduleBySegment({ schedule, dayService, isAuthenticated }: { schedule: Schedule, dayService: string, isAuthenticated?: boolean }) {
+export default function CCScheduleBySegment({ schedule, dayService, isAuthenticated, isCompact = false }: { schedule: Schedule, dayService: string, isAuthenticated?: boolean, isCompact?: boolean }) {
   if (dayService === 'events') {
     return (
       <div className='w-full rounded-t-xl rounded-b-lg overflow-hidden'>
@@ -43,13 +43,12 @@ export default function CCScheduleBySegment({ schedule, dayService, isAuthentica
             { dayService === service.SATURDAY ?
               <Fragment>
                 <tr>
-                  <th colSpan={4} className="text-white bg-slate-800 border border-slate-800 uppercase py-2">{formatDateLong(schedule.saturday)}</th>
+                  <th colSpan={3} className="text-white bg-slate-800 border border-slate-800 uppercase py-2">{formatDateLong(schedule.saturday)}</th>
                 </tr>
                 <tr className='h-0.5'></tr>
                 <tr className='uppercase bg-slate-300 border-t border-x border-slate-300'>
                   <th colSpan={2}>{service.SATURDAY}</th>
                   <th>{saturday.FIRST_SERVICE}</th>
-                  <th>{saturday.SECOND_SERVICE}</th>
                 </tr>
               </Fragment> :
               <Fragment>
@@ -84,11 +83,10 @@ export default function CCScheduleBySegment({ schedule, dayService, isAuthentica
                 <tr key={i} data-group={role.slice(0, 3)} className={`${isLastInGroup && "last-in-group"} ${isFirstInGroup && "first-in-group"} border border-slate-300 bg-slate-100 odd:bg-slate-200`}>
                   <td className="w-9 text-center h-6 text-xs">{i+1}</td>
                   {/* str.replace(/\d+/g, "") removes numbers in name */}
-                  <td className="px-1 w-52 uppercase text-sm">{role.replace("broadcast", "bc").replace(/\d+/g, "")}</td>
+                  <td className={`px-1 uppercase ${isCompact ? 'w-32 text-xs' : 'w-52 text-sm'}`}>{role.replace("broadcast", "bc").replace(/\d+/g, "")}</td>
                   { dayService === service.SATURDAY ?
                     <>
                       <SCVolunteerCell service={snsFirst} />
-                      <SCVolunteerCell service={snsSecond} />
                     </> :
                     <>
                       <SCVolunteerCell service={firstService} />

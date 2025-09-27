@@ -1,16 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 const slides = [0, 1, 2, 3, 4, 5, 6];
 
 export default function CCSlideshow() {
   const itemsRef = useRef<Array<HTMLDivElement | null>>([]);
   const [ active, setActive ] = useState(slides.length - 1);
+  const [ mounted, setMounted ] = useState(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     itemsRef.current = itemsRef.current.slice(0, slides.length);
+    setMounted(true);
   }, [])
 
   const loadSlideshow = useCallback(() => {
@@ -45,10 +47,14 @@ export default function CCSlideshow() {
   }, [active])
 
   useEffect(() => {
-    loadSlideshow();
-  }, [loadSlideshow])
+    if (mounted) {
+      loadSlideshow();
+    }
+  }, [loadSlideshow, mounted])
 
   useEffect(() => {
+    if (!mounted) return;
+    
     const intervalId = setInterval(() => {
       setActive(prev => getNextValue(prev + 1))
     }, 7000)
@@ -56,7 +62,7 @@ export default function CCSlideshow() {
     return () => {
       clearInterval(intervalId)
     }
-  }, [])
+  }, [mounted])
 
   function getNextValue(current: number) {
     const length = slides.length;

@@ -147,7 +147,6 @@ export const sunday = {
 
 export const serviceCodeToTime = {
   [serviceCode.SNS_1]: saturday.FIRST_SERVICE,
-  [serviceCode.SNS_2]: saturday.SECOND_SERVICE,
   [serviceCode.SUNDAY_1]: sunday.FIRST_SERVICE,
   [serviceCode.SUNDAY_2]: sunday.SECOND_SERVICE,
   [serviceCode.SUNDAY_3]: sunday.THIRD_SERVICE,

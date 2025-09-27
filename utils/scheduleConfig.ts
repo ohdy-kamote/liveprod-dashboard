@@ -23,14 +23,14 @@ export interface ScheduleConfig {
 // Default configuration - can be overridden
 export const defaultScheduleConfig: ScheduleConfig = {
   services: [
-    // Saturday Services
+    // Saturday Services (default single column at 5:00 PM)
     { id: 'sns1', name: '5:00 pm', time: '17:00', day: 'saturday', order: 1, isActive: true },
     
     // Sunday Services
-    { id: 'sunday1', name: '9:00 am', time: '09:00', day: 'sunday', order: 3, isActive: true },
-    { id: 'sunday2', name: '12:00 pm', time: '12:00', day: 'sunday', order: 4, isActive: true },
-    { id: 'sunday3', name: '3:00 pm', time: '15:00', day: 'sunday', order: 5, isActive: true },
-    { id: 'sunday4', name: '6:00 pm', time: '18:00', day: 'sunday', order: 6, isActive: true },
+    { id: 'sunday1', name: '9:00 am', time: '09:00', day: 'sunday', order: 2, isActive: true },
+    { id: 'sunday2', name: '12:00 pm', time: '12:00', day: 'sunday', order: 3, isActive: true },
+    { id: 'sunday3', name: '3:00 pm', time: '15:00', day: 'sunday', order: 4, isActive: true },
+    { id: 'sunday4', name: '6:00 pm', time: '18:00', day: 'sunday', order: 5, isActive: true },
   ],
   displaySettings: {
     showSNS: true,

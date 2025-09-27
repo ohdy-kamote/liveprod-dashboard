@@ -9,10 +9,14 @@ import GCTabLInk from '../global/tabs/GCTabLink';
 export default async function SCScheduleBySegment({increment, service}: {increment: number, service: string}) {
   const session = await auth();
   const isAuthenticated = session?.user?.isAdmin;
-  const serviceDate = getNextService(increment);
-  const nextServiceDate = getNextService(increment+1);
-  const schedule1 = await getSchduleByDateRange(serviceDate.saturday, serviceDate.sunday);
-  const schedule2 = await getSchduleByDateRange(nextServiceDate.saturday, nextServiceDate.sunday);
+  const serviceDate1 = getNextService(increment);
+  const serviceDate2 = getNextService(increment+1);
+  const serviceDate3 = getNextService(increment+2);
+  const serviceDate4 = getNextService(increment+3);
+  const schedule1 = await getSchduleByDateRange(serviceDate1.saturday, serviceDate1.sunday);
+  const schedule2 = await getSchduleByDateRange(serviceDate2.saturday, serviceDate2.sunday);
+  const schedule3 = await getSchduleByDateRange(serviceDate3.saturday, serviceDate3.sunday);
+  const schedule4 = await getSchduleByDateRange(serviceDate4.saturday, serviceDate4.sunday);
 
   return (
     <div className="flex justify-center">
@@ -32,12 +36,19 @@ export default async function SCScheduleBySegment({increment, service}: {increme
         <div>
           {service === 'events' ? (
             <div className="mt-[0.5px]">
-              <CCScheduleBySegment schedule={[]} dayService={service} isAuthenticated={isAuthenticated} />
+              <CCScheduleBySegment schedule={[]} dayService={service} isAuthenticated={isAuthenticated} isCompact={false} />
+            </div>
+          ) : service === 'saturday' ? (
+            <div className="grid grid-cols-4 gap-2 w-full mt-[0.5px]">
+              <CCScheduleBySegment schedule={schedule1} dayService={service} isAuthenticated={isAuthenticated} isCompact={true} />
+              <CCScheduleBySegment schedule={schedule2} dayService={service} isAuthenticated={isAuthenticated} isCompact={true} />
+              <CCScheduleBySegment schedule={schedule3} dayService={service} isAuthenticated={isAuthenticated} isCompact={true} />
+              <CCScheduleBySegment schedule={schedule4} dayService={service} isAuthenticated={isAuthenticated} isCompact={true} />
             </div>
           ) : (
             <div className="flex gap-2 w-full mt-[0.5px]">
-              <CCScheduleBySegment schedule={schedule1} dayService={service} isAuthenticated={isAuthenticated} />
-              <CCScheduleBySegment schedule={schedule2} dayService={service} isAuthenticated={isAuthenticated} />
+              <CCScheduleBySegment schedule={schedule1} dayService={service} isAuthenticated={isAuthenticated} isCompact={false} />
+              <CCScheduleBySegment schedule={schedule2} dayService={service} isAuthenticated={isAuthenticated} isCompact={false} />
             </div>
           )}
         </div>
