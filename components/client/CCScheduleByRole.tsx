@@ -27,8 +27,7 @@ export default function CCSchedulesByRole({ role, service, hasSaturday }: { role
               <th className="sticky top-px bg-slate-300 border border-slate-300 uppercase">{sunday.FOURTH_SERVICE}</th>
             </tr>
           </thead>
-          { /* @ts-expect-error children provided by server */ }
-          { arguments[0].children }
+          { (arguments[0] as any).children }
         </table>
       </div>
     </div>

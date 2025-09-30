@@ -20,12 +20,11 @@ export async function fetchGCalEvents(fromISO: string, toISO: string, calendarId
     throw new Error("Missing Google Calendar credentials (GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY, GOOGLE_CALENDAR_ID)");
   }
 
-  const jwt = new google.auth.JWT(
-    clientEmail,
-    undefined,
-    privateKey,
-    ["https://www.googleapis.com/auth/calendar.readonly"],
-  );
+  const jwt = new google.auth.JWT({
+    email: clientEmail,
+    key: privateKey,
+    scopes: ["https://www.googleapis.com/auth/calendar.readonly"],
+  });
 
   const calendar = google.calendar({ version: "v3", auth: jwt });
   const res = await calendar.events.list({

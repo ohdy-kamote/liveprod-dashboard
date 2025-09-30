@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { scheduleConfigManager, ServiceTime, ScheduleConfig } from "@/utils/scheduleConfig";
 import GCInputText from "../global/GCInputText";
-import GCSelect from "../global/GCSelect";
 
 interface CCScheduleConfigManagerProps {
   onConfigChange?: (config: ScheduleConfig) => void;
@@ -187,23 +186,21 @@ function AddServiceForm({ onAdd, onCancel }: { onAdd: (service: Omit<ServiceTime
             label="Time (HH:MM)"
             value={formData.time}
             onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-            placeholder="09:00"
             required
           />
           <div>
             <label className="block text-sm font-medium mb-2">Day</label>
-            <GCSelect
+            <select
               value={formData.day}
               onChange={(e) => setFormData({ ...formData, day: e.target.value as 'saturday' | 'sunday' })}
-              options={[
-                { value: 'saturday', label: 'Saturday' },
-                { value: 'sunday', label: 'Sunday' }
-              ]}
-            />
+              className="w-full p-2 border rounded"
+            >
+              <option value="saturday">Saturday</option>
+              <option value="sunday">Sunday</option>
+            </select>
           </div>
           <GCInputText
             label="Order"
-            type="number"
             value={formData.order.toString()}
             onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
             required
@@ -270,23 +267,21 @@ function EditServiceForm({
             label="Time (HH:MM)"
             value={formData.time}
             onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-            placeholder="09:00"
             required
           />
           <div>
             <label className="block text-sm font-medium mb-2">Day</label>
-            <GCSelect
+            <select
               value={formData.day}
               onChange={(e) => setFormData({ ...formData, day: e.target.value as 'saturday' | 'sunday' })}
-              options={[
-                { value: 'saturday', label: 'Saturday' },
-                { value: 'sunday', label: 'Sunday' }
-              ]}
-            />
+              className="w-full p-2 border rounded"
+            >
+              <option value="saturday">Saturday</option>
+              <option value="sunday">Sunday</option>
+            </select>
           </div>
           <GCInputText
             label="Order"
-            type="number"
             value={formData.order.toString()}
             onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) })}
             required

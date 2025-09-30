@@ -179,8 +179,8 @@ export function getEventsForDate(events: CalendarEvent[], date: Date): CalendarE
 export function createEventSummary(events: CalendarEvent[]): string {
   if (events.length === 0) return 'No events';
   
-  const roles = [...new Set(events.map(e => e.resource.role))];
-  const volunteers = [...new Set(events.map(e => e.resource.volunteer))];
+  const roles = Array.from(new Set(events.map(e => e.resource.role)));
+  const volunteers = Array.from(new Set(events.map(e => e.resource.volunteer)));
   
   return `${events.length} event(s) - ${roles.length} role(s) - ${volunteers.length} volunteer(s)`;
 }

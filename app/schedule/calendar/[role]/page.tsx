@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import SCMonthlyCalendar from "@/components/server/SCMonthlyCalendar";
 import { category } from "@/utils/constants";
+import { redirect } from "next/navigation";
 import { Fragment } from "react";
 
 export default async function RoleCalendarPage({ params }: { params: { role: string } }) {
@@ -37,7 +38,7 @@ export default async function RoleCalendarPage({ params }: { params: { role: str
         role={role}
         showStatistics={true}
         showLiveProductionEvents={false}
-        isAdmin={isAdmin}
+        isAdmin={!!isAdmin}
       />
     </Fragment>
   );

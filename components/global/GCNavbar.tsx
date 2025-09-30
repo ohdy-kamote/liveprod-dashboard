@@ -13,7 +13,7 @@ export default function Navbar({ session }: { session: Session | null }) {
   const [newPath, setNewPath] = useState("/");
 
   const isAuthenticated = session?.user?.username;
-  const isAdmin = session?.user?.isAdmin;
+  const isAdmin = (session?.user as any)?.isAdmin;
 
   useEffect(() => {
     const url = `${pathname}`

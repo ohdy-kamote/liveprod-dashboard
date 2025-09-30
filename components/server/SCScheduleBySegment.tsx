@@ -8,7 +8,7 @@ import GCTabLInk from '../global/tabs/GCTabLink';
 
 export default async function SCScheduleBySegment({increment, service}: {increment: number, service: string}) {
   const session = await auth();
-  const isAuthenticated = session?.user?.isAdmin;
+  const isAuthenticated = (session?.user as any)?.isAdmin;
   const serviceDate1 = getNextService(increment);
   const serviceDate2 = getNextService(increment+1);
   const serviceDate3 = getNextService(increment+2);
@@ -36,7 +36,7 @@ export default async function SCScheduleBySegment({increment, service}: {increme
         <div>
           {service === 'events' ? (
             <div className="mt-[0.5px]">
-              <CCScheduleBySegment schedule={[]} dayService={service} isAuthenticated={isAuthenticated} isCompact={false} />
+              <CCScheduleBySegment schedule={{saturday: '', sunday: '', data: []}} dayService={service} isAuthenticated={isAuthenticated} isCompact={false} />
             </div>
           ) : service === 'saturday' ? (
             <div className="grid grid-cols-4 gap-2 w-full mt-[0.5px]">

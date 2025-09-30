@@ -11,6 +11,10 @@ interface Schedule {
 }
 
 export default function CCScheduleBySegment({ schedule, dayService, isAuthenticated, isCompact = false }: { schedule: Schedule, dayService: string, isAuthenticated?: boolean, isCompact?: boolean }) {
+  const roles = useMemo(() => (
+    dayService === service.SATURDAY ? category.SNS_ROLES : category.ROLES
+  ), [dayService])
+
   if (dayService === 'events') {
     return (
       <div className='w-full rounded-t-xl rounded-b-lg overflow-hidden'>
@@ -18,6 +22,7 @@ export default function CCScheduleBySegment({ schedule, dayService, isAuthentica
       </div>
     );
   }
+  
   const convertData = (data: any) => {
     const convertedData: any = {};
     data?.forEach((item: any) => {
@@ -30,10 +35,6 @@ export default function CCScheduleBySegment({ schedule, dayService, isAuthentica
   };
 
   const convertedData: any = convertData(schedule?.data);
-
-  const roles = useMemo(() => (
-    dayService === service.SATURDAY ? category.SNS_ROLES : category.ROLES
-  ), [dayService])
 
   return (
     <div className='w-full rounded-t-xl rounded-b-lg overflow-hidden'>

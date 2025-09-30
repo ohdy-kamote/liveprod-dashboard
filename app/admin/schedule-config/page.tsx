@@ -1,12 +1,11 @@
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/auth";
+import { auth } from "@/auth";
 import CCScheduleConfigManager from "@/components/client/CCScheduleConfigManager";
 
 export default async function ScheduleConfigPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   
-  if (!session || session.user.role !== "admin") {
+  if (!session || (session.user as any).role !== "admin") {
     redirect("/login");
   }
 
