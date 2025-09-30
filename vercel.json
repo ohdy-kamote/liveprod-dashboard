@@ -3,7 +3,6 @@
     {
       "path": "/api/notifications/run",
       "schedule": "0 6 * * *",
-      "method": "POST",
       "headers": {
         "x-cron-secret": "@cron_secret"
       }
