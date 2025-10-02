@@ -8,7 +8,8 @@ async function handleNotifications(request: Request) {
   const session = await auth();
   const isAdminTrigger = request.headers.get("x-admin-sync") === "1" && !!session?.user?.username;
   const cronSecret = request.headers.get("x-cron-secret");
-  const isCron = !!process.env.CRON_SECRET && cronSecret === process.env.CRON_SECRET;
+  const isVercelCron = request.headers.get("user-agent")?.includes("vercel-cron");
+  const isCron = (!!process.env.CRON_SECRET && cronSecret === process.env.CRON_SECRET) || isVercelCron;
 
   if (!isAdminTrigger && !isCron) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

@@ -8,9 +8,10 @@
 ## Endpoint
 - POST /api/notifications/run
   - Sends reminders to volunteers scheduled exactly 2 days from now (Asia/Manila)
-  - Accepts either header:
-    - x-cron-secret: {CRON_SECRET}  (for automated calls)
-    - or x-admin-sync: 1 with a logged-in admin session (manual trigger)
+  - Accepts either:
+    - Vercel cron (detected via user-agent header)
+    - x-cron-secret: {CRON_SECRET} header (for manual calls)
+    - x-admin-sync: 1 with logged-in admin session (manual trigger)
 
 ## Vercel Cron
 - vercel.json includes:
@@ -19,18 +20,14 @@
   "crons": [
     {
       "path": "/api/notifications/run",
-      "schedule": "0 6 * * *",
-      "method": "POST",
-      "headers": {
-        "x-cron-secret": "@cron_secret"
-      }
+      "schedule": "0 6 * * *"
     }
   ]
 }
 ```
 - In Vercel Project → Settings → Environment Variables:
-  - Add `cron_secret` (value must equal CRON_SECRET)
   - Add `TEXTBEE_API_KEY`, `TEXTBEE_DEVICE_ID`, `CRON_SECRET`
+  - Note: Vercel cron jobs are authenticated via user-agent header automatically
 
 ## Local test
 ```
