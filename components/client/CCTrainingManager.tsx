@@ -1,0 +1,237 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import GCInputTextWithLabel from "@/components/global/GCInputTextWithLabel";
+
+interface Training {
+  _id?: string;
+  trainingName: string;
+  date: string;
+  trainors: string[];
+  volunteers: { _id: string; name: string }[];
+  createdAt?: string;
+}
+
+interface Volunteer {
+  _id: string;
+  name: string;
+}
+
+export default function CCTrainingManager({ isAuthenticated }: { isAuthenticated: boolean }) {
+  const [trainings, setTrainings] = useState<Training[]>([]);
+  const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
+  const [newTraining, setNewTraining] = useState<Training>({
+    trainingName: "",
+    date: "",
+    trainors: [""],
+    volunteers: []
+  });
+  const [selectedVolunteers, setSelectedVolunteers] = useState<string[]>([]);
+
+  useEffect(() => {
+    fetchTrainings();
+    fetchVolunteers();
+  }, []);
+
+  const fetchTrainings = async () => {
+    try {
+      const response = await fetch('/api/trainings');
+      const result = await response.json();
+      setTrainings(result.data || []);
+    } catch (error) {
+      console.error('Error fetching trainings:', error);
+    }
+  };
+
+  const fetchVolunteers = async () => {
+    try {
+      const response = await fetch('/api/volunteers');
+      const result = await response.json();
+      setVolunteers(result.data || []);
+    } catch (error) {
+      console.error('Error fetching volunteers:', error);
+    }
+  };
+
+  const addTrainor = () => {
+    setNewTraining({
+      ...newTraining,
+      trainors: [...newTraining.trainors, ""]
+    });
+  };
+
+  const removeTrainor = (index: number) => {
+    const updatedTrainors = newTraining.trainors.filter((_, i) => i !== index);
+    setNewTraining({
+      ...newTraining,
+      trainors: updatedTrainors.length > 0 ? updatedTrainors : [""]
+    });
+  };
+
+  const updateTrainor = (index: number, value: string) => {
+    const updatedTrainors = [...newTraining.trainors];
+    updatedTrainors[index] = value;
+    setNewTraining({
+      ...newTraining,
+      trainors: updatedTrainors
+    });
+  };
+
+  const handleVolunteerSelection = (volunteerId: string, isSelected: boolean) => {
+    if (isSelected) {
+      setSelectedVolunteers([...selectedVolunteers, volunteerId]);
+    } else {
+      setSelectedVolunteers(selectedVolunteers.filter(id => id !== volunteerId));
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const trainingData = {
+        ...newTraining,
+        trainors: newTraining.trainors.filter(trainor => trainor.trim() !== ""),
+        volunteers: selectedVolunteers
+      };
+
+      const response = await fetch('/api/trainings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(trainingData)
+      });
+
+      if (response.ok) {
+        fetchTrainings();
+        setNewTraining({
+          trainingName: "",
+          date: "",
+          trainors: [""],
+          volunteers: []
+        });
+        setSelectedVolunteers([]);
+      }
+    } catch (error) {
+      console.error('Error creating training:', error);
+    }
+  };
+
+  return (
+    <div className="w-full">
+      <div className="bg-slate-800 border border-slate-800 flex justify-between items-center px-6">
+        <h2 className="text-white text-lg font-semibold py-3">Training</h2>
+      </div>
+
+      {isAuthenticated && (
+        <div className="p-4 bg-slate-50 border-b">
+          <h3 className="text-lg font-semibold mb-4">Add New Training</h3>
+          
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <GCInputTextWithLabel
+              label="Training Name"
+              value={newTraining.trainingName}
+              onChange={(e) => setNewTraining({...newTraining, trainingName: e.target.value})}
+            />
+            <GCInputTextWithLabel
+              label="Date"
+              type="date"
+              value={newTraining.date}
+              onChange={(e) => setNewTraining({...newTraining, date: e.target.value})}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2">Trainors:</label>
+            {newTraining.trainors.map((trainor, index) => (
+              <div key={index} className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  value={trainor}
+                  onChange={(e) => updateTrainor(index, e.target.value)}
+                  placeholder={`Trainor ${index + 1} name`}
+                  className="flex-1 p-2 border border-gray-300 rounded"
+                />
+                {newTraining.trainors.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeTrainor(index)}
+                    className="px-3 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={addTrainor}
+              className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+            >
+              Add Trainor
+            </button>
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2">Select Volunteers:</label>
+            <div className="max-h-40 overflow-y-auto border border-gray-300 rounded p-2">
+              {volunteers.map((volunteer) => (
+                <label key={volunteer._id} className="flex items-center mb-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedVolunteers.includes(volunteer._id)}
+                    onChange={(e) => handleVolunteerSelection(volunteer._id, e.target.checked)}
+                    className="mr-2"
+                  />
+                  {volunteer.name}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Add Training
+          </button>
+        </div>
+      )}
+
+      <div className="p-4">
+        <h3 className="text-lg font-semibold mb-4">Training Records</h3>
+        {trainings.length === 0 ? (
+          <p className="text-gray-500">No training records found.</p>
+        ) : (
+          <div className="space-y-4">
+            {trainings.map((training) => (
+              <div key={training._id} className="border border-gray-300 rounded p-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <h4 className="font-semibold text-lg">{training.trainingName}</h4>
+                    <p className="text-gray-600">
+                      {new Date(training.date).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">Trainors:</h5>
+                    <ul className="text-sm text-gray-600">
+                      {training.trainors.map((trainor, index) => (
+                        <li key={index}>• {trainor}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-medium mb-1">Volunteers ({training.volunteers.length}):</h5>
+                    <div className="text-sm text-gray-600 max-h-20 overflow-y-auto">
+                      {training.volunteers.map((volunteer, index) => (
+                        <div key={volunteer._id}>• {volunteer.name}</div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

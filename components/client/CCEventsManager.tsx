@@ -115,23 +115,7 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
     setNewEvent({ ...newEvent, date, day: dayName });
   };
 
-  const handleVolunteerChange = (role: string, checked: boolean) => {
-    setNewEvent({
-      ...newEvent,
-      volunteersNeeded: {
-        ...newEvent.volunteersNeeded,
-        [role]: checked
-      }
-    });
-    
-    if (!checked) {
-      setSelectedVolunteers(prev => {
-        const updated = { ...prev };
-        delete updated[role];
-        return updated;
-      });
-    }
-  };
+
 
   const handleVolunteerSelection = (role: string, volunteerId: string) => {
     setSelectedVolunteers(prev => ({
@@ -286,7 +270,7 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Volunteers Needed:</label>
+            <label className="block text-sm font-medium mb-2">Assign Volunteers:</label>
             <div className="grid grid-cols-2 gap-4">
               {[
                 { key: 'foh', label: 'FOH' },
@@ -299,29 +283,29 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
                 const availableVolunteers = getVolunteersForRole(key);
                 return (
                   <div key={key} className="flex flex-col gap-2">
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={newEvent.volunteersNeeded[key as keyof typeof newEvent.volunteersNeeded]}
-                        onChange={(e) => handleVolunteerChange(key, e.target.checked)}
-                        className="mr-2"
-                      />
-                      {label}
-                    </label>
-                    {newEvent.volunteersNeeded[key as keyof typeof newEvent.volunteersNeeded] && (
-                      <select 
-                        className="ml-6 p-1 border border-gray-300 rounded text-sm"
-                        value={selectedVolunteers[key] || ''}
-                        onChange={(e) => handleVolunteerSelection(key, e.target.value)}
-                      >
-                        <option value="">Select Volunteer</option>
-                        {availableVolunteers.map(volunteer => (
-                          <option key={volunteer._id} value={volunteer._id}>
-                            {volunteer.name}
-                          </option>
-                        ))}
-                      </select>
-                    )}
+                    <label className="text-sm font-medium">{label}:</label>
+                    <select 
+                      className="p-2 border border-gray-300 rounded"
+                      value={selectedVolunteers[key] || ''}
+                      onChange={(e) => {
+                        const volunteerId = e.target.value;
+                        handleVolunteerSelection(key, volunteerId);
+                        setNewEvent({
+                          ...newEvent,
+                          volunteersNeeded: {
+                            ...newEvent.volunteersNeeded,
+                            [key]: !!volunteerId
+                          }
+                        });
+                      }}
+                    >
+                      <option value="">No volunteer assigned</option>
+                      {availableVolunteers.map(volunteer => (
+                        <option key={volunteer._id} value={volunteer._id}>
+                          {volunteer.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 );
               })}

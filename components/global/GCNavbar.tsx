@@ -43,6 +43,7 @@ export default function Navbar({ session }: { session: Session | null }) {
     if (pathname.startsWith("/volunteer/all")) return "Volunteers List";
     if (pathname.startsWith("/volunteer/profile")) return "Volunteer Profile";
     if (pathname.startsWith("/volunteer/add")) return "Add Volunteer";
+    if (pathname.startsWith("/volunteer/training")) return "Training";
     return "Dashboard";
   }, [pathname]);
 
@@ -58,7 +59,13 @@ export default function Navbar({ session }: { session: Session | null }) {
         { isAdmin && <Link className="text-white p-2" href={"/schedule/role/foh"}>Schedules</Link> }
         <Link className="text-white p-2" href={"/schedule/calendar"}>Calendar</Link>
         <Link className="text-white p-2" href={"/schedule/segment/audio/sunday"}>Upcoming</Link>
-        <Link className="text-white p-2" href={"/volunteer/all"}>Volunteers</Link>
+        <div className="relative group">
+          <Link className="text-white p-2" href={"/volunteer/all"}>Volunteers</Link>
+          <div className="absolute top-full left-0 bg-slate-800 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity z-10 min-w-max">
+            <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/all"}>Volunteers List</Link>
+            <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/training"}>Training</Link>
+          </div>
+        </div>
         { !isAuthenticated ?
           <button onClick={() => signIn()} className="text-white p-2">Login</button>
           :

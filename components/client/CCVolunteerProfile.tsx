@@ -255,46 +255,28 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
             <div className="bg-slate-300 h-px" />
             <div className="px-5 pb-5 pt-12">
               <div className="flex flex-col gap-4">
-                {trainings.map((training, index) => (
-                  <div key={index} className="flex gap-3 items-center">
-                    <GCInputTextWithLabel 
-                      disabled={!isAuthenticated} 
-                      onChange={(e) => {
-                        const newTrainings = [...trainings];
-                        newTrainings[index].name = e.target.value;
-                        setTrainings(newTrainings);
-                      }} 
-                      label={`Training ${index + 1} Name`} 
-                      value={training.name} 
-                    />
-                    <GCInputTextWithLabel 
-                      disabled={!isAuthenticated} 
-                      onChange={(e) => {
-                        const newTrainings = [...trainings];
-                        newTrainings[index].date = e.target.value;
-                        setTrainings(newTrainings);
-                      }} 
-                      label={`Training ${index + 1} Date`} 
-                      value={training.date ? new Date(training.date).toISOString().split('T')[0] : ''} 
-                      type="date"
-                    />
-                    {isAuthenticated && (
-                      <button 
-                        onClick={() => setTrainings(trainings.filter((_, i) => i !== index))}
-                        className="text-red-500 hover:text-red-700 mt-6"
-                      >
-                        <IoCloseCircle size={24} />
-                      </button>
-                    )}
+                {(volunteer as any).trainingsAttended?.map((training: any, index: number) => (
+                  <div key={index} className="border border-gray-200 rounded p-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <h4 className="font-semibold">{training.trainingName}</h4>
+                        <p className="text-sm text-gray-600">
+                          {new Date(training.date).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div>
+                        <h5 className="font-medium mb-1">Trainors:</h5>
+                        <ul className="text-sm text-gray-600">
+                          {training.trainors?.map((trainor: string, i: number) => (
+                            <li key={i}>• {trainor}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
                   </div>
-                ))}
-                {isAuthenticated && trainings.length < 2 && (
-                  <button 
-                    onClick={() => setTrainings([...trainings, { name: '', date: '' }])}
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-fit"
-                  >
-                    Add Training
-                  </button>
+                )) || []}
+                {(!((volunteer as any).trainingsAttended) || (volunteer as any).trainingsAttended.length === 0) && (
+                  <p className="text-gray-500 text-center py-8">No training records found.</p>
                 )}
               </div>
             </div>

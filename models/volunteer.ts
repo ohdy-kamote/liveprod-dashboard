@@ -56,6 +56,20 @@ const volunteerSchema = new Schema({
       type: Date,
       required: true
     }
+  }],
+  trainingsAttended: [{
+    trainingName: {
+      type: String,
+      required: true
+    },
+    date: {
+      type: Date,
+      required: true
+    },
+    trainors: [{
+      type: String,
+      required: true
+    }]
   }]
 }, { timestamps: true, strict: true });
 
