@@ -21,6 +21,7 @@ interface Data {
   status: string
   segment: string
   gender: string
+  roles: string[]
   active: boolean
 }
 
@@ -50,6 +51,9 @@ const conditionalRowStyles = [
 export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdmin: boolean }) {
   const router = useRouter();
   const [query, setQuery] = useState('');
+  const [genderFilter, setGenderFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [roleFilter, setRoleFilter] = useState('');
 
   const deleteVol = async (volunteerId: string, volunteerName: string) => {
     const confirmed = confirm(`Are you sure you want to remove ${volunteerName} as volunteer?`);
@@ -99,6 +103,13 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
       selector: (row: Data) => row.status,
       sortable: true,
     },
+    {
+      name: "Roles",
+      selector: (row: Data) => row.roles?.join(', ') || '--',
+      sortable: true,
+      width: '300px',
+      wrap: true,
+    },
   ];
 
   if (isAdmin) {
@@ -112,15 +123,20 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
 
   const filteredVolunteers = useMemo(() => {
     const filteredValues = data.filter((volunteer) => {
-      return volunteer.name.toLowerCase().includes(query.toLowerCase());
+      const matchesQuery = volunteer.name.toLowerCase().includes(query.toLowerCase());
+      const matchesGender = !genderFilter || volunteer.gender === genderFilter;
+      const matchesStatus = !statusFilter || volunteer.status === statusFilter;
+      const matchesRole = !roleFilter || volunteer.roles?.some(role => role.toLowerCase().includes(roleFilter.toLowerCase()));
+      
+      return matchesQuery && matchesGender && matchesStatus && matchesRole;
     });
 
-    if (isAdmin && query === '') return data;
+    if (isAdmin && query === '' && !genderFilter && !statusFilter && !roleFilter) return data;
     if (isAdmin) return filteredValues;
     if (filteredValues.length === 1) return filteredValues;
     return [];
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, isAdmin])
+  }, [query, genderFilter, statusFilter, roleFilter, isAdmin])
 
   const noDataMessage = () => {
     if (isAdmin || query.length) return "There are no records to display";
@@ -134,10 +150,49 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
   return (
     <div className="flex justify-center">
       <div className="w-full">
-        <div className="flex flex-col gap-7 text-slate-700 px-32">
-          <div className="flex justify-end">
-            <div className="flex gap-3 justify-end w-1/2">
-              <div className="w-1/2">
+        <div className="flex flex-col gap-7 text-slate-700 px-32 pt-8">
+          <div className="flex justify-between items-end mb-6">
+            <div className="flex gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Gender</label>
+                <select 
+                  value={genderFilter} 
+                  onChange={(e) => setGenderFilter(e.target.value)}
+                  className="p-2 border border-gray-300 rounded"
+                >
+                  <option value="">All Genders</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Status</label>
+                <select 
+                  value={statusFilter} 
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="p-2 border border-gray-300 rounded"
+                >
+                  <option value="">All Status</option>
+                  <option value="active">Active</option>
+                  <option value="trainee">Trainee</option>
+                  <option value="observer">Observer</option>
+                  <option value="on leave">On Leave</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1">Role</label>
+                <input 
+                  type="text"
+                  value={roleFilter} 
+                  onChange={(e) => setRoleFilter(e.target.value)}
+                  placeholder="Filter by role"
+                  className="p-2 border border-gray-300 rounded"
+                />
+              </div>
+            </div>
+            <div className="flex gap-3 justify-end">
+              <div className="w-64">
                 <GCInputSearch onChange={(event) => setQuery(event.target.value)} />
               </div>
               { isAdmin &&
