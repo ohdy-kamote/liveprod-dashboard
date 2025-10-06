@@ -159,7 +159,7 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
       if (response.ok) {
         fetchEvents();
         setNewEvent({
-          status: "confirmed",
+          status: "tentative",
           date: "",
           day: "",
           eventName: "",
@@ -233,7 +233,7 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
               label="Status" 
               value={newEvent.status} 
               onChange={(e) => setNewEvent({...newEvent, status: e.target.value})}
-              options={["confirmed", "cancelled"]}
+              options={["confirmed", "tentative", "cancelled"]}
             />
             <GCInputTextWithLabel 
               label="Date" 
@@ -347,16 +347,21 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
                   {isAuthenticated ? (
                     <select 
                       className={`p-1 border border-gray-300 rounded text-sm ${
-                        event.status === 'confirmed' ? 'text-green-600' : 'text-red-600'
+                        event.status === 'confirmed' ? 'text-green-600' : 
+                        event.status === 'tentative' ? 'text-yellow-600' : 'text-red-600'
                       }`}
                       value={event.status}
                       onChange={(e) => handleStatusUpdate(event._id!, e.target.value)}
                     >
                       <option value="confirmed" className="text-green-600">CONFIRMED</option>
+                      <option value="tentative" className="text-yellow-600">TENTATIVE</option>
                       <option value="cancelled" className="text-red-600">CANCELLED</option>
                     </select>
                   ) : (
-                    <span className={event.status === 'confirmed' ? 'text-green-600' : 'text-red-600'}>
+                    <span className={
+                      event.status === 'confirmed' ? 'text-green-600' : 
+                      event.status === 'tentative' ? 'text-yellow-600' : 'text-red-600'
+                    }>
                       {event.status.toUpperCase()}
                     </span>
                   )}
