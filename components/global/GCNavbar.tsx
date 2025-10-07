@@ -12,11 +12,13 @@ export default function Navbar({ session }: { session: Session | null }) {
   const router = useRouter();
   const [newPath, setNewPath] = useState("/");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  const isAuthenticated = session?.user?.username;
-  const isAdmin = (session?.user as any)?.isAdmin;
+  const isAuthenticated = mounted ? session?.user?.username : false;
+  const isAdmin = mounted ? (session?.user as any)?.isAdmin : false;
 
   useEffect(() => {
+    setMounted(true);
     const url = `${pathname}`
     const prevPath = newPath;
     setNewPath(url);
@@ -77,9 +79,9 @@ export default function Navbar({ session }: { session: Session | null }) {
               onMouseLeave={() => setShowDropdown(false)}
             >
               <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/all"}>Volunteers List</Link>
-              <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/training"}>Training</Link>
-              <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/observer-tracker"}>Observer Tracker</Link>
-              <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/analytics"}>Analytics</Link>
+              {isAdmin && <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/training"}>Training</Link>}
+              {isAdmin && <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/observer-tracker"}>Observer Tracker</Link>}
+              {isAdmin && <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/analytics"}>Analytics</Link>}
             </div>
           )}
         </div>

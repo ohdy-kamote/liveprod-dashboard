@@ -93,24 +93,29 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
       selector: (row: Data) => row.segment,
       sortable: true,
     },
-    {
-      name: "Gender",
-      selector: (row: Data) => row.gender,
-      sortable: true,
-    },
-    {
-      name: "Status",
-      selector: (row: Data) => row.status,
-      sortable: true,
-    },
-    {
-      name: "Roles",
-      selector: (row: Data) => row.roles?.join(', ') || '--',
-      sortable: true,
-      width: '300px',
-      wrap: true,
-    },
   ];
+
+  if (isAdmin) {
+    columns.push(
+      {
+        name: "Gender",
+        selector: (row: Data) => row.gender,
+        sortable: true,
+      },
+      {
+        name: "Status",
+        selector: (row: Data) => row.status,
+        sortable: true,
+      },
+      {
+        name: "Roles",
+        selector: (row: Data) => row.roles?.join(', ') || '--',
+        sortable: true,
+        width: '300px',
+        wrap: true,
+      }
+    );
+  }
 
   if (isAdmin) {
     columns.push({
@@ -151,46 +156,48 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
     <div className="flex justify-center">
       <div className="w-full">
         <div className="flex flex-col gap-7 text-slate-700 px-32 pt-8">
-          <div className="flex justify-between items-end mb-6">
-            <div className="flex gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">Gender</label>
-                <select 
-                  value={genderFilter} 
-                  onChange={(e) => setGenderFilter(e.target.value)}
-                  className="p-2 border border-gray-300 rounded"
-                >
-                  <option value="">All Genders</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
+          <div className="flex justify-end items-end mb-6">
+            {isAdmin && (
+              <div className="flex gap-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Gender</label>
+                  <select 
+                    value={genderFilter} 
+                    onChange={(e) => setGenderFilter(e.target.value)}
+                    className="p-2 border border-gray-300 rounded"
+                  >
+                    <option value="">All Genders</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Status</label>
+                  <select 
+                    value={statusFilter} 
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="p-2 border border-gray-300 rounded"
+                  >
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="trainee">Trainee</option>
+                    <option value="observer">Observer</option>
+                    <option value="on leave">On Leave</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-1">Role</label>
+                  <input 
+                    type="text"
+                    value={roleFilter} 
+                    onChange={(e) => setRoleFilter(e.target.value)}
+                    placeholder="Filter by role"
+                    className="p-2 border border-gray-300 rounded"
+                  />
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Status</label>
-                <select 
-                  value={statusFilter} 
-                  onChange={(e) => setStatusFilter(e.target.value)}
-                  className="p-2 border border-gray-300 rounded"
-                >
-                  <option value="">All Status</option>
-                  <option value="active">Active</option>
-                  <option value="trainee">Trainee</option>
-                  <option value="observer">Observer</option>
-                  <option value="on leave">On Leave</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Role</label>
-                <input 
-                  type="text"
-                  value={roleFilter} 
-                  onChange={(e) => setRoleFilter(e.target.value)}
-                  placeholder="Filter by role"
-                  className="p-2 border border-gray-300 rounded"
-                />
-              </div>
-            </div>
+            )}
             <div className="flex gap-3 justify-end">
               <div className="w-64">
                 <GCInputSearch onChange={(event) => setQuery(event.target.value)} />

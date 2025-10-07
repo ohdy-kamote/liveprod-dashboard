@@ -5,3 +5,9 @@ export async function checkAuth() {
   const authenticated = !!session?.user;
   return authenticated;
 }
+
+export async function checkAdminAuth() {
+  const session = await auth();
+  const isAdmin = !!(session?.user as any)?.isAdmin;
+  return isAdmin;
+}

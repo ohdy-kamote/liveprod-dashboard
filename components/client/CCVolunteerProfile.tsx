@@ -39,7 +39,7 @@ interface Schedule {
   service: string
 }
 
-export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { volunteer: Volunteer, isAuthenticated: boolean }) {
+export default function CCVolunteerProfile({ volunteer, isAuthenticated, isAdmin }: { volunteer: Volunteer, isAuthenticated: boolean, isAdmin: boolean }) {
   const router = useRouter();
   const [ firstName, setFirstName ] = useState<string>(volunteer.firstName);
   const [ lastName, setLastName ] = useState<string>(volunteer.lastName);
@@ -211,10 +211,12 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated }: { vol
                         <GCInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setNickName(e.target.value)} label="nickname" value={nickName} />
                         <GCSelect disabled={!isAuthenticated} onChange={(e) => setGender(e.target.value)} label="gender" value={gender} options={category.GENDER} />
                       </div>
-                      <div className="flex justify-between gap-5 w-full">
-                        <GCInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setPhone(e.target.value)} label="phone number" value={phone} />
-                        <div className="w-full"></div>
-                      </div>
+                      {isAdmin && (
+                        <div className="flex justify-between gap-5 w-full">
+                          <GCInputTextWithLabel disabled={!isAuthenticated} onChange={(e) => setPhone(e.target.value)} label="phone number" value={phone} />
+                          <div className="w-full"></div>
+                        </div>
+                      )}
                     </div>
                     <div className="flex flex-col justify-between gap-0 w-full">
                       <GCSelect disabled={!isAuthenticated} onChange={(e) => setRole(e.target.value)} label="roles assigned" value={role} options={category.ROLES} uppercase />
