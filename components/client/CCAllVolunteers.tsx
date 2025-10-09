@@ -30,6 +30,8 @@ interface Columns {
   selector: (row: Data) => string
   sortable: boolean
   button?: boolean
+  width?: string
+  wrap?: boolean
 }
 
 const conditionalRowStyles = [

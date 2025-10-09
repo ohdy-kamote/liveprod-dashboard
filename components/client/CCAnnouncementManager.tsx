@@ -83,7 +83,6 @@ export default function CCAnnouncementManager() {
             label="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter announcement title"
           />
           
           <div>
