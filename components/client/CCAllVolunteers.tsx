@@ -98,6 +98,19 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
   ];
 
   if (isAdmin) {
+    columns.splice(0, 0, {
+      name: "ID",
+      selector: (row: Data) => {
+        const volunteerId = (row as any).volunteerId;
+        return volunteerId ? volunteerId : "Not Assigned";
+      },
+      sortable: true,
+      width: "140px",
+      wrap: true
+    });
+  }
+
+  if (isAdmin) {
     columns.push(
       {
         name: "Gender",
@@ -113,7 +126,7 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
         name: "Roles",
         selector: (row: Data) => row.roles?.join(', ') || '--',
         sortable: true,
-        width: '300px',
+        width: '250px',
         wrap: true,
       }
     );
@@ -129,6 +142,10 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
   }
 
   const filteredVolunteers = useMemo(() => {
+    if (!isAdmin) {
+      return []; // Non-admin users see no volunteers in the list
+    }
+    
     const filteredValues = data.filter((volunteer) => {
       const matchesQuery = volunteer.name.toLowerCase().includes(query.toLowerCase());
       const matchesGender = !genderFilter || volunteer.gender === genderFilter;
@@ -138,16 +155,14 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
       return matchesQuery && matchesGender && matchesStatus && matchesRole;
     });
 
-    if (isAdmin && query === '' && !genderFilter && !statusFilter && !roleFilter) return data;
-    if (isAdmin) return filteredValues;
-    if (filteredValues.length === 1) return filteredValues;
-    return [];
+    if (query === '' && !genderFilter && !statusFilter && !roleFilter) return data;
+    return filteredValues;
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, genderFilter, statusFilter, roleFilter, isAdmin])
+  }, [query, genderFilter, statusFilter, roleFilter, isAdmin, data])
 
   const noDataMessage = () => {
-    if (isAdmin || query.length) return "There are no records to display";
-    return "You're on guest mode. Please search for your name to view your profile";
+    if (isAdmin) return "There are no records to display";
+    return "Enter your Volunteer ID above to access your profile";
   }
 
   const openModal = () => {
@@ -201,9 +216,42 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
               </div>
             )}
             <div className="flex gap-3 justify-end">
-              <div className="w-64">
-                <GCInputSearch onChange={(event) => setQuery(event.target.value)} />
-              </div>
+              {isAdmin ? (
+                <div className="w-64">
+                  <GCInputSearch onChange={(event) => setQuery(event.target.value)} />
+                </div>
+              ) : (
+                <div className="flex gap-2 items-end">
+                  <div className="w-64">
+                    <label className="block text-sm font-medium mb-1">Enter Volunteer ID</label>
+                    <input
+                      type="text"
+                      placeholder="CCF-LP-00001"
+                      className="w-full p-2 border border-gray-300 rounded"
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          const volunteerId = (e.target as HTMLInputElement).value.trim();
+                          if (volunteerId) {
+                            router.push(`/volunteer/id/${volunteerId}`);
+                          }
+                        }
+                      }}
+                    />
+                  </div>
+                  <button
+                    onClick={() => {
+                      const input = document.querySelector('input[placeholder="CCF-LP-00001"]') as HTMLInputElement;
+                      const volunteerId = input?.value.trim();
+                      if (volunteerId) {
+                        router.push(`/volunteer/id/${volunteerId}`);
+                      }
+                    }}
+                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 h-10"
+                  >
+                    Go
+                  </button>
+                </div>
+              )}
               { isAdmin &&
                 <button
                   onClick={openModal}
@@ -225,7 +273,7 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
                 paginationPerPage: 25,
                 paginationRowsPerPageOptions: [10, 25, 50, 100]
               })}
-              onRowClicked={(row: Data) => router.push(`/volunteer/profile/${row._id}`)}
+              onRowClicked={isAdmin ? (row: Data) => router.push(`/volunteer/profile/${row._id}`) : undefined}
               noDataComponent={
                 <div className="flex h-96 flex-col justify-center">
                   <div className="flex gap-1 text-slate-700">

@@ -189,6 +189,11 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated, isAdmin
                   <h2 className="font-semibold text-lg capitalize">
                     {`${volunteer.firstName}${getAlias()}${volunteer.lastName}`}
                   </h2>
+                  {isAdmin && (
+                    <p className="text-xs text-slate-500 font-mono">
+                      ID: {(volunteer as any).volunteerId || "Not Assigned"}
+                    </p>
+                  )}
                   <div className={`text-sm capitalize flex items-center ${statusColor(volunteer.status)}`}>
                     <GoDotFill />
                     <p>{volunteer.status}</p>

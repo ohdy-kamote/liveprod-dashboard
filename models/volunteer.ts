@@ -2,6 +2,11 @@ import { category } from "@/utils/constants";
 import mongoose, { Schema } from "mongoose";
 
 const volunteerSchema = new Schema({
+  volunteerId: {
+    type: String,
+    unique: true,
+    sparse: true
+  },
   nickName: String,
   firstName: {
     type: String,
