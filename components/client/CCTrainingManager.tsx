@@ -116,9 +116,7 @@ export default function CCTrainingManager({ isAuthenticated }: { isAuthenticated
 
   return (
     <div className="w-full">
-      <div className="bg-slate-800 border border-slate-800 flex justify-between items-center px-6">
-        <h2 className="text-white text-lg font-semibold py-3">Training</h2>
-      </div>
+
 
       {isAuthenticated && (
         <div className="p-4 bg-slate-50 border-b">

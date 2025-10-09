@@ -31,13 +31,12 @@ export default function CCObserverTracker({ isAuthenticated }: { isAuthenticated
   };
 
   return (
-    <div className="w-full">
-      <div className="bg-slate-800 border border-slate-800 flex justify-between items-center px-6">
-        <h2 className="text-white text-lg font-semibold py-3">Observer Tracker</h2>
-        <span className="text-white text-sm">{observers.length} observers</span>
+    <div className="px-8 py-6">
+      <div className="flex justify-end items-center mb-6">
+        <span className="text-slate-600 font-medium">{observers.length} observers</span>
       </div>
 
-      <div className="p-6">
+      <div>
         {observers.length === 0 ? (
           <p className="text-gray-500 text-center py-8">No observers found.</p>
         ) : (

@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import CCSlideshow from "@/components/client/CCSlideshow";
+import CCAnnouncementBanner from "@/components/client/CCAnnouncementBanner";
 import Image from "next/image";
 import { PiLegoSmiley, PiLegoSmileyDuotone } from "react-icons/pi"
 
@@ -9,6 +10,7 @@ export default async function Home() {
 
   return (
     <>
+      <CCAnnouncementBanner />
       <div className="flex flex-col gap-16">
         <div className="flex gap-3 text-white opacity-60 justify-center">
           <PiLegoSmileyDuotone size={27} />

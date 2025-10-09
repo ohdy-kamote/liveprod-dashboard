@@ -48,7 +48,7 @@ export default function Navbar({ session }: { session: Session | null }) {
     if (pathname.startsWith("/volunteer/add")) return "Add Volunteer";
     if (pathname.startsWith("/volunteer/training")) return "Training";
     if (pathname.startsWith("/volunteer/observer-tracker")) return "Observer Tracker";
-    if (pathname.startsWith("/volunteer/analytics")) return "Analytics";
+    if (pathname.startsWith("/admin/analytics")) return "Analytics";
     return "Dashboard";
   }, [pathname]);
 
@@ -81,7 +81,8 @@ export default function Navbar({ session }: { session: Session | null }) {
               <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/all"}>Volunteers List</Link>
               {isAdmin && <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/training"}>Training</Link>}
               {isAdmin && <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/observer-tracker"}>Observer Tracker</Link>}
-              {isAdmin && <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/volunteer/analytics"}>Analytics</Link>}
+              {isAdmin && <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/admin/analytics"}>Analytics</Link>}
+              {isAdmin && <Link className="block text-white px-4 py-2 hover:bg-slate-700" href={"/admin/announcements"}>Announcements</Link>}
             </div>
           )}
         </div>
