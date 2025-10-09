@@ -219,8 +219,10 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
               data={filteredVolunteers}
               conditionalRowStyles={conditionalRowStyles}
               pagination={isAdmin}
-              paginationPerPage={25}
-              paginationRowsPerPageOptions={[10, 25, 50, 100]}
+              {...(isAdmin && {
+                paginationPerPage: 25,
+                paginationRowsPerPageOptions: [10, 25, 50, 100]
+              })}
               onRowClicked={(row: Data) => router.push(`/volunteer/profile/${row._id}`)}
               noDataComponent={
                 <div className="flex h-96 flex-col justify-center">
