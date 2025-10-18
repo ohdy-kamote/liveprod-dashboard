@@ -18,7 +18,7 @@ export async function POST() {
         Math.floor((Date.now() - new Date(log.startDate).getTime()) / (1000 * 60 * 60 * 24)) : 0;
       
       const trialPeriodDays = (log.trialDuration || 4) * 7; // weeks to days
-      const hasRecentEvaluations = log.evaluations.some(evaluation => 
+      const hasRecentEvaluations = log.evaluations.some((evaluation: any) => 
         (Date.now() - new Date(evaluation.date).getTime()) < (30 * 24 * 60 * 60 * 1000) // 30 days
       );
 

@@ -34,7 +34,7 @@ export async function POST() {
             { upsert: true, new: true }
           );
           migratedCount++;
-        } catch (error) {
+        } catch (error: any) {
           // Skip if duplicate key error (already exists)
           if (error.code !== 11000) {
             throw error;

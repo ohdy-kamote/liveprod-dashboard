@@ -379,7 +379,7 @@ export default function CCObserverTracker({ isAuthenticated }: { isAuthenticated
 
       {observerLogs.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">No observers found. Volunteers with status "observer" will automatically appear here.</p>
+          <p className="text-gray-500">No observers found. Volunteers with status &quot;observer&quot; will automatically appear here.</p>
         </div>
       )}
     </div>

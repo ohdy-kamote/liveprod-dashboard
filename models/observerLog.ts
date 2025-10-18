@@ -58,7 +58,7 @@ const observerLogSchema = new mongoose.Schema({
 observerLogSchema.methods.calculateProgressScore = function() {
   if (this.evaluations.length === 0) return 0;
   
-  const totalScore = this.evaluations.reduce((sum, evaluation) => {
+  const totalScore = this.evaluations.reduce((sum: number, evaluation: any) => {
     return sum + (evaluation.punctuality + evaluation.attitude + evaluation.initiative + evaluation.participation);
   }, 0);
   
