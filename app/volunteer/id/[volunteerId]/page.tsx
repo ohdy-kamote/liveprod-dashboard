@@ -2,7 +2,15 @@ import { redirect } from "next/navigation";
 
 async function getVolunteerByVolunteerId(volunteerId: string) {
   try {
-    const baseUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL || 'http://localhost:3000';
+    // For server-side calls, use relative URL or construct proper absolute URL
+    let baseUrl = 'http://localhost:3000';
+    
+    if (process.env.VERCEL_URL) {
+      baseUrl = `https://${process.env.VERCEL_URL}`;
+    } else if (process.env.NEXTAUTH_URL) {
+      baseUrl = process.env.NEXTAUTH_URL;
+    }
+    
     const response = await fetch(`${baseUrl}/api/volunteers/by-id/${volunteerId}`, {
       cache: "no-store"
     });

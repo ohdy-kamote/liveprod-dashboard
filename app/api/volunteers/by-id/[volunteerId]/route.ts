@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request, { params }: { params: { volunteerId: string } }) {
   try {
     await connectMongoDB();
-    const volunteer = await Volunteer.findOne({ volunteerId: params.volunteerId }).populate("schedules");
+    const volunteer = await Volunteer.findOne({ volunteerId: params.volunteerId });
     
     if (!volunteer) {
       return NextResponse.json({ error: "Volunteer not found" }, { status: 404 });
