@@ -231,7 +231,9 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
                       onKeyPress={(e) => {
                         if (e.key === 'Enter') {
                           const volunteerId = (e.target as HTMLInputElement).value.trim();
+                          console.log('Volunteer ID entered:', volunteerId);
                           if (volunteerId) {
+                            console.log('Navigating to:', `/volunteer/id/${volunteerId}`);
                             router.push(`/volunteer/id/${volunteerId}`);
                           }
                         }
@@ -242,7 +244,9 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
                     onClick={() => {
                       const input = document.querySelector('input[placeholder="CCF-LP-00001"]') as HTMLInputElement;
                       const volunteerId = input?.value.trim();
+                      console.log('Go button clicked, volunteer ID:', volunteerId);
                       if (volunteerId) {
+                        console.log('Navigating to:', `/volunteer/id/${volunteerId}`);
                         router.push(`/volunteer/id/${volunteerId}`);
                       }
                     }}
