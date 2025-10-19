@@ -11,10 +11,12 @@ export default async function SCVolunteerProfile({ id }: { id: string }) {
     const res = await getVolunteerById(id);
     const volunteer = res.data;
 
+    // Allow access to volunteer profile even without authentication
+    // This enables volunteer ID lookup functionality
     return (
       <CCVolunteerProfile volunteer={volunteer} isAuthenticated={isAuthenticated} isAdmin={isAdmin} />
     )
   } catch (error) {
-    redirect("/");
+    redirect("/volunteer/all");
   }
 }
