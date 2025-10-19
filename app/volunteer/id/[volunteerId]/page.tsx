@@ -26,19 +26,14 @@ async function getVolunteerByVolunteerId(volunteerId: string) {
 }
 
 export default async function VolunteerByIdPage({ params }: { params: { volunteerId: string } }) {
-  try {
-    const result = await getVolunteerByVolunteerId(params.volunteerId);
-    
-    if (!result || !result.data) {
-      console.log('Volunteer not found:', params.volunteerId);
-      redirect("/volunteer/all");
-    }
-    
-    console.log('Redirecting to profile:', result.data._id);
-    // Redirect to the regular profile page using the MongoDB _id
-    redirect(`/volunteer/profile/${result.data._id}`);
-  } catch (error) {
-    console.error('Error in volunteer ID lookup:', error);
+  const result = await getVolunteerByVolunteerId(params.volunteerId);
+  
+  if (!result || !result.data) {
+    console.log('Volunteer not found:', params.volunteerId);
     redirect("/volunteer/all");
   }
+  
+  console.log('Redirecting to profile:', result.data._id);
+  // Redirect to the regular profile page using the MongoDB _id
+  redirect(`/volunteer/profile/${result.data._id}`);
 }
