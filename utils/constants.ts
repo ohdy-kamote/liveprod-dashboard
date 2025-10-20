@@ -22,6 +22,7 @@ const role = {
   NXTGEN: "nxtgen",
   NXTGEN_TRAINEE: "nxtgen trainee",
   NXTGEN_OBSERVER: "nxtgen observer",
+  AUDIO_CORE_TEAM: "audio core team",
   AUDIO_VOLUNTEER_1: "audio volunteer 1",
   AUDIO_VOLUNTEER_2: "audio volunteer 2",
 }
@@ -88,8 +89,7 @@ export const category: { [key: string]: string[] } = {
     role.NXTGEN,
     role.NXTGEN_TRAINEE,
     role.NXTGEN_OBSERVER,
-    role.AUDIO_VOLUNTEER_1,
-    role.AUDIO_VOLUNTEER_2
+    role.AUDIO_CORE_TEAM
   ],
   SNS_ROLES: [
     role.FOH,

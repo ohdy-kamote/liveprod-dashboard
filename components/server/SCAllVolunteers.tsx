@@ -7,7 +7,10 @@ export default async function SCAllVolunteers() {
   const volunteers = await getAllVolunteers();
   const isAdmin = await checkAdminAuth();
 
+  // Handle case where volunteers data might be undefined or have errors
+  const volunteerData = volunteers?.data || [];
+
 	return (
-    <CCAllVolunteers data={volunteers.data} isAdmin={isAdmin} />
+    <CCAllVolunteers data={volunteerData} isAdmin={isAdmin} />
 	)
 }

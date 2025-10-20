@@ -150,7 +150,7 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
       const matchesQuery = volunteer.name.toLowerCase().includes(query.toLowerCase());
       const matchesGender = !genderFilter || volunteer.gender === genderFilter;
       const matchesStatus = !statusFilter || volunteer.status === statusFilter;
-      const matchesRole = !roleFilter || volunteer.roles?.some(role => role.toLowerCase().includes(roleFilter.toLowerCase()));
+      const matchesRole = !roleFilter || volunteer.roles?.some(role => role.toLowerCase() === roleFilter.toLowerCase());
       
       return matchesQuery && matchesGender && matchesStatus && matchesRole;
     });
@@ -173,27 +173,27 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
     <div className="flex justify-center">
       <div className="w-full">
         <div className="flex flex-col gap-7 text-slate-700 px-32 pt-8">
-          <div className="flex justify-end items-end mb-6">
+          <div className="flex justify-between items-end mb-6">
             {isAdmin && (
-              <div className="flex gap-4">
-                <div>
+              <div className="flex gap-3 items-end">
+                <div className="min-w-[120px]">
                   <label className="block text-sm font-medium mb-1">Gender</label>
                   <select 
                     value={genderFilter} 
                     onChange={(e) => setGenderFilter(e.target.value)}
-                    className="p-2 border border-gray-300 rounded"
+                    className="w-full p-2 border border-gray-300 rounded h-10"
                   >
                     <option value="">All Genders</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </select>
                 </div>
-                <div>
+                <div className="min-w-[120px]">
                   <label className="block text-sm font-medium mb-1">Status</label>
                   <select 
                     value={statusFilter} 
                     onChange={(e) => setStatusFilter(e.target.value)}
-                    className="p-2 border border-gray-300 rounded"
+                    className="w-full p-2 border border-gray-300 rounded h-10"
                   >
                     <option value="">All Status</option>
                     <option value="active">Active</option>
@@ -203,31 +203,60 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
                     <option value="inactive">Inactive</option>
                   </select>
                 </div>
-                <div>
+                <div className="min-w-[180px]">
                   <label className="block text-sm font-medium mb-1">Role</label>
-                  <input 
-                    type="text"
+                  <select 
                     value={roleFilter} 
                     onChange={(e) => setRoleFilter(e.target.value)}
-                    placeholder="Filter by role"
-                    className="p-2 border border-gray-300 rounded"
-                  />
+                    className="w-full p-2 border border-gray-300 rounded h-10"
+                  >
+                    <option value="">All Roles</option>
+                    <option value="foh">FOH</option>
+                    <option value="foh assistant">FOH Assistant</option>
+                    <option value="foh trainee">FOH Trainee</option>
+                    <option value="foh assistant trainee">FOH Assistant Trainee</option>
+                    <option value="foh observer">FOH Observer</option>
+                    <option value="monitor mix">Monitor Mix</option>
+                    <option value="rf tech">RF Tech</option>
+                    <option value="monitor mix trainee">Monitor Mix Trainee</option>
+                    <option value="monitor mix observer">Monitor Mix Observer</option>
+                    <option value="broadcast mix">Broadcast Mix</option>
+                    <option value="broadcast mix assistant">Broadcast Mix Assistant</option>
+                    <option value="broadcast mix trainee">Broadcast Mix Trainee</option>
+                    <option value="broadcast mix assistant trainee">Broadcast Mix Assistant Trainee</option>
+                    <option value="broadcast mix observer">Broadcast Mix Observer</option>
+                    <option value="nxtgen">NXTGen</option>
+                    <option value="nxtgen trainee">NXTGen Trainee</option>
+                    <option value="nxtgen observer">NXTGen Observer</option>
+                    <option value="audio core team">Audio Core Team</option>
+                  </select>
                 </div>
+                <button
+                  onClick={() => {
+                    setGenderFilter('');
+                    setStatusFilter('');
+                    setRoleFilter('');
+                    setQuery('');
+                  }}
+                  className="px-3 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 h-10 text-sm"
+                >
+                  Reset
+                </button>
               </div>
             )}
-            <div className="flex gap-3 justify-end">
+            <div className="flex gap-3 items-end">
               {isAdmin ? (
                 <div className="w-64">
                   <GCInputSearch onChange={(event) => setQuery(event.target.value)} />
                 </div>
               ) : (
                 <div className="flex gap-2 items-end">
-                  <div className="w-64">
+                  <div className="w-80">
                     <label className="block text-sm font-medium mb-1">Enter Volunteer ID</label>
                     <input
                       type="text"
-                      placeholder="CCF-LP-00001"
-                      className="w-full p-2 border border-gray-300 rounded"
+                      placeholder="A123456 / S123456 / L123456"
+                      className="w-full p-2 border border-gray-300 rounded h-10"
                       onKeyPress={(e) => {
                         if (e.key === 'Enter') {
                           const volunteerId = (e.target as HTMLInputElement).value.trim();
@@ -242,7 +271,7 @@ export default function CCAllVolunteers({ data, isAdmin }: { data: Data[], isAdm
                   </div>
                   <button
                     onClick={() => {
-                      const input = document.querySelector('input[placeholder="CCF-LP-00001"]') as HTMLInputElement;
+                      const input = document.querySelector('input[placeholder="A123456 / S123456 / L123456"]') as HTMLInputElement;
                       const volunteerId = input?.value.trim();
                       console.log('Go button clicked, volunteer ID:', volunteerId);
                       if (volunteerId) {

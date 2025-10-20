@@ -16,7 +16,7 @@ export async function POST(request: any) {
 
   try {
     await connectMongoDB();
-    const volunteerId = await generateVolunteerId();
+    const volunteerId = await generateVolunteerId(requestData.segment);
     const updateData = {
       volunteerId,
       name: `${requestData.firstName} ${requestData.lastName}`,
@@ -36,20 +36,25 @@ export async function GET() {
   // Get volunteers sorted by lastName
   const volunteers = await Volunteer.find().select("-schedules -createdAt -updatedAt").sort({ lastName: 1 });
   
-  // Check for volunteers needing IDs (no ID or sequential ID)
+  // Check for volunteers needing IDs (no ID, old CCF-LP format, or sequential ID)
   const volunteersNeedingIds = volunteers.filter(v => 
-    !v.volunteerId || /^CCF-LP-0\d{4}$/.test(v.volunteerId)
+    !v.volunteerId || 
+    v.volunteerId === "" || 
+    v.volunteerId.startsWith('CCF-LP-') ||
+    /^CCF-LP-0\d{4}$/.test(v.volunteerId)
   );
   
   if (volunteersNeedingIds.length > 0) {
     const { generateVolunteerId } = await import('@/utils/volunteerIdGenerator');
     
-    // Assign random IDs to volunteers without them or with sequential IDs
+    // Assign new segment-based IDs to volunteers without them or with old format
     for (const volunteer of volunteersNeedingIds) {
-      const volunteerId = await generateVolunteerId();
+      const volunteerId = await generateVolunteerId(volunteer.segment);
       await Volunteer.findByIdAndUpdate(volunteer._id, { volunteerId });
       volunteer.volunteerId = volunteerId;
     }
+    
+    console.log(`Updated ${volunteersNeedingIds.length} volunteer IDs to new A###### format`);
   }
   
   return NextResponse.json({data: volunteers}, {status: 200});

@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import Link from "next/link";
 import { BsArrowLeftCircle, BsArrowRightCircle } from "react-icons/bs";
 import CCScheduleBySegment from "../client/CCScheduleBySegment";
+import CCMergedScheduleBySegment from "../client/CCMergedScheduleBySegment";
 import GCTabLInk from '../global/tabs/GCTabLink';
 
 export default async function SCScheduleBySegment({increment, service}: {increment: number, service: string}) {
@@ -21,15 +22,14 @@ export default async function SCScheduleBySegment({increment, service}: {increme
   return (
     <div className="flex justify-center">
       <div className="flex flex-col w-full gap-2 text-slate-700">
-        <div className='flex items-center justify-end'>
+        <div className='flex items-center justify-end mb-6'>
           <GCTabLInk
             links={[
-              `/schedule/segment/audio/saturday?increment=${increment}`,
-              `/schedule/segment/audio/sunday?increment=${increment}`,
+              `/schedule/segment/audio/regular?increment=${increment}`,
               `/schedule/segment/audio/events?increment=${increment}`
             ]}
-            name={["saturday", "sunday", "events"]}
-            labels={["Saturday", "Sunday", "Events"]}
+            name={["regular", "events"]}
+            labels={["Regular Service", "Events"]}
             isSinglePath
           />
         </div>
@@ -38,17 +38,10 @@ export default async function SCScheduleBySegment({increment, service}: {increme
             <div className="mt-[0.5px]">
               <CCScheduleBySegment schedule={{saturday: '', sunday: '', data: []}} dayService={service} isAuthenticated={isAuthenticated} isCompact={false} />
             </div>
-          ) : service === 'saturday' ? (
-            <div className="grid grid-cols-4 gap-2 w-full mt-[0.5px]">
-              <CCScheduleBySegment schedule={schedule1} dayService={service} isAuthenticated={isAuthenticated} isCompact={true} />
-              <CCScheduleBySegment schedule={schedule2} dayService={service} isAuthenticated={isAuthenticated} isCompact={true} />
-              <CCScheduleBySegment schedule={schedule3} dayService={service} isAuthenticated={isAuthenticated} isCompact={true} />
-              <CCScheduleBySegment schedule={schedule4} dayService={service} isAuthenticated={isAuthenticated} isCompact={true} />
-            </div>
           ) : (
             <div className="flex gap-2 w-full mt-[0.5px]">
-              <CCScheduleBySegment schedule={schedule1} dayService={service} isAuthenticated={isAuthenticated} isCompact={false} />
-              <CCScheduleBySegment schedule={schedule2} dayService={service} isAuthenticated={isAuthenticated} isCompact={false} />
+              <CCMergedScheduleBySegment schedule={schedule1} isAuthenticated={isAuthenticated} />
+              <CCMergedScheduleBySegment schedule={schedule2} isAuthenticated={isAuthenticated} />
             </div>
           )}
         </div>
@@ -56,13 +49,13 @@ export default async function SCScheduleBySegment({increment, service}: {increme
           <div className='absolute bottom-4 left-0 w-full px-4'>
             <div className=''>
               <div className="flex justify-between">
-                <Link className="text-slate-600 hover:underline" href={`/schedule/segment/audio/${service}?increment=${increment-1}`}>
+                <Link className="text-slate-600 hover:underline" href={`/schedule/segment/audio/regular?increment=${increment-1}`}>
                   <div className='flex gap-2 items-center'>
                     <BsArrowLeftCircle size={22} />
                     <p>Prev Week</p>
                   </div>
                 </Link>
-                <Link className="text-slate-600 hover:underline" href={`/schedule/segment/audio/${service}?increment=${increment+1}`}>
+                <Link className="text-slate-600 hover:underline" href={`/schedule/segment/audio/regular?increment=${increment+1}`}>
                   <div className='flex gap-2 items-center'>
                   <p>Next Week</p>
                   <BsArrowRightCircle size={22} />

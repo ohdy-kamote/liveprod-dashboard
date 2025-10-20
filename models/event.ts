@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const eventSchema = new Schema({
   status: {
     type: String,
-    enum: ["confirmed", "cancelled"],
+    enum: ["confirmed", "tentative", "cancelled"],
     required: true,
     default: "confirmed"
   },

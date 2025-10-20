@@ -45,7 +45,9 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
   const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
   const [selectedVolunteers, setSelectedVolunteers] = useState<{[key: string]: string}>({});
   const [currentPage, setCurrentPage] = useState(0);
-  const eventsPerPage = 5;
+  const eventsPerPage = 7;
+  const [editingEvent, setEditingEvent] = useState<Event | null>(null);
+  const [editSelectedVolunteers, setEditSelectedVolunteers] = useState<{[key: string]: string}>({});
   const [newEvent, setNewEvent] = useState<Event>({
     status: "confirmed",
     date: "",
@@ -173,6 +175,12 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
   const startIndex = currentPage * eventsPerPage;
   const endIndex = startIndex + eventsPerPage;
   const currentEvents = events.slice(startIndex, endIndex);
+  
+  // Always show 7 columns - add empty placeholders if needed
+  const displayEvents: (Event | null)[] = [...currentEvents];
+  while (displayEvents.length < eventsPerPage) {
+    displayEvents.push(null);
+  }
 
   const handlePrevPage = () => {
     setCurrentPage(prev => Math.max(0, prev - 1));
@@ -230,28 +238,29 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
               value={newEvent.eventName} 
               onChange={(e) => setNewEvent({...newEvent, eventName: e.target.value})}
             />
-            <GCInputTextWithLabel 
+            <GCSelect 
               label="Venue" 
               value={newEvent.venue} 
               onChange={(e) => setNewEvent({...newEvent, venue: e.target.value})}
+              options={["Main Hall", "MPH", "7F Gym", "GF Annex", "2F Annex"]}
             />
-            <GCInputTextWithLabel 
+            <GCSelect 
               label="Call Time" 
-              type="time"
               value={newEvent.callTime} 
               onChange={(e) => setNewEvent({...newEvent, callTime: e.target.value})}
+              options={["6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM"]}
             />
-            <GCInputTextWithLabel 
+            <GCSelect 
               label="Start Time" 
-              type="time"
               value={newEvent.startTime} 
               onChange={(e) => setNewEvent({...newEvent, startTime: e.target.value})}
+              options={["6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM"]}
             />
-            <GCInputTextWithLabel 
+            <GCSelect 
               label="End Time" 
-              type="time"
               value={newEvent.endTime} 
               onChange={(e) => setNewEvent({...newEvent, endTime: e.target.value})}
+              options={["6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM"]}
             />
             <GCSelect 
               label="Praise and Worship" 
@@ -299,7 +308,8 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
                         });
                       }}
                     >
-                      <option value="">No volunteer assigned</option>
+                      <option value="">-</option>
+                      <option value="N/A">N/A</option>
                       {availableVolunteers.map(volunteer => (
                         <option key={volunteer._id} value={volunteer._id}>
                           {volunteer.name}
@@ -322,112 +332,114 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
       )}
 
       <div className="overflow-x-auto">
-        <table className="w-full text-sm border border-slate-300">
+        <table className="table-fixed w-full text-sm border border-slate-300">
           <tbody>
             <tr>
-              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold">Status</td>
-              {currentEvents.map((event) => (
-                <td key={event._id} className="border border-slate-300 p-2 text-center">
-                  {isAuthenticated ? (
-                    <select 
-                      className={`p-1 border border-gray-300 rounded text-sm ${
+              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">Status</td>
+              {displayEvents.map((event, index) => (
+                <td key={event?._id || `empty-${index}`} className="border border-slate-300 p-2 text-center w-32">
+                  {event ? (
+                    isAuthenticated ? (
+                      <select 
+                        className={`p-1 border border-gray-300 rounded text-sm ${
+                          event.status === 'confirmed' ? 'text-green-600' : 
+                          event.status === 'tentative' ? 'text-yellow-600' : 'text-red-600'
+                        }`}
+                        value={event.status}
+                        onChange={(e) => handleStatusUpdate(event._id!, e.target.value)}
+                      >
+                        <option value="confirmed" className="text-green-600">CONFIRMED</option>
+                        <option value="tentative" className="text-yellow-600">TENTATIVE</option>
+                        <option value="cancelled" className="text-red-600">CANCELLED</option>
+                      </select>
+                    ) : (
+                      <span className={
                         event.status === 'confirmed' ? 'text-green-600' : 
                         event.status === 'tentative' ? 'text-yellow-600' : 'text-red-600'
-                      }`}
-                      value={event.status}
-                      onChange={(e) => handleStatusUpdate(event._id!, e.target.value)}
-                    >
-                      <option value="confirmed" className="text-green-600">CONFIRMED</option>
-                      <option value="tentative" className="text-yellow-600">TENTATIVE</option>
-                      <option value="cancelled" className="text-red-600">CANCELLED</option>
-                    </select>
-                  ) : (
-                    <span className={
-                      event.status === 'confirmed' ? 'text-green-600' : 
-                      event.status === 'tentative' ? 'text-yellow-600' : 'text-red-600'
-                    }>
-                      {event.status.toUpperCase()}
-                    </span>
-                  )}
+                      }>
+                        {event.status.toUpperCase()}
+                      </span>
+                    )
+                  ) : null}
                 </td>
               ))}
             </tr>
             <tr>
-              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold">Date</td>
-              {currentEvents.map((event) => (
-                <td key={event._id} className="border border-slate-300 p-2 text-center">
-                  {new Date(event.date).toLocaleDateString()}
+              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">Date</td>
+              {displayEvents.map((event, index) => (
+                <td key={event?._id || `empty-${index}`} className="border border-slate-300 p-2 text-center w-32 break-words">
+                  {event ? new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) : ''}
                 </td>
               ))}
             </tr>
             <tr>
-              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold">Day</td>
-              {currentEvents.map((event) => (
-                <td key={event._id} className="border border-slate-300 p-2 text-center">
-                  {event.day}
+              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">Day</td>
+              {displayEvents.map((event, index) => (
+                <td key={event?._id || `empty-${index}`} className="border border-slate-300 p-2 text-center w-32 break-words">
+                  {event?.day || ''}
                 </td>
               ))}
             </tr>
             <tr>
-              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold">Event Name</td>
-              {currentEvents.map((event) => (
-                <td key={event._id} className="border border-slate-300 p-2 text-center">
-                  {event.eventName}
+              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">Event Name</td>
+              {displayEvents.map((event, index) => (
+                <td key={event?._id || `empty-${index}`} className="border border-slate-300 p-2 text-center font-bold text-lg w-32 break-words">
+                  {event?.eventName || ''}
                 </td>
               ))}
             </tr>
             <tr>
-              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold">Venue</td>
+              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">Venue</td>
               {currentEvents.map((event) => (
-                <td key={event._id} className="border border-slate-300 p-2 text-center">
+                <td key={event._id} className="border border-slate-300 p-2 text-center w-32 break-words">
                   {event.venue}
                 </td>
               ))}
             </tr>
             <tr>
-              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold">Call Time</td>
+              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">Call Time</td>
               {currentEvents.map((event) => (
-                <td key={event._id} className="border border-slate-300 p-2 text-center">
+                <td key={event._id} className="border border-slate-300 p-2 text-center w-32 break-words">
                   {event.callTime}
                 </td>
               ))}
             </tr>
             <tr>
-              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold">Start Time</td>
+              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">Start Time</td>
               {currentEvents.map((event) => (
-                <td key={event._id} className="border border-slate-300 p-2 text-center">
+                <td key={event._id} className="border border-slate-300 p-2 text-center w-32 break-words">
                   {event.startTime}
                 </td>
               ))}
             </tr>
             <tr>
-              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold">End Time</td>
+              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">End Time</td>
               {currentEvents.map((event) => (
-                <td key={event._id} className="border border-slate-300 p-2 text-center">
+                <td key={event._id} className="border border-slate-300 p-2 text-center w-32 break-words">
                   {event.endTime}
                 </td>
               ))}
             </tr>
             <tr>
-              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold">Praise & Worship</td>
+              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">Praise & Worship</td>
               {currentEvents.map((event) => (
-                <td key={event._id} className="border border-slate-300 p-2 text-center">
+                <td key={event._id} className="border border-slate-300 p-2 text-center w-32 break-words">
                   {event.praiseAndWorship ? 'Yes' : 'No'}
                 </td>
               ))}
             </tr>
             <tr>
-              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold">Other Details</td>
+              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">Other Details</td>
               {currentEvents.map((event) => (
-                <td key={event._id} className="border border-slate-300 p-2 text-center">
+                <td key={event._id} className="border border-slate-300 p-2 text-center w-32 break-words">
                   {event.otherDetails || '-'}
                 </td>
               ))}
             </tr>
             <tr>
-              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold">Volunteers Needed</td>
+              <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">Volunteers Needed</td>
               {currentEvents.map((event) => (
-                <td key={event._id} className="border border-slate-300 p-2 text-center">
+                <td key={event._id} className="border border-slate-300 p-2 text-center w-32 break-words">
                   <div className="text-xs space-y-1">
                     {Object.entries(event.volunteersNeeded)
                       .filter(([_, needed]) => needed)
@@ -460,6 +472,24 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
                 </td>
               ))}
             </tr>
+            {isAuthenticated && (
+              <tr>
+                <td className="bg-slate-300 border border-slate-300 p-2 font-semibold w-24">Actions</td>
+                {currentEvents.map((event) => (
+                  <td key={event._id} className="border border-slate-300 p-2 text-center w-32">
+                    <button 
+                      onClick={() => {
+                        setEditingEvent(event);
+                        setEditSelectedVolunteers(event.assignedVolunteers || {});
+                      }}
+                      className="bg-blue-500 text-white px-2 py-1 rounded text-xs hover:bg-blue-600"
+                    >
+                      Edit
+                    </button>
+                  </td>
+                ))}
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -483,6 +513,155 @@ export default function CCEventsManager({ isAuthenticated }: { isAuthenticated: 
           >
             Next
           </button>
+        </div>
+      )}
+
+      {editingEvent && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <h3 className="text-lg font-semibold mb-4">Edit Event</h3>
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <GCSelect 
+                label="Status" 
+                value={editingEvent.status} 
+                onChange={(e) => setEditingEvent({...editingEvent, status: e.target.value})}
+                options={["confirmed", "tentative", "cancelled"]}
+              />
+              <GCInputTextWithLabel 
+                label="Date" 
+                type="date"
+                value={editingEvent.date} 
+                onChange={(e) => {
+                  const dayName = new Date(e.target.value).toLocaleDateString('en-US', { weekday: 'long' });
+                  setEditingEvent({...editingEvent, date: e.target.value, day: dayName});
+                }}
+              />
+              <GCInputTextWithLabel 
+                label="Event Name" 
+                value={editingEvent.eventName} 
+                onChange={(e) => setEditingEvent({...editingEvent, eventName: e.target.value})}
+              />
+              <GCSelect 
+                label="Venue" 
+                value={editingEvent.venue} 
+                onChange={(e) => setEditingEvent({...editingEvent, venue: e.target.value})}
+                options={["Main Hall", "MPH", "7F Gym", "GF Annex", "2F Annex"]}
+              />
+              <GCSelect 
+                label="Call Time" 
+                value={editingEvent.callTime} 
+                onChange={(e) => setEditingEvent({...editingEvent, callTime: e.target.value})}
+                options={["6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM"]}
+              />
+              <GCSelect 
+                label="Start Time" 
+                value={editingEvent.startTime} 
+                onChange={(e) => setEditingEvent({...editingEvent, startTime: e.target.value})}
+                options={["6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM"]}
+              />
+              <GCSelect 
+                label="End Time" 
+                value={editingEvent.endTime} 
+                onChange={(e) => setEditingEvent({...editingEvent, endTime: e.target.value})}
+                options={["6:00 AM", "7:00 AM", "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM", "10:00 PM", "11:00 PM"]}
+              />
+              <GCSelect 
+                label="Praise and Worship" 
+                value={editingEvent.praiseAndWorship ? "yes" : "no"} 
+                onChange={(e) => setEditingEvent({...editingEvent, praiseAndWorship: e.target.value === "yes"})}
+                options={["yes", "no"]}
+              />
+            </div>
+            
+            <div className="mb-4">
+              <GCInputTextWithLabel 
+                label="Other Details" 
+                value={editingEvent.otherDetails} 
+                onChange={(e) => setEditingEvent({...editingEvent, otherDetails: e.target.value})}
+              />
+            </div>
+
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-2">Assign Volunteers:</label>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { key: 'foh', label: 'FOH' },
+                  { key: 'assistantFoh', label: 'Assistant FOH' },
+                  { key: 'bcMix', label: 'BC Mix' },
+                  { key: 'assistantBcMix', label: 'Assistant BC Mix' },
+                  { key: 'monMix', label: 'Mon Mix' },
+                  { key: 'rfTech', label: 'RF Tech' }
+                ].map(({ key, label }) => {
+                  const availableVolunteers = getVolunteersForRole(key);
+                  return (
+                    <div key={key} className="flex flex-col gap-2">
+                      <label className="text-sm font-medium">{label}:</label>
+                      <select 
+                        className="p-2 border border-gray-300 rounded"
+                        value={editSelectedVolunteers[key] || ''}
+                        onChange={(e) => {
+                          const volunteerId = e.target.value;
+                          setEditSelectedVolunteers(prev => ({...prev, [key]: volunteerId}));
+                          setEditingEvent({
+                            ...editingEvent,
+                            volunteersNeeded: {
+                              ...editingEvent.volunteersNeeded,
+                              [key]: !!volunteerId
+                            }
+                          });
+                        }}
+                      >
+                        <option value="">-</option>
+                        <option value="N/A">N/A</option>
+                        {availableVolunteers.map(volunteer => (
+                          <option key={volunteer._id} value={volunteer._id}>
+                            {volunteer.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="flex gap-2">
+              <button 
+                onClick={async () => {
+                  try {
+                    const response = await fetch(`/api/events/${editingEvent._id}`, {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        ...editingEvent,
+                        assignedVolunteers: editSelectedVolunteers
+                      })
+                    });
+                    
+                    if (response.ok) {
+                      fetchEvents();
+                      setEditingEvent(null);
+                      setEditSelectedVolunteers({});
+                    }
+                  } catch (error) {
+                    console.error('Error updating event:', error);
+                  }
+                }}
+                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              >
+                Save Changes
+              </button>
+              <button 
+                onClick={() => {
+                  setEditingEvent(null);
+                  setEditSelectedVolunteers({});
+                }}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

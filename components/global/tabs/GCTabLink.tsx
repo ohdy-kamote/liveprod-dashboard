@@ -11,7 +11,7 @@ export default function GCTabLInk(props: Readonly<{
   path?: string
 }>) {
   const { links, labels, isSinglePath = false } = props;
-  const params = useParams<{role1: string, service: string}>();
+  const params = useParams<{role1: string, service: string, segment: string}>();
   let numPaths = 1;
 
   const getBackgroundByNumber = (pathNum: number) => {
@@ -23,7 +23,11 @@ export default function GCTabLInk(props: Readonly<{
   }
 
   const getBackgroundByName = (name?: string) => {
-    if (name === params?.service) {
+    // Check both service and the last part of the URL path
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+    const isActive = name === params?.service || currentPath.includes(`/${name}`);
+    
+    if (isActive) {
       return "bg-slate-700";
     } else {
       return "bg-slate-400";
@@ -36,7 +40,7 @@ export default function GCTabLInk(props: Readonly<{
         <Link
           key={index}
           href={link}
-          className={`text-white py-1 w-28 text-center first:rounded-s-xl last:rounded-e-xl ${isSinglePath ? getBackgroundByName(props?.name?.[index]) : getBackgroundByNumber(index + 1)}`}
+          className={`text-white py-1 w-36 text-center first:rounded-s-xl last:rounded-e-xl ${isSinglePath ? getBackgroundByName(props?.name?.[index]) : getBackgroundByNumber(index + 1)}`}
         >
           {labels[index]}
         </Link>

@@ -39,7 +39,7 @@ export default function Navbar({ session }: { session: Session | null }) {
 
   const pageTitle = useMemo(() => {
     if (pathname.startsWith("/schedule/segment/")) return "Upcoming Schedule";
-    if (pathname.startsWith("/schedule/role/")) return "Schedule Masterlist";
+    if (pathname.startsWith("/schedule/role/")) return "Masterlist";
     if (pathname.startsWith("/schedule/assign-volunteer")) return "Assign Volunteer";
     if (pathname.startsWith("/schedule/calendar")) return "Live Production Calendar";
     if (pathname.startsWith("/login")) return "Login Page";
@@ -63,7 +63,7 @@ export default function Navbar({ session }: { session: Session | null }) {
       <div className="flex justify-between">
         { isAdmin && <Link className="text-white p-2" href={"/schedule/role/foh"}>Schedules</Link> }
         <Link className="text-white p-2" href={"/schedule/calendar"}>Calendar</Link>
-        <Link className="text-white p-2" href={"/schedule/segment/audio/sunday"}>Upcoming</Link>
+        <Link className="text-white p-2" href={"/schedule/segment/audio/regular"}>Upcoming</Link>
         <div className="relative">
           <button 
             className="text-white p-2 cursor-pointer"

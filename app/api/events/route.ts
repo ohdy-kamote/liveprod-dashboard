@@ -15,6 +15,18 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const eventData = await request.json();
+    
+    // Filter out N/A and empty values from assignedVolunteers
+    if (eventData.assignedVolunteers) {
+      const filteredVolunteers: any = {};
+      Object.entries(eventData.assignedVolunteers).forEach(([key, value]) => {
+        if (value && value !== "N/A" && value !== "") {
+          filteredVolunteers[key] = value;
+        }
+      });
+      eventData.assignedVolunteers = filteredVolunteers;
+    }
+    
     await connectMongoDB();
     
     const event = new Event(eventData);
@@ -22,6 +34,7 @@ export async function POST(request: NextRequest) {
     
     return NextResponse.json({ message: "Event created successfully", data: event }, { status: 201 });
   } catch (error: any) {
+    console.error('Event creation error:', error);
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }

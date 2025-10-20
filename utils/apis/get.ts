@@ -88,6 +88,7 @@ export const getAllVolunteers = async () => {
     return await res.json();
   } catch (error) {
     console.log("Error loading volunteers", error);
+    return { data: [], error: error instanceof Error ? error.message : 'Unknown error' };
   }
 }
 

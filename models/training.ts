@@ -2,6 +2,7 @@ import mongoose, { Schema, Document } from 'mongoose';
 
 export interface ITraining extends Document {
   trainingName: string;
+  description?: string;
   date: Date;
   trainors: string[];
   volunteers: mongoose.Types.ObjectId[];
@@ -13,6 +14,10 @@ const TrainingSchema: Schema = new Schema({
   trainingName: {
     type: String,
     required: true,
+    trim: true
+  },
+  description: {
+    type: String,
     trim: true
   },
   date: {

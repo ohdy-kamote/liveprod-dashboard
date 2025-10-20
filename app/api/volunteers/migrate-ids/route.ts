@@ -1,37 +1,37 @@
+import { NextResponse } from "next/server";
 import connectMongoDB from "@/libs/mongodb";
 import Volunteer from "@/models/volunteer";
-import { NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { generateVolunteerId } from "@/utils/volunteerIdGenerator";
 
 export async function POST() {
   try {
-    const session = await auth();
-    const isAdmin = !!(session?.user as any)?.isAdmin;
-    
-    if (!isAdmin) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     await connectMongoDB();
     
-    // Find all volunteers (to update both existing and new ones with random IDs)
-    const allVolunteers = await Volunteer.find({});
-    const { generateVolunteerId } = await import('@/utils/volunteerIdGenerator');
-    
+    // Find all volunteers without volunteerId or with old format
+    const volunteers = await Volunteer.find({
+      $or: [
+        { volunteerId: { $exists: false } },
+        { volunteerId: null },
+        { volunteerId: "" },
+        { volunteerId: { $regex: /^CCF-LP-/ } } // Old format
+      ]
+    });
+
     let updated = 0;
-    for (const volunteer of allVolunteers) {
-      // Generate new random ID for all volunteers
-      const volunteerId = await generateVolunteerId();
-      await Volunteer.findByIdAndUpdate(volunteer._id, { volunteerId });
+    
+    for (const volunteer of volunteers) {
+      const newId = await generateVolunteerId(volunteer.segment);
+      await Volunteer.findByIdAndUpdate(volunteer._id, { volunteerId: newId });
       updated++;
     }
-    
+
     return NextResponse.json({ 
-      message: `Successfully added volunteer IDs to ${updated} volunteers`,
+      message: `Successfully updated ${updated} volunteer IDs to new A000000 format`,
       updated 
     });
     
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    console.error("Migration error:", error);
+    return NextResponse.json({ error: "Migration failed" }, { status: 500 });
   }
 }
