@@ -9,6 +9,11 @@ export default async function SCVolunteerProfile({ id }: { id: string }) {
     const isAdmin = await checkAdminAuth();
 
     const res = await getVolunteerById(id);
+    
+    if (!res || !res.data) {
+      redirect("/");
+    }
+    
     const volunteer = res.data;
 
     // Allow access to volunteer profile even without authentication
@@ -17,6 +22,6 @@ export default async function SCVolunteerProfile({ id }: { id: string }) {
       <CCVolunteerProfile volunteer={volunteer} isAuthenticated={isAuthenticated} isAdmin={isAdmin} />
     )
   } catch (error) {
-    redirect("/volunteer/all");
+    redirect("/");
   }
 }
