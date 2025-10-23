@@ -2,25 +2,34 @@ import { redirect } from "next/navigation";
 
 async function getVolunteerByVolunteerId(volunteerId: string) {
   try {
-    // For server-side calls, use relative URL or construct proper absolute URL
-    let baseUrl = 'http://localhost:3000';
+    // Use proper base URL for different environments
+    const baseUrl = process.env.VERCEL_URL 
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXTAUTH_URL 
+      ? process.env.NEXTAUTH_URL
+      : 'http://localhost:3000';
     
-    if (process.env.VERCEL_URL) {
-      baseUrl = `https://${process.env.VERCEL_URL}`;
-    } else if (process.env.NEXTAUTH_URL) {
-      baseUrl = process.env.NEXTAUTH_URL;
-    }
+    console.log('Fetching volunteer with ID:', volunteerId, 'from:', baseUrl);
     
     const response = await fetch(`${baseUrl}/api/volunteers/by-id/${volunteerId}`, {
-      cache: "no-store"
+      cache: "no-store",
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
     
+    console.log('API Response status:', response.status);
+    
     if (!response.ok) {
+      console.log('API Response not ok:', response.statusText);
       return null;
     }
     
-    return await response.json();
+    const result = await response.json();
+    console.log('API Response data:', result);
+    return result;
   } catch (error) {
+    console.error('Error fetching volunteer:', error);
     return null;
   }
 }
@@ -30,7 +39,8 @@ export default async function VolunteerByIdPage({ params }: { params: { voluntee
   
   if (!result || !result.data) {
     console.log('Volunteer not found:', params.volunteerId);
-    redirect("/volunteer/all");
+    // Try to redirect with error message
+    redirect("/volunteer/all?error=volunteer-not-found");
   }
   
   console.log('Redirecting to profile:', result.data._id);
