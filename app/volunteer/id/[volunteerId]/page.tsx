@@ -2,10 +2,9 @@ import { redirect } from "next/navigation";
 
 async function getVolunteerByVolunteerId(volunteerId: string) {
   try {
-    const baseUrl = process.env.VERCEL_URL 
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXTAUTH_URL 
-      ? process.env.NEXTAUTH_URL
+    // Use absolute URL for production, relative for development
+    const baseUrl = process.env.NODE_ENV === 'production' 
+      ? 'https://ccf-liveprod.vercel.app'
       : 'http://localhost:3000';
     
     const response = await fetch(`${baseUrl}/api/volunteers/by-id/${volunteerId}`, {
