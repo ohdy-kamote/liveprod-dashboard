@@ -1,31 +1,18 @@
 import { redirect } from "next/navigation";
-
-async function getVolunteerByVolunteerId(volunteerId: string) {
-  try {
-    const baseUrl = process.env.NODE_ENV === 'development' 
-      ? 'http://localhost:3000'
-      : 'https://ccf-liveprod-git-production-ready-v2-dexv2s-projects.vercel.app';
-    
-    const response = await fetch(`${baseUrl}/api/volunteers/by-id/${volunteerId}`, {
-      cache: "no-store"
-    });
-    
-    if (!response.ok) {
-      return null;
-    }
-    
-    return await response.json();
-  } catch (error) {
-    return null;
-  }
-}
+import connectMongoDB from "@/libs/mongodb";
+import Volunteer from "@/models/volunteer";
 
 export default async function VolunteerByIdPage({ params }: { params: { volunteerId: string } }) {
-  const result = await getVolunteerByVolunteerId(params.volunteerId);
-  
-  if (!result || !result.data) {
+  try {
+    await connectMongoDB();
+    const volunteer = await Volunteer.findOne({ volunteerId: params.volunteerId });
+    
+    if (!volunteer) {
+      redirect("/volunteer/all");
+    }
+    
+    redirect(`/volunteer/profile/${volunteer._id}`);
+  } catch (error) {
     redirect("/volunteer/all");
   }
-  
-  redirect(`/volunteer/profile/${result.data._id}`);
 }
