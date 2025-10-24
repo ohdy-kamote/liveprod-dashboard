@@ -2,8 +2,9 @@ import { redirect } from "next/navigation";
 
 async function getVolunteerByVolunteerId(volunteerId: string) {
   try {
-    const baseUrl = process.env.NEXTAUTH_URL || 
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+    const baseUrl = process.env.NODE_ENV === 'development' 
+      ? 'http://localhost:3000'
+      : 'https://ccf-liveprod-git-production-ready-v2-dexv2s-projects.vercel.app';
     
     const response = await fetch(`${baseUrl}/api/volunteers/by-id/${volunteerId}`, {
       cache: "no-store"
