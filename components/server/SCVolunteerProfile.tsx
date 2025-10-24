@@ -19,14 +19,12 @@ export default async function SCVolunteerProfile({ id }: { id: string }) {
 
     console.log('Volunteer name:', volunteer.firstName, volunteer.lastName);
     
+    // Get auth status but don't let it fail
+    const isAuthenticated = false; // Default to false for volunteer access
+    const isAdmin = false; // Default to false for volunteer access
+    
     return (
-      <div className="p-8">
-        <h1 className="text-2xl font-bold">Volunteer Profile</h1>
-        <p>Name: {volunteer.firstName} {volunteer.lastName}</p>
-        <p>ID: {volunteer.volunteerId}</p>
-        <p>Status: {volunteer.status}</p>
-        <p>Segment: {volunteer.segment}</p>
-      </div>
+      <CCVolunteerProfile volunteer={volunteer} isAuthenticated={isAuthenticated} isAdmin={isAdmin} />
     );
   } catch (error) {
     console.log('Error:', error);
