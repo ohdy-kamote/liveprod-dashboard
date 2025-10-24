@@ -1,20 +1,20 @@
 import CCVolunteerProfile from "@/components/client/CCVolunteerProfile";
-import { getVolunteerById } from "@/utils/apis/get";
 import { checkAuth, checkAdminAuth } from "@/utils/helpersServer";
 import { redirect } from "next/navigation";
+import connectMongoDB from "@/libs/mongodb";
+import Volunteer from "@/models/volunteer";
 
 export default async function SCVolunteerProfile({ id }: { id: string }) {
   try {
     const isAuthenticated = await checkAuth();
     const isAdmin = await checkAdminAuth();
 
-    const res = await getVolunteerById(id);
+    await connectMongoDB();
+    const volunteer = await Volunteer.findById(id).populate('schedules');
     
-    if (!res || !res.data) {
+    if (!volunteer) {
       redirect("/");
     }
-    
-    const volunteer = res.data;
 
     // Allow access to volunteer profile even without authentication
     // This enables volunteer ID lookup functionality
