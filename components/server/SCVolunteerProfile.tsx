@@ -12,8 +12,11 @@ export default async function SCVolunteerProfile({ id }: { id: string }) {
     console.log('Auth check complete. Authenticated:', isAuthenticated, 'Admin:', isAdmin);
 
     await connectMongoDB();
-    const volunteer = await Volunteer.findById(id).populate('schedules');
+    const volunteer = await Volunteer.findById(id);
     console.log('Database query complete. Volunteer found:', !!volunteer);
+    if (volunteer) {
+      console.log('Volunteer data:', JSON.stringify(volunteer, null, 2));
+    }
     
     if (!volunteer) {
       console.log('No volunteer found, redirecting to home');
