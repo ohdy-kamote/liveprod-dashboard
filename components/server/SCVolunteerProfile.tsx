@@ -5,32 +5,31 @@ import connectMongoDB from "@/libs/mongodb";
 import Volunteer from "@/models/volunteer";
 
 export default async function SCVolunteerProfile({ id }: { id: string }) {
+  console.log('Loading volunteer profile for ID:', id);
+  
   try {
-    console.log('Loading volunteer profile for ID:', id);
-    const isAuthenticated = await checkAuth();
-    const isAdmin = await checkAdminAuth();
-    console.log('Auth check complete. Authenticated:', isAuthenticated, 'Admin:', isAdmin);
-
     await connectMongoDB();
     const volunteer = await Volunteer.findById(id);
-    console.log('Database query complete. Volunteer found:', !!volunteer);
-    if (volunteer) {
-      console.log('Volunteer data:', JSON.stringify(volunteer, null, 2));
-    }
+    console.log('Volunteer found:', !!volunteer);
     
     if (!volunteer) {
-      console.log('No volunteer found, redirecting to home');
-      redirect("/");
+      console.log('No volunteer found');
+      return <div className="p-8">Volunteer not found</div>;
     }
 
-    console.log('Rendering volunteer profile for:', volunteer.firstName, volunteer.lastName);
-    // Allow access to volunteer profile even without authentication
-    // This enables volunteer ID lookup functionality
+    console.log('Volunteer name:', volunteer.firstName, volunteer.lastName);
+    
     return (
-      <CCVolunteerProfile volunteer={volunteer} isAuthenticated={isAuthenticated} isAdmin={isAdmin} />
-    )
+      <div className="p-8">
+        <h1 className="text-2xl font-bold">Volunteer Profile</h1>
+        <p>Name: {volunteer.firstName} {volunteer.lastName}</p>
+        <p>ID: {volunteer.volunteerId}</p>
+        <p>Status: {volunteer.status}</p>
+        <p>Segment: {volunteer.segment}</p>
+      </div>
+    );
   } catch (error) {
-    console.log('Error in volunteer profile:', error);
-    redirect("/");
+    console.log('Error:', error);
+    return <div className="p-8 text-red-500">Error loading profile</div>;
   }
 }
