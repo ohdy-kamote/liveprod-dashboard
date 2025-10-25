@@ -1,9 +1,15 @@
 import CCAssignVolunteer from "@/components/client/CCAssignVolunteer";
-import { getAllVolunteersPopulated, getScheduleById, getFilteredSchedules } from '@/utils/apis/get';
+import { getScheduleById, getFilteredSchedules } from '@/utils/apis/get';
 import { eq } from "@/utils/dates";
+import connectMongoDB from "@/libs/mongodb";
+import Volunteer from "@/models/volunteer";
 
 export default async function SCAssignVolunteer({ id }: { id: string }) {
-  const volunteersRes = await getAllVolunteersPopulated();
+  // Get volunteers directly from database
+  await connectMongoDB();
+  const volunteers = await Volunteer.find({ active: true }).populate('schedules');
+  const volunteersRes = { data: volunteers };
+  
   const scheduleRes = await getScheduleById(id);
   const adjacentSchedules = await getFilteredSchedules({
     date: scheduleRes.data.date,
