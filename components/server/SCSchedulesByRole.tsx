@@ -3,8 +3,9 @@ import { formatDate } from "@/utils/helpers";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
 import SCVolunteerCell from "@/components/server/SCVolunteerCell";
-import { getSchedulesByRole } from "@/utils/apis/get";
 import CCSchedulesByRole from "../client/CCScheduleByRole";
+import connectMongoDB from "@/libs/mongodb";
+import Schedule from "@/models/schedule";
 
 export default async function SCSchedulesByRole({role}: {role: string}) {
   if (!category.ROLES.includes(role)) {
@@ -12,7 +13,9 @@ export default async function SCSchedulesByRole({role}: {role: string}) {
   }
 
   try {
-    const res = await getSchedulesByRole(role);
+    await connectMongoDB();
+    const schedules = await Schedule.find({ role }).populate('volunteer');
+    const res = { data: schedules };
     
     if (!res || !res.data) {
       return (
