@@ -32,10 +32,14 @@ export default async function SCSchedulesByRole({role}: {role: string}) {
       );
     }
 
+    // Group schedules by service
     const service: any = {};
     for (let i = 0; i < res.data.length; i++) {
       const schedule = res.data[i];
-      service[schedule._id] = schedule.service;
+      if (!service[schedule.service]) {
+        service[schedule.service] = [];
+      }
+      service[schedule.service].push(schedule);
     }
 
     const hasSaturday = Boolean(service?.[category.SATURDAY_SERVICES[0]]?.length);
