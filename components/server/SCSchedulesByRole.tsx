@@ -6,6 +6,7 @@ import SCVolunteerCell from "@/components/server/SCVolunteerCell";
 import CCSchedulesByRole from "../client/CCScheduleByRole";
 import connectMongoDB from "@/libs/mongodb";
 import Schedule from "@/models/schedule";
+import Volunteer from "@/models/volunteer";
 
 export default async function SCSchedulesByRole({role}: {role: string}) {
   if (!category.ROLES.includes(role)) {
@@ -14,7 +15,7 @@ export default async function SCSchedulesByRole({role}: {role: string}) {
 
   try {
     await connectMongoDB();
-    const schedules = await Schedule.find({ role }).populate('volunteer');
+    const schedules = await Schedule.find({ role });
     const res = { data: schedules };
     
     if (!res || !res.data) {
