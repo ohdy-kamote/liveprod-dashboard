@@ -3,6 +3,7 @@ import { getScheduleById, getFilteredSchedules } from '@/utils/apis/get';
 import { eq } from "@/utils/dates";
 import connectMongoDB from "@/libs/mongodb";
 import Volunteer from "@/models/volunteer";
+import Schedule from "@/models/schedule";
 
 export default async function SCAssignVolunteer({ id }: { id: string }) {
   // Get volunteers directly from database
