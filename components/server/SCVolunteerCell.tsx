@@ -3,6 +3,7 @@ import CCVolunteerCell from "@/components/client/CCVolunteerCell";
 
 export default async function SCVolunteerCell(props: { service: any }) {
   const isAuthenticated = await checkAuth();
+  console.log('SCVolunteerCell - isAuthenticated:', isAuthenticated);
 
   return <CCVolunteerCell service={props.service} isAuthenticated={isAuthenticated} />;
 }
