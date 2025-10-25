@@ -7,8 +7,8 @@ import Volunteer from "@/models/volunteer";
 export default async function SCAssignVolunteer({ id }: { id: string }) {
   // Get volunteers directly from database
   await connectMongoDB();
-  const volunteers = await Volunteer.find({ active: true }).populate('schedules');
-  const volunteersRes = { data: volunteers };
+  const volunteersData = await Volunteer.find({ active: true }).populate('schedules');
+  const volunteersRes = { data: volunteersData };
   
   const scheduleRes = await getScheduleById(id);
   const adjacentSchedules = await getFilteredSchedules({
