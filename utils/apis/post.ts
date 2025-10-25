@@ -26,7 +26,13 @@ export const postCreateMonthSchedule = async () => {
 
 export const getAdmin = async (username: string, password: string) => {
   try {
-    const res = await fetch(`/api/admin/get`, {
+    const baseUrl = process.env.NODE_ENV === 'development' 
+      ? 'http://localhost:3000'
+      : process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}`
+        : 'https://ccf-liveprod.vercel.app';
+        
+    const res = await fetch(`${baseUrl}/api/admin/get`, {
       cache: "no-store",
       method: "POST",
       headers: {
