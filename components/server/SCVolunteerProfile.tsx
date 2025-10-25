@@ -25,9 +25,21 @@ export default async function SCVolunteerProfile({ id }: { id: string }) {
     
     console.log('About to render profile component');
     
-    // Create safe volunteer data without schedules to avoid errors
+    // Convert Mongoose document to plain object for client component
     const safeVolunteer = {
-      ...volunteer,
+      _id: volunteer._id.toString(),
+      name: volunteer.name,
+      firstName: volunteer.firstName,
+      lastName: volunteer.lastName,
+      nickName: volunteer.nickName || '',
+      status: volunteer.status,
+      segment: volunteer.segment,
+      roles: volunteer.roles || [],
+      gender: volunteer.gender,
+      phone: volunteer.phone || '',
+      volunteerId: volunteer.volunteerId,
+      trainings: volunteer.trainings || [],
+      trainingsAttended: volunteer.trainingsAttended || [],
       schedules: [] // Empty schedules array to prevent errors
     };
     
