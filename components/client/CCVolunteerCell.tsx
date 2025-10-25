@@ -10,7 +10,8 @@ export default function CCVolunteerCell({ service, isAuthenticated }: { service:
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    console.log('CCVolunteerCell - service:', service, 'isAuthenticated:', isAuthenticated);
+  }, [service, isAuthenticated]);
 
   const handleClick = () => {
     if (!mounted || !isAuthenticated || !service?.id) return;
