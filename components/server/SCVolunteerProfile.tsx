@@ -24,17 +24,15 @@ export default async function SCVolunteerProfile({ id }: { id: string }) {
     const isAdmin = false; // Default to false for volunteer access
     
     console.log('About to render profile component');
+    
+    // Create safe volunteer data without schedules to avoid errors
+    const safeVolunteer = {
+      ...volunteer,
+      schedules: [] // Empty schedules array to prevent errors
+    };
+    
     return (
-      <div className="p-8">
-        <h1 className="text-2xl font-bold">Volunteer Profile</h1>
-        <p>Name: {volunteer.firstName} {volunteer.lastName}</p>
-        <p>ID: {volunteer.volunteerId}</p>
-        <p>Status: {volunteer.status}</p>
-        <p>Segment: {volunteer.segment}</p>
-        <p>Roles: {volunteer.roles?.join(', ') || 'None'}</p>
-        <p>Gender: {volunteer.gender}</p>
-        <p>Phone: {volunteer.phone || 'Not provided'}</p>
-      </div>
+      <CCVolunteerProfile volunteer={safeVolunteer} isAuthenticated={isAuthenticated} isAdmin={isAdmin} />
     );
   } catch (error) {
     console.log('Error:', error);
