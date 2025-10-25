@@ -26,18 +26,20 @@ export const postCreateMonthSchedule = async () => {
 
 export const getAdmin = async (username: string, password: string) => {
   try {
-    // Import here to avoid circular dependencies
-    const connectMongoDB = (await import('@/libs/mongodb')).default;
-    const Admin = (await import('@/models/admin')).default;
-    
-    await connectMongoDB();
-    const admin = await Admin.findOne({ username, password });
-    
-    if (!admin) {
-      throw new Error("Admin not found");
+    const res = await fetch(`/api/admin/get`, {
+      cache: "no-store",
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({ username, password })
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to get admin");
     }
 
-    return { data: admin };
+    return await res.json();
   } catch (error) {
     console.log("Error loading admin:", error);
     throw error;
