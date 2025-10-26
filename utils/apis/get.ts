@@ -110,16 +110,28 @@ export const getAllVolunteersPopulated = async () => {
 
 export const getVolunteerById = async (id: string) => {
   try {
+    if (!SOURCE_URL) {
+      throw new Error("API source URL is not configured");
+    }
+
+    console.log(`Fetching volunteer with ID ${id} from ${SOURCE_URL}/api/volunteers/${id}`);
     const res = await fetch(`${SOURCE_URL}/api/volunteers/${id}`, {
       cache: "no-store"
     });
 
     if (!res.ok) {
-      throw new Error("Failed to get volunteer");
+      const errorData = await res.json().catch(() => ({ message: "Unknown error" }));
+      throw new Error(errorData.message || `Failed to get volunteer: ${res.status} ${res.statusText}`);
     }
 
-    return await res.json();
+    const data = await res.json();
+    if (!data.data) {
+      throw new Error("Invalid response format from server");
+    }
+
+    return data;
   } catch (error) {
-    console.log("Error loading volunteer", error);
+    console.error("Error loading volunteer:", error);
+    throw error; // Rethrow to handle in the component
   }
 }

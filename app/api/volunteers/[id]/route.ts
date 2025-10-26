@@ -37,9 +37,21 @@ export async function PUT(request: any, { params }: any) {
 }
 
 export async function GET(request: any, { params }: any) {
-  await connectMongoDB();
-  const volunteer = await Volunteer.findById(params.id).populate("schedules", "date role service");
-  return NextResponse.json({data: volunteer}, {status: 200});
+  try {
+    console.log('Attempting to connect to MongoDB...');
+    await connectMongoDB();
+    console.log('Connected to MongoDB, finding volunteer:', params.id);
+    const volunteer = await Volunteer.findById(params.id).populate("schedules", "date role service");
+    if (!volunteer) {
+      console.log('Volunteer not found:', params.id);
+      return NextResponse.json({error: 'Volunteer not found'}, {status: 404});
+    }
+    console.log('Volunteer found:', volunteer._id);
+    return NextResponse.json({data: volunteer}, {status: 200});
+  } catch (error) {
+    console.error('Error in GET /api/volunteers/[id]:', error);
+    return NextResponse.json({error: error.message}, {status: 500});
+  }
 }
 
 export async function DELETE(request: any, { params }: any) {
