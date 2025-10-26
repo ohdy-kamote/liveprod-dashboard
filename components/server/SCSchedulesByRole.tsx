@@ -3,8 +3,10 @@ import { formatDate } from "@/utils/helpers";
 import { redirect } from "next/navigation";
 import { Fragment } from "react";
 import SCVolunteerCell from "@/components/server/SCVolunteerCell";
-import { getSchedulesByRole } from "@/utils/apis/get";
 import CCSchedulesByRole from "../client/CCScheduleByRole";
+import connectMongoDB from "@/libs/mongodb";
+import Schedule from "@/models/schedule";
+import Volunteer from "@/models/volunteer";
 
 export default async function SCSchedulesByRole({role}: {role: string}) {
   if (!category.ROLES.includes(role)) {
@@ -12,7 +14,9 @@ export default async function SCSchedulesByRole({role}: {role: string}) {
   }
 
   try {
-    const res = await getSchedulesByRole(role);
+    await connectMongoDB();
+    const schedules = await Schedule.find({ role });
+    const res = { data: schedules };
     
     if (!res || !res.data) {
       return (
@@ -28,10 +32,14 @@ export default async function SCSchedulesByRole({role}: {role: string}) {
       );
     }
 
+    // Group schedules by service
     const service: any = {};
     for (let i = 0; i < res.data.length; i++) {
       const schedule = res.data[i];
-      service[schedule._id] = schedule.service;
+      if (!service[schedule.service]) {
+        service[schedule.service] = [];
+      }
+      service[schedule.service].push(schedule);
     }
 
     const hasSaturday = Boolean(service?.[category.SATURDAY_SERVICES[0]]?.length);

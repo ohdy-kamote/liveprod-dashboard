@@ -122,19 +122,21 @@ export default function CCVolunteerProfile({ volunteer, isAuthenticated, isAdmin
     const schedule: any[] = [];
     let lastSchedule = newDate().getTime();
 
-    for (let i = 0; i < volunteer?.schedules?.length; i++) {
-      const sched = volunteer.schedules[i];
-      const newSchedule = new Date(from(sched.date, sched.service)).getTime();
-      if (newSchedule > lastSchedule) {
-        lastSchedule = newSchedule;
-      }
+    if (volunteer?.schedules && Array.isArray(volunteer.schedules)) {
+      for (let i = 0; i < volunteer.schedules.length; i++) {
+        const sched = volunteer.schedules[i];
+        const newSchedule = new Date(from(sched.date, sched.service)).getTime();
+        if (newSchedule > lastSchedule) {
+          lastSchedule = newSchedule;
+        }
 
-      schedule.push({
-        id: sched._id,
-        title: sched.role.toUpperCase(),
-        start: from(sched.date, sched.service),
-        end: to(from(sched.date, sched.service))
-      });
+        schedule.push({
+          id: sched._id,
+          title: sched.role.toUpperCase(),
+          start: from(sched.date, sched.service),
+          end: to(from(sched.date, sched.service))
+        });
+      }
     }
 
     const length = diff(newDate(), new Date(lastSchedule), "day");

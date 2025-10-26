@@ -4,6 +4,8 @@ import { checkAuth, checkAdminAuth } from "@/utils/helpersServer";
 import { redirect } from "next/navigation";
 
 export default async function SCVolunteerProfile({ id }: { id: string }) {
+  console.log('Loading volunteer profile for ID:', id);
+  
   try {
     console.log('SCVolunteerProfile: Starting to fetch data for volunteer', id);
     
@@ -27,11 +29,22 @@ export default async function SCVolunteerProfile({ id }: { id: string }) {
       throw new Error('Volunteer data not found');
     }
 
+    // Ensure all optional fields have default values
+    const safeVolunteer = {
+      ...res.data,
+      nickName: res.data.nickName || '',
+      phone: res.data.phone || '',
+      roles: res.data.roles || [],
+      trainings: res.data.trainings || [],
+      trainingsAttended: res.data.trainingsAttended || [],
+      schedules: res.data.schedules || []
+    };
+
     console.log('SCVolunteerProfile: Successfully fetched volunteer data');
 
     return (
       <CCVolunteerProfile 
-        volunteer={res.data} 
+        volunteer={safeVolunteer} 
         isAuthenticated={isAuthenticated} 
         isAdmin={isAdmin} 
       />

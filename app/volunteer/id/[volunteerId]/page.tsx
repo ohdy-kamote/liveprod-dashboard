@@ -1,39 +1,17 @@
 import { redirect } from "next/navigation";
-
-async function getVolunteerByVolunteerId(volunteerId: string) {
-  try {
-    // For server-side calls, use relative URL or construct proper absolute URL
-    let baseUrl = 'http://localhost:3000';
-    
-    if (process.env.VERCEL_URL) {
-      baseUrl = `https://${process.env.VERCEL_URL}`;
-    } else if (process.env.NEXTAUTH_URL) {
-      baseUrl = process.env.NEXTAUTH_URL;
-    }
-    
-    const response = await fetch(`${baseUrl}/api/volunteers/by-id/${volunteerId}`, {
-      cache: "no-store"
-    });
-    
-    if (!response.ok) {
-      return null;
-    }
-    
-    return await response.json();
-  } catch (error) {
-    return null;
-  }
-}
+import connectMongoDB from "@/libs/mongodb";
+import Volunteer from "@/models/volunteer";
 
 export default async function VolunteerByIdPage({ params }: { params: { volunteerId: string } }) {
-  const result = await getVolunteerByVolunteerId(params.volunteerId);
+  console.log('Looking up volunteer ID:', params.volunteerId);
+  await connectMongoDB();
+  const volunteer = await Volunteer.findOne({ volunteerId: params.volunteerId });
   
-  if (!result || !result.data) {
-    console.log('Volunteer not found:', params.volunteerId);
+  if (!volunteer) {
+    console.log('Volunteer not found, redirecting to /volunteer/all');
     redirect("/volunteer/all");
   }
   
-  console.log('Redirecting to profile:', result.data._id);
-  // Redirect to the regular profile page using the MongoDB _id
-  redirect(`/volunteer/profile/${result.data._id}`);
+  console.log('Volunteer found, redirecting to profile:', volunteer._id);
+  redirect(`/volunteer/profile/${volunteer._id}`);
 }
